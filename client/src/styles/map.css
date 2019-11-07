@@ -1,6 +1,6 @@
 #map-box {
     overflow: hidden;
-    width: 1080px;
+    width: 1000px;
     height: 700px;
     background-color: red;
 }
@@ -13,4 +13,8 @@
 
 .react-draggable, .cursor {
     cursor: move;
-  }
+}
+
+area {
+    cursor: pointer;
+}
