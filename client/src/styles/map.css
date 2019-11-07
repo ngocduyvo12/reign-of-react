@@ -1,0 +1,12 @@
+#map-box {
+    overflow: hidden;
+    width: 1080px;
+    height: 700px;
+    background-color: red;
+}
+
+#text-box {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+}
