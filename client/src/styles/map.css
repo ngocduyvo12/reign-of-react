@@ -5,8 +5,12 @@
     background-color: red;
 }
 
-#text-box {
-    width: 100px;
-    height: 100px;
+/* #text-box {
+    width: 2000px;
+    height: 2000px;
     background-color: blue;
-}
+} */
+
+.react-draggable, .cursor {
+    cursor: move;
+  }

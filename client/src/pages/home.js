@@ -11,11 +11,17 @@ class Home extends Component {
     render() {
         const dragHandlers = { onStart: this.onStart, onStop: this.onStop };
         return (
+            <div className="container-fluid">
+
             <div id="map-box">
                 <Draggable {...dragHandlers}>
+                    <div id="text-box" >
                     <img src="./img/map/map.png" id="map" alt="map" useMap="#game-map" />
+                    
+                    </div>
                 </Draggable>
                 <Map />
+            </div>
             </div>
         )
     }
