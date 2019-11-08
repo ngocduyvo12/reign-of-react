@@ -4,8 +4,8 @@
         "coords": [277, 395, 237, 434, 211, 559, 278, 624, 315, 556, 444, 480, 413, 405],
         "name": "hellerbenia",
         "fillColor": "rgba(255,255,255,0)",
-        "strokeColor": "rgba(255,255,255,0)"
-   
+        "strokeColor": "rgba(255,255,255,0)",
+        "tier": 1
     },
     {
         "shape": "poly",

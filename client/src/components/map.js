@@ -52,7 +52,6 @@ class Map extends Component {
                 >
                     <Draggable >
                         <div id="text-box" style={{ top: "0px", left: "0px" }}>
-                            {/* <img src="./img/map/map.png" id="map" alt="map" useMap="#game-map" /> */}
                             <ImageMapper
                                 src="./img/map/map.png"
                                 map={MAP}
