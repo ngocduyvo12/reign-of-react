@@ -10,7 +10,7 @@ class Login extends Component {
             <>
                 <div className="jumbotron">
                     <h1>Welcome to Reign of React!</h1>
-                    <h3>Sign in or register a new account with us</h3>
+                    <h3>Sign in or register a new account with us to play</h3>
                     <form id="sign-in">
                         <h3>Sign In</h3>
                         <div className="form-group">
