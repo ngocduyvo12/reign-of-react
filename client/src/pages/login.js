@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "../styles/login.css";
 
 class Login extends Component {
-
+      
     render() {
         return (
             <>
@@ -21,7 +23,7 @@ class Login extends Component {
                             <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
                             <small id="emailHelp" className="form-text text-muted">Please Enter Your Password</small>
                         </div>
-                        <button type="submit" className="btn btn-lg btn-dark">Submit</button>
+                        <Link to="/home"><button type="submit" className="btn btn-lg btn-dark">Submit</button></Link>
                     </form>
                     <form id="register">
                         <h3>Register New Account</h3>
@@ -40,7 +42,7 @@ class Login extends Component {
                             <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
                             <small id="emailHelp" className="form-text text-muted">Please Re-enter Your Password</small>
                         </div>
-                        <button type="submit" className="btn btn-lg btn-dark">Submit</button>
+                        <Link to="/home"><button type="submit" className="btn btn-lg btn-dark">Submit</button></Link>
                     </form>
                     <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
                     <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
