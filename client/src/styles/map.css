@@ -2,14 +2,15 @@
     overflow: hidden;
     width: 1000px;
     height: 700px;
-    background-color: red;
+    /* background-color: red; */
+    background-image: url(./background.png);
+    position: absolute;
 }
 
-/* #text-box {
-    width: 2000px;
-    height: 2000px;
-    background-color: blue;
-} */
+#text-box {
+    position: relative;
+    left: -200px;
+}
 
 .react-draggable, .cursor {
     cursor: move;
