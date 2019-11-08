@@ -4,6 +4,7 @@ import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper"
 import mapJSON from "../map.json"
+import Help from "../components/Help"
 
 
 var MAP = {
@@ -59,6 +60,8 @@ class Map extends Component {
                                 width={1844}
                                 onClick={area => this.getMapInfoHandler(area)}
                             ></ImageMapper>
+                            <Help 
+                            />
                         </div>
                     </Draggable>
                 </div>
