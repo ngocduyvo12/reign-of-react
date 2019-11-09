@@ -12,7 +12,6 @@ var MAP = {
     areas: mapJSON
 }
 
-
 class Map extends Component {
 
     //function for moving map:
@@ -60,8 +59,6 @@ class Map extends Component {
                                 width={1844}
                                 onClick={area => this.getMapInfoHandler(area)}
                             ></ImageMapper>
-                            <Help 
-                            />
                         </div>
                     </Draggable>
                 </div>
@@ -70,6 +67,5 @@ class Map extends Component {
         )
     }
 }
-
 
 export default Map;
