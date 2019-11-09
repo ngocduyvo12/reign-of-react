@@ -53,7 +53,7 @@ class Map extends Component {
                     <Draggable >
                         <div id="text-box" style={{ top: "0px", left: "0px" }}>
                             <ImageMapper
-                                src="./img/map/map.png"
+                                src="../img/map/map.png"
                                 map={MAP}
                                 width={1844}
                                 onClick={area => this.getMapInfoHandler(area)}
