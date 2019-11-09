@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper"
-import mapJSON from "../map.json"
+import mapJSON from "../json/map"
 
 
 var MAP = {
