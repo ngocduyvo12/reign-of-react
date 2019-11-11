@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import Map from "../components/map"
+import Help from "../components/Help"
 import "../styles/map.css";
 import "../styles/player-stat.css"
 
@@ -27,6 +28,7 @@ class Home extends Component {
                         <div className="row">
                             <div className="col">
                                 <div id="player-stat-box">
+                        <Help />
                                     <div className="row align-items-center">
 
                                     </div>

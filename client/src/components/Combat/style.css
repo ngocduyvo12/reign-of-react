@@ -1,0 +1,28 @@
+.jumbotron {
+    background: black;
+}
+
+#combat-stats {
+    background: black;
+    height: 400px;
+}
+
+.combat-log {
+    background: red;
+    height: 400px;
+}
+
+.enemy-cards {
+    background: orange;
+    height: 400px;
+}
+
+.player-inventory {
+    background: green;
+    height: 400px;
+}
+
+.player-cards {
+    background: blueviolet;
+    height: 300px;
+}
