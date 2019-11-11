@@ -50,13 +50,6 @@ class Welcome extends Component {
         this.setRedirect();
     }
 
-    playGame = (event) => {
-        event.preventDefault()
-        if (this.state.redirect) {
-            return <Redirect to="/home" />
-        }
-    }
-
     render() {
         return (
             <div className="container jumbotron">
