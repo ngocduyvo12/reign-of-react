@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 // import Modal from "react-modal";
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./style.css";
 import Druid from "../Druid"
@@ -9,7 +10,8 @@ import Warrior from "../Warrior"
 class Welcome extends Component {
 
     state = {
-        class: ""
+        class: "",
+        redirect: false
     }
 
     classInfo = () => {
@@ -22,14 +24,26 @@ class Welcome extends Component {
         }
     }
 
+    playGame = (event) => {
+        if (this.state.redirect) {
+            return <Redirect to="/home" />
+        }
+    }
+
+    verifySelection = () => {
+        if (this.state.class === "Druid" || this.state.class === "Warrior") {
+            this.setState({ redirect : true })
+        }
+    }
+
     selectDruid = (event) => {
         event.preventDefault()
-        this.setState({ class : "Druid" })
+        this.setState({ class: "Druid"})
     }
 
     selectWarrior = (event) => {
         event.preventDefault()
-        this.setState({ class : "Warrior" })
+        this.setState({ class: "Warrior" })
     }
 
 
@@ -48,15 +62,21 @@ class Welcome extends Component {
                 <div className="row">
                     <div className="col-md-4 class-available">
                         <p>Currently Available Classes:</p>
-                        <button className="btn-lg btn-dark btn-lg" onClick={this.selectDruid}>Druid</button>
-                        <button className="btn-lg btn-dark btn-lg" onClick={this.selectWarrior}>Warrior</button>
+                        <button className="btn-lg btn-dark" onClick={this.selectDruid}>Druid</button>
+                        <button className="btn-lg btn-dark" onClick={this.selectWarrior}>Warrior</button>
                     </div>
                     <div className="col-md-8 class-description">
                         {this.classInfo()}
                     </div>
                     <div className="col-md-12 random-card">
-                        <p>THIS IS WHERE RANDOM CARDS WILL BE ASSIGNED BASED ON THE PLAYER SELECTION</p>
+                    {this.verifySelection()}
+                        <p>THIS IS WHERE RANDOM CARDS WILL BE ASSIGNED BASED ON THE CLASS SELECTION</p>
+                        <button className="btn-lg btn-dark" onClick={this.playGame}>Play Now</button>
                     </div>
+                    {/* <div>
+                        {this.playGame()}
+                        <button onClick={this.setRedirect}>Redirect</button>
+                    </div> */}
                 </div>
             </div>
         )
