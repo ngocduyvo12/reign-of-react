@@ -10,8 +10,15 @@
 
 .class-description {
     background: orange;
+    height: 20rem;
 }
 
 .random-card {
     background: brown;
+}
+
+.btn-dark {
+    width: 80%;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
