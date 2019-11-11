@@ -3,8 +3,15 @@ import Modal from "react-modal";
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./style.css";
+import Druid from "../Druid"
 
 class Welcome extends Component {
+
+    state = {
+        class: ""
+    }
+
+    
 
     render() {
         return (
@@ -21,10 +28,10 @@ class Welcome extends Component {
                 <div class="row">
                     <div class="col-md-4 class-available">
                         <p>Currently Available Classes:</p>
-                        <p>DUMMY FOR DRUID</p>
+                        <button class="btn-lg btn-dark btn-lg">Druid</button>
                     </div>
                     <div class="col-md-8 class-description">
-                        <p>DUMMY FOR THE INFORMATION THAT WILL COME WITH THE SELECTION OF A CLASS</p>
+                        <Druid />
                     </div>
                     <div class="col-md-12 random-card">
                         <p>THIS IS WHERE RANDOM CARDS WILL BE ASSIGNED BASED ON THE PLAYER SELECTION</p>
