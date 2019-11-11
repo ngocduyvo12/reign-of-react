@@ -24,28 +24,38 @@ class Welcome extends Component {
         }
     }
 
-    playGame = (event) => {
+    showPlay = () => {
         if (this.state.redirect) {
-            return <Redirect to="/home" />
+            return <Link to="/home"><button className="btn-lg btn-dark">Play Now</button></Link>
+        } else {
+            return <h3>Please Choose A Class Above!</h3>
         }
     }
 
-    verifySelection = () => {
-        if (this.state.class === "Druid" || this.state.class === "Warrior") {
-            this.setState({ redirect : true })
-        }
+    setRedirect = () => {
+        this.setState({
+            redirect: true
+        })
     }
 
     selectDruid = (event) => {
         event.preventDefault()
-        this.setState({ class: "Druid"})
+        this.setState({ class: "Druid" });
+        this.setRedirect();
     }
 
     selectWarrior = (event) => {
         event.preventDefault()
         this.setState({ class: "Warrior" })
+        this.setRedirect();
     }
 
+    playGame = (event) => {
+        event.preventDefault()
+        if (this.state.redirect) {
+            return <Redirect to="/home" />
+        }
+    }
 
     render() {
         return (
@@ -69,14 +79,8 @@ class Welcome extends Component {
                         {this.classInfo()}
                     </div>
                     <div className="col-md-12 random-card">
-                    {this.verifySelection()}
-                        <p>THIS IS WHERE RANDOM CARDS WILL BE ASSIGNED BASED ON THE CLASS SELECTION</p>
-                        <button className="btn-lg btn-dark" onClick={this.playGame}>Play Now</button>
+                        {this.showPlay()}
                     </div>
-                    {/* <div>
-                        {this.playGame()}
-                        <button onClick={this.setRedirect}>Redirect</button>
-                    </div> */}
                 </div>
             </div>
         )
