@@ -3,6 +3,7 @@ import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same 
 import Map from "../components/map"
 import "../styles/map.css";
 import "../styles/player-stat.css"
+import Equipped from "../components/equipped"
 
 class Home extends Component {
     state = {
@@ -23,24 +24,20 @@ class Home extends Component {
                     </div>
 
                     <div className="col col-lg-4">
-                    {/* player stats div */}
+                        {/* player stats div */}
                         <div className="row">
                             <div className="col">
                                 <div id="player-stat-box">
                                     <div className="row align-items-center">
-
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    {/* consumable items div */}
-                    <div className="row">
-                            <div className="col">
-                                <div id="player-consumable-box">
-                                    {/* logic to display current consumable items */}
-                                </div>
-                            </div>
+                        {/* equipped card div */}
+                        <div className="row">
+                                    {/* logic to display current equipped cards */}
+                                    <Equipped {...this.props} />
                         </div>
                     </div>
                 </div>

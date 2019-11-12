@@ -21,6 +21,11 @@ export default {
   // Saves a user to the database
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
+  },
+
+  //get equippedCards from user id in url
+  getEquippedCards: function(id){
+    return axios.get("/api/user/getEquippedCards/" + id);
   }
 };
 
