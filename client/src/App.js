@@ -14,13 +14,10 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/home/:id" component={Home} />
         <Route exact path="/welcome" component={Welcome} />
-        <Route path="/combat/:id" component={Combat} />
-        <Route exact path="/combat" component={Combat} />
-        {/* dynamic url */}
-        <Route path="/home/:id" component={Home} />
-        <Route path="/inventory/:id" component={Inventory} />
+        <Route exact path="/combat/:location/:id" component={Combat} />
+        <Route exact path="/inventory/:id" component={Inventory} />
         <Route exact path="/results" component={PostCombat} />
       </Switch>
     </Router>

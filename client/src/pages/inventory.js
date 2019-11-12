@@ -17,31 +17,21 @@ class Inventory extends Component {
 
   //on page load call functions for displaying inventory and equipped cards
   componentDidMount() {
-    // console.log(this.props.match.params.id)
-    this.loadInventory();
-    this.loadEquipped();
+    this.loadCards();
   }
 
-  //function to get inventory cards:
-  loadInventory = () => {
-    API.getInventoryCards(this.props.match.params.id)
-      .then(res => {
-        // console.log(res.data.inventoryCards)
-        this.setState({ inventoryCard: res.data.inventoryCards})
-        // console.log(this.state.inventoryCard)
-      }).catch(err => console.log(err.response))
-  }
+  
 
   //function to get equipped cards:
-  loadEquipped = () => {
-    API.getEquippedCards(this.props.match.params.id)
+  loadCards = () => {
+    API.getAllCards(this.props.match.params.id)
       .then(res => {
         this.setState({ equippedCards: res.data.equippedCards })
-        // console.log(this.state.equippedCards);
+        this.setState({ inventoryCard: res.data.inventoryCards})
+        // console.log(res.data);
       })
       .catch(err => console.log(err))
   }
-
 
   //onclick of inventory image trigger this function:
   //check if the equippedCards array is > 3:
