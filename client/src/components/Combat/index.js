@@ -9,11 +9,13 @@ import characters from "../../json/characters.json"
 
 class Combat extends Component {
     state = {
-        items: []
+        items: [],
+        myEnemy: []
     }
 
     randomEnemy = () => {
         let randNum = (Math.floor(Math.random() * 50) + 1)
+        
         console.log(randNum)
     }
 
