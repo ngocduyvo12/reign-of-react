@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper"
-import mapJSON from "../map.json"
+import mapJSON from "../json/map.json"
 import Help from "../components/Help"
 
 
@@ -53,7 +53,7 @@ class Map extends Component {
                     <Draggable >
                         <div id="text-box" style={{ top: "0px", left: "0px" }}>
                             <ImageMapper
-                                src="../img/map/map.png"
+                                src="./img/map/map.png"
                                 map={MAP}
                                 width={1844}
                                 onClick={area => this.getMapInfoHandler(area)}
