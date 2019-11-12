@@ -4,11 +4,9 @@ import Map from "../components/map"
 import Help from "../components/Help"
 import "../styles/map.css";
 import "../styles/player-stat.css"
+import Equipped from "../components/equipped"
 
 class Home extends Component {
-    state = {
-        items: []
-    }
 
     handleLocationClick = (tier) => {
         this.props.history.push("/combat/"+tier+"/"+this.props.match.params.id)
@@ -29,25 +27,21 @@ class Home extends Component {
                     </div>
 
                     <div className="col col-lg-4">
-                    {/* player stats div */}
+                        {/* player stats div */}
                         <div className="row">
                             <div className="col">
                                 <div id="player-stat-box">
-                        <Help />
+                                    <Help />
                                     <div className="row align-items-center">
-
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                    {/* consumable items div */}
-                    <div className="row">
-                            <div className="col">
-                                <div id="player-consumable-box">
-                                    {/* logic to display current consumable items */}
-                                </div>
-                            </div>
+                        {/* equipped card div */}
+                        <div className="row">
+                            {/* logic to display current equipped cards */}
+                            <Equipped {...this.props} />
                         </div>
                     </div>
                 </div>

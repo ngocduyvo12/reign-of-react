@@ -52,7 +52,7 @@ var UserSchema = new Schema({
   // This allows us to populate the Article with an associated Note
   inventoryCards: [{
     type: Schema.Types.ObjectId,
-    ref: "inventoryCards"
+    ref: "InventoryCards"
   }]
 });
 

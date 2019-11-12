@@ -1,6 +1,6 @@
 #map-box {
     overflow: hidden;
-    width: 1000px;
+    width: 98%;
     height: 700px;
     /* background-color: red; */
     background-image: url(./background.png);
