@@ -6,6 +6,7 @@ import Welcome from "./components/Welcome";
 import Inventory from "./pages/inventory";
 // import Map from "./components/map"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import PostCombat from './components/postCombat';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         {/* dynamic url */}
         <Route path="/home/:id" component={Home} />
         <Route path="/inventory/:id" component={Inventory} />
+        <Route exact path="/results" component={PostCombat} />
       </Switch>
     </Router>
   )
