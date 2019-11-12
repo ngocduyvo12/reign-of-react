@@ -4,30 +4,53 @@ import "./style.css"
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
 import Fightlogs from "../Fightlogs";
-import characters from "../../json/characters.json"
+import MapInfoCombat from "../MapInfoCombat";
+import characters from "../../json/characters.json";
+import mapJSON from "../../json/map.json";
+import API from "../../utils/API";
 
+let randomMonster = Math.floor(Math.random() * 3)
+
+let monsterID = mapJSON[0].monsters[randomMonster]
+console.log(monsterID)
 
 class Combat extends Component {
     state = {
         items: [],
-        myEnemy: []
+        myEnemyAttack: characters[monsterID].attack,
+        myEnemyDefense: characters[monsterID].defense,
+        myEnemyHealth: characters[monsterID].hitpoints,
     }
 
-    randomEnemy = () => {
-        let randNum = (Math.floor(Math.random() * 50) + 1)
-        
-        console.log(randNum)
+    componentDidMount() {
+        console.log(this.props.match.params.id)
     }
+
+    loadUserInfo = () => {
+        API.getUserId(this.props.match.parms.id)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    }
+    
 
     render() {
         return (
             <>
                 <div>
-                    {this.randomEnemy()}
                     <div className="jumbotron">
                         <h1>Glorious Combat</h1>
                         <div className="container">
                             <div className="row">
+                                <div className="map-info col-md-12">
+                                    <div>
+                                        <MapInfoCombat
+                                            mapName={mapJSON[0].name}
+                                            mapLevel={mapJSON[0].tier}
+                                            mapMonsters={mapJSON[0].monsters}
+                                            mapExp={mapJSON[0].experience}
+                                        />
+                                    </div>
+                                </div>
 
                                 <div className="combat-log col-md-3">
                                     <div>
@@ -37,17 +60,18 @@ class Combat extends Component {
                                 <div className="enemy-cards col-md-9">
                                     <div>
                                         <EnemyCards
-                                            name={characters[0].name}
-                                            image={characters[0].image}
-                                            hitpoints={characters[0].hitpoints}
-                                            attack={characters[0].attack}
-                                            defense={characters[0].defense}
+                                            name={characters[monsterID].name}
+                                            image={characters[monsterID].image}
+                                            hitpoints={this.state.myEnemyHealth}
+                                            attack={this.state.myEnemyAttack}
+                                            defense={this.state.myEnemyDefense}
                                         />
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
                                     <div>
-                                        <PlayerCards />
+                                        <PlayerCards {...this.props}/>
+
                                     </div>
                                 </div>
 

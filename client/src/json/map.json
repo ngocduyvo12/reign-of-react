@@ -5,7 +5,9 @@
         "name": "hellerbenia",
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
-        "tier": 1
+        "tier": 1,
+        "monsters": [1,2,3],
+        "experience": 100
     },
     {
         "shape": "poly",
