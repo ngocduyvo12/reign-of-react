@@ -16,7 +16,7 @@ function App() {
         <Route exact path="/" component={Login} />
         <Route exact path="/home/:id" component={Home} />
         <Route exact path="/welcome" component={Welcome} />
-        <Route exact path="/combat/:tier/:id" component={Combat} />
+        <Route exact path="/combat/:location/:id" component={Combat} />
         <Route exact path="/inventory/:id" component={Inventory} />
         <Route exact path="/results" component={PostCombat} />
       </Switch>

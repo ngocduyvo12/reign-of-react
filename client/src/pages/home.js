@@ -8,8 +8,8 @@ import Equipped from "../components/equipped"
 
 class Home extends Component {
 
-    handleLocationClick = (tier) => {
-        this.props.history.push("/combat/"+tier+"/"+this.props.match.params.id)
+    handleLocationClick = (name) => {
+        this.props.history.push("/combat/"+name+"/"+this.props.match.params.id)
     }
 
     render() {
