@@ -151,7 +151,7 @@ class Login extends Component {
               onChange={this.handleInputChange} />
               <small id="emailHelp" className="form-text text-muted">Please Re-enter Your Password</small>
             </div>
-            <Link to="/home">
+            <Link to="/welcome">
               <button 
               type="submit" 
               className="btn btn-lg btn-dark"

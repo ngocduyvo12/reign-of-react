@@ -16,22 +16,16 @@ class Combat extends Component {
                         <div className="container">
                             <div className="row">
 
-                                <div className="combat-log col-md-2">
+                                <div className="combat-log col-md-3">
                                     <div>
                                         Combat Stats Insert Here
                                         These are updated Each Round
                                     </div>
                                 </div>
-                                <div className="enemy-cards col-md-7">
+                                <div className="enemy-cards col-md-9">
                                     <div>
                                         Enemy Cards Insert Here
                                         Append Each
-                                    </div>
-                                </div>
-                                <div className="player-inventory col-md-3">
-                                    <div>
-                                        Player Inventory Insert Here
-                                        Based on Inventory from Home Page
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
