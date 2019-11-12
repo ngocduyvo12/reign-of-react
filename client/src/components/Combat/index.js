@@ -24,16 +24,15 @@ class Combat extends Component {
 
     loadUserInfo = () => {
         API.getUserId(this.props.match.params.id)
-        .then(res => console.log(res.data))
-        // .then(res => this.setState({ myCards: res.data.equippedCards }))
-        .catch(err => console.log(err))
+            .then(res => this.setState({ myCards: res.data.myCards }))
+            .catch(err => console.log(err))
     }
-    
+
     componentDidMount() {
         console.log(this.props.match.params.id)
         this.loadUserInfo();
     }
-    
+
     render() {
         return (
             <>
@@ -70,11 +69,23 @@ class Combat extends Component {
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
-                                    <div>
-                                        <PlayerCards 
-                                            myCards={this.state.myCards}
-                                        />
-                                    </div>
+                                    {this.state.myCards ? (
+                                        <>
+                                            {this.state.myCards.map(cards => (
+                                                <div className="col" key={cards._id}>
+                                                    <img
+                                                        id={cards._id}
+                                                        className="equippedImages"
+                                                        src={cards.image}
+                                                        alt={cards.name}
+                                                        onClick={this.unEquip}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </>
+                                    ) : (
+                                            <h3>No Card Equipped</h3>
+                                        )}
                                 </div>
 
                             </div>

@@ -21,6 +21,22 @@ export default {
   // Saves a user to the database
   saveUser: function(userData) {
     return axios.post("/api/user", userData);
+  },
+  //get equippedCards from user id in url
+  getEquippedCards: function(id){
+    return axios.get("/api/user/getEquippedCards/" + id);
+  },
+  //get inventory cards from user id in url
+  getInventoryCards: function(id){
+    return axios.get("/api/user/getInventoryCards/" + id)
+  },
+  //add new card to equippedCards if there are slot available
+  updateEquippedCard: function(data){
+    return axios.post("/api/user/updateEquippedCard", data)
+  },
+  //un-equip a card and add to inventory
+  unEquipCard: function(data){
+    return axios.post("/api/user/unEquipCard", data)
   }
 };
 
