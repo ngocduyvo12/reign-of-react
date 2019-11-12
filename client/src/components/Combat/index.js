@@ -22,16 +22,21 @@ class Combat extends Component {
         myEnemyHealth: characters[monsterID].hitpoints,
     }
 
-    loadUserInfo = () => {
-        API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myCards: res.data.myCards }))
-            .catch(err => console.log(err))
-    }
-
     componentDidMount() {
         console.log(this.props.match.params.id)
         this.loadUserInfo();
     }
+
+    loadUserInfo = () => {
+        API.getUserId(this.props.match.params.id)
+            .then(res => this.setState({ myCards: res.data.equippedCards }))
+            .catch(err => console.log(err))
+    }
+
+    callParty = () => {
+        this.loadUserInfo();
+    }
+
 
     render() {
         return (
@@ -69,24 +74,23 @@ class Combat extends Component {
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
-                                    {this.state.myCards ? (
-                                        <>
+                                         <>
                                             {this.state.myCards.map(cards => (
-                                                <div className="col" key={cards._id}>
+                                                <div key={cards._id}>
+                                                    <h4> Name: {cards.name}</h4>
+                                                    <h5> Health: {cards.hitPoint}</h5>
+                                                    <h5> Attack: {cards.attack}</h5>
+                                                    <h5> Defense: {cards.defense}</h5>
                                                     <img
                                                         id={cards._id}
-                                                        className="equippedImages"
+                                                        className="equipped-combat"
                                                         src={cards.image}
                                                         alt={cards.name}
-                                                        onClick={this.unEquip}
                                                     />
                                                 </div>
                                             ))}
                                         </>
-                                    ) : (
-                                            <h3>No Card Equipped</h3>
-                                        )}
-                                </div>
+                                </div> 
 
                             </div>
                         </div>

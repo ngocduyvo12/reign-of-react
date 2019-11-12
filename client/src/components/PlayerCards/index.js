@@ -6,7 +6,7 @@ function PlayerCards(props) {
     return (
         <div>
             <h2>This is a test as well</h2>
-            {/* <h2>Cards: {props.name}</h2> */}
+            <h2>Cards: {props.name}</h2>
         </div>
     )
 }
