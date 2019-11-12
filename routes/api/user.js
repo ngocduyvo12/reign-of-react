@@ -19,14 +19,36 @@ router
 router
     .route("/login")
     .post(userController.login)
-
-//matches with "api/user/dev/seed-equipped"
-router
-    .route("/dev/seed-equipped")
-    .get(userController.devSeed)
-
 //matches with "api/user/getEquippedCards/:id"
 router
     .route("/getEquippedCards/:id")
     .get(userController.getEquippedCards)
+
+//matches with "api/user/getInventoryCards/:id"
+router
+    .route("/getInventoryCards/:id")
+    .get(userController.getInventoryCards)
+
+//matches with "api/user/updateEquippedCard"
+//route for equipping a card if party have available slot
+router
+.route("/updateEquippedCard")
+.post(userController.updateEquippedCard)
+
+//matches with "api/user/unEquipCard"
+//route for un-equipping a card
+router
+.route("/unEquipCard")
+.post(userController.unEquipCard)
+
+//route for seeding data for testing purposes.
+//matches with "api/user/dev/seed-equipped"
+router
+    .route("/dev/seed-equipped")
+    .get(userController.devSeed)
+//route for seeding data for testing purposes.
+//matches with "api/user/dev/seed-equipped"
+router
+    .route("/dev/seed-inventory")
+    .get(userController.devSeedInvent)
 module.exports = router;

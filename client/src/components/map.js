@@ -3,14 +3,14 @@ import ReactDOM from "react-dom"
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper"
-import mapJSON from "../json/map"
+import mapJSON from "../json/map.json"
+import Help from "../components/Help"
 
 
 var MAP = {
     name: "my-map",
     areas: mapJSON
 }
-
 
 class Map extends Component {
 
@@ -66,6 +66,5 @@ class Map extends Component {
         )
     }
 }
-
 
 export default Map;

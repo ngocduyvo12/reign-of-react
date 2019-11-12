@@ -2,6 +2,7 @@
 
 module.exports = {
     User: require("./User"),
-    EquippedCards: require("./EquippedCards")
+    EquippedCards: require("./EquippedCards"),
+    InventoryCards: require("./InventoryCards")
   };
   

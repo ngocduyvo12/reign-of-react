@@ -35,6 +35,7 @@
     "mongoose": "^5.3.16",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-image-mapper": "0.0.15"
+    "react-image-mapper": "0.0.15",
+    "react-modal": "^3.11.1"
   }
 }

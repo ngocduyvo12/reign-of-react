@@ -5,7 +5,8 @@
         "name": "hellerbenia",
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
-        "tier": 1
+        "tier": 1,
+        "monster": [1, 2, 3]
     },
     {
         "shape": "poly",

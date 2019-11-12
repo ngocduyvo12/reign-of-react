@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 class Equipped extends Component {
 
     state = {
-        card: [],
-        test: [],
+        cards: [],
     }
 
     componentDidMount() {
@@ -20,10 +19,8 @@ class Equipped extends Component {
     loadCards = () => {
         API.getEquippedCards(this.props.match.params.id)
             .then(res => {
-
-                this.setState({ card: res.data })
-                this.setState({ test: res.data.equippedCards })
-                console.log(this.state.test);
+                this.setState({ cards: res.data.equippedCards })
+                console.log(this.state.cards);
             })
             .catch(err => console.log(err))
     }
@@ -31,18 +28,21 @@ class Equipped extends Component {
     render() {
         return (
             <>
-                {this.state.test.length ? (
+                {this.state.cards.length ? (
                     <>
-                        {this.state.test.map(cards => (
-                            <div className="col col-md-3">
-                                <Link to={"/inventory/" + this.props.match.params.id}>
+                        {this.state.cards.map(cards => (
+                            // <div className="col col-md-3" key={cards._id}>
+                            <div className="col" key={cards._id}>
+                                <Link 
+                                to={"/inventory/" + this.props.match.params.id}>
                                     <img
-                                    className="equippedImages"
-                                        key={cards._id}
+                                        className="equippedImages"
                                         src={cards.image}
-                                        alt={cards.name} />
+                                        alt={cards.name}
+                                    />
                                 </Link>
                             </div>
+                          
                         ))}
                     </>
                 ) : (
