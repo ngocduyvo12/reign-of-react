@@ -8,6 +8,10 @@ import Equipped from "../components/equipped"
 
 class Home extends Component {
 
+    handleLocationClick = (tier) => {
+        this.props.history.push("/combat/"+tier+"/"+this.props.match.params.id)
+    }
+
     render() {
 
         return (
@@ -17,7 +21,8 @@ class Home extends Component {
                         {/* Map div */}
                         <div id="map-box">
                             {/* call on map component */}
-                            <Map />
+                            {/* <MapWithRouter userid={this.props.match.params.id} /> */}
+                            <Map handleLocationClick={this.handleLocationClick} />
                         </div>
                     </div>
 
