@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import "./style.css"
+import EnemyCards from "../EnemyCards";
+import PlayerCards from "../PlayerCards";
+import Fightlogs from "../Fightlogs";
 
 class Combat extends Component {
     state = {
@@ -18,20 +21,17 @@ class Combat extends Component {
 
                                 <div className="combat-log col-md-3">
                                     <div>
-                                        Combat Stats Insert Here
-                                        These are updated Each Round
+                                        <Fightlogs />
                                     </div>
                                 </div>
                                 <div className="enemy-cards col-md-9">
                                     <div>
-                                        Enemy Cards Insert Here
-                                        Append Each
+                                        <EnemyCards />
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
                                     <div>
-                                        Player Cards Insert Here 
-                                        Append Each Card with ability to attack
+                                        <PlayerCards />
                                     </div>
                                 </div>
 
