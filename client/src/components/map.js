@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom"
+import ReactDOM from "react-dom";
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import ImageMapper from "react-image-mapper"
-import mapJSON from "../json/map.json"
-import Help from "../components/Help"
+import ImageMapper from "react-image-mapper";
+import mapJSON from "../json/map.json";
+import Help from "../components/Help";
+import Modal from "react-modal";
 
 
 var MAP = {
@@ -13,6 +14,30 @@ var MAP = {
 }
 
 class Map extends Component {
+
+    constructor() {
+        super();
+
+        this.state = {
+            modalIsOpen: false
+        };
+
+        this.openModal = this.openModal.bind(this);
+        this.afterOpenModal = this.afterOpenModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+    }
+
+    openModal() {
+        this.setState({ modalIsOpen: true });
+    }
+
+    afterOpenModal() {
+        this.subtitle.style.color = "black";
+    }
+
+    closeModal() {
+        this.setState({ modalIsOpen: false });
+    }
 
     //function for moving map:
     moveMap(event) {
@@ -65,6 +90,7 @@ class Map extends Component {
             </>
         )
     }
+    
 }
 
 export default Map;
