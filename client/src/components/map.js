@@ -3,9 +3,9 @@ import ReactDOM from "react-dom"
 import { withRouter } from "react-router";
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import ImageMapper from "react-image-mapper"
-import mapJSON from "../json/map.json"
-import Help from "../components/Help"
+import ImageMapper from "react-image-mapper";
+import mapJSON from "../json/map.json";
+// import Help from "../components/Help";
 
 
 var MAP = {
