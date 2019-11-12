@@ -17,7 +17,7 @@ class Equipped extends Component {
     }
 
     loadCards = () => {
-        API.getEquippedCards(this.props.match.params.id)
+        API.getAllCards(this.props.match.params.id)
             .then(res => {
                 this.setState({ cards: res.data.equippedCards })
                 console.log(this.state.cards);

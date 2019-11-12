@@ -32,7 +32,7 @@ class Login extends Component {
       })
       .then(res => {this.props.history.push(`/home/${res.data[0]._id}`)} )
       .catch(err => {
-        console.log(err.response.status)
+        // console.log(err.response.status)
         if(err.response.status === 404){
           alert("Incorrect username and password")
         }})
