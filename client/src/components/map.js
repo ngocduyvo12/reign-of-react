@@ -55,7 +55,7 @@ class Map extends Component {
                                 src="../img/map/map.png"
                                 map={MAP}
                                 width={1844}
-                                onClick={area => this.props.handleLocationClick(area.tier)}
+                                onClick={area => this.props.handleLocationClick(area.name)}
                             ></ImageMapper>
                         </div>
                     </Draggable>
