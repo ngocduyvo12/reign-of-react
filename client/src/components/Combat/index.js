@@ -22,17 +22,17 @@ class Combat extends Component {
         myEnemyHealth: characters[monsterID].hitpoints,
     }
 
-    componentDidMount() {
-        console.log(this.props.match.params.id)
-    }
-
     loadUserInfo = () => {
-        API.getUserId(this.props.match.parms.id)
+        API.getUserId(this.props.match.params.id)
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
     
-
+    componentDidMount() {
+        console.log(this.props.match.params.id)
+        this.loadUserInfo();
+    }
+    
     render() {
         return (
             <>
