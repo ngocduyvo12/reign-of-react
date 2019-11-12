@@ -12,11 +12,11 @@ import API from "../../utils/API";
 let randomMonster = Math.floor(Math.random() * 3)
 
 let monsterID = mapJSON[0].monsters[randomMonster]
-console.log(monsterID)
 
 class Combat extends Component {
     state = {
         items: [],
+        myCards: [],
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
         myEnemyHealth: characters[monsterID].hitpoints,
@@ -24,7 +24,8 @@ class Combat extends Component {
 
     loadUserInfo = () => {
         API.getUserId(this.props.match.params.id)
-        .then(res => console.log(res))
+        .then(res => console.log(res.data))
+        // .then(res => this.setState({ myCards: res.data.equippedCards }))
         .catch(err => console.log(err))
     }
     
@@ -70,8 +71,9 @@ class Combat extends Component {
                                 </div>
                                 <div className="player-cards col-md-12">
                                     <div>
-                                        <PlayerCards {...this.props}/>
-
+                                        <PlayerCards 
+                                            myCards={this.state.myCards}
+                                        />
                                     </div>
                                 </div>
 
