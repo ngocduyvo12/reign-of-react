@@ -19,10 +19,10 @@ router
 router
     .route("/login")
     .post(userController.login)
-//matches with "api/user/getEquippedCards/:id"
+//matches with "api/user/getAllCards/:id"
 router
-    .route("/getEquippedCards/:id")
-    .get(userController.getEquippedCards)
+    .route("/getAllCards/:id")
+    .get(userController.getAllCards)
 
 //matches with "api/user/getInventoryCards/:id"
 router

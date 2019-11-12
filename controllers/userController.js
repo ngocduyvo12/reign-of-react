@@ -59,9 +59,9 @@ module.exports = {
   },
 
   //get info from equipped cards
-  getEquippedCards: function (req, res) {
+  getAllCards: function (req, res) {
     db.User.findOne({_id: req.params.id})
-    .populate("equippedCards")
+    .populate(["equippedCards", "inventoryCards"])
     .then(function(dbCards){
       res.json(dbCards)
     }).catch(err => res.status(422).json(err))
