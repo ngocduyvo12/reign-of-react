@@ -6,7 +6,7 @@ function MapInfoCombat(props) {
     
     return (
 
-        <div className="card">
+        <div>
             <div className="map-stats">
                 <p>Tier: {props.mapLevel}</p>
                 <p>Name: {props.mapName}</p>

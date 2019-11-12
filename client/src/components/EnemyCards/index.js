@@ -5,7 +5,7 @@ function EnemyCards(props) {
 
         return (
 
-            <div className="card">
+            <div>
                 <div className="img-container">
                     <img alt={props.name} src={`${process.env.PUBLIC_URL}/img/cards/${props.image}`} />
                 </div>

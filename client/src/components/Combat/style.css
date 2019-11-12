@@ -24,9 +24,18 @@
 
 .player-cards {
     background: blueviolet;
-    height: 300px;
+    height: 400px;
 }
 
 .card {
     color: black;
+}
+
+.player-equipped {
+    width: 25%;
+    float: left;
+}
+
+.player-character {
+    margin-top: 5rem;
 }
