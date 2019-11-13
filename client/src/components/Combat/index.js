@@ -32,7 +32,6 @@ class Combat extends Component {
         console.log(this.props.match.params.id)
         this.loadUserInfo();
         this.loadUserCharacter();
-        // this.loadAttack();
         this.loadLocationAndMonsterInfo();
     }
 
@@ -114,12 +113,14 @@ class Combat extends Component {
                                             </div>
                                         ))}
                                     </>
+                                    {/* /img/cards/lvl3_armorDragon.png
+                                    ../img/cards/lvl1_ancientWhale.png */}
                                 </div>
                                 <div className="player-character col-md-12">
                                     <PlayerCards
                                         userName={this.state.myPlayer.userName}
                                         exp={this.state.myPlayer.exp}
-                                        attack={this.state.myAttack}
+                                    // attack={this.state.myAttack}
                                     //  defense="Defense"
                                     //  health="Health"
                                     />

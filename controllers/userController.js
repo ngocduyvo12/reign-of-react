@@ -137,7 +137,7 @@ module.exports = {
     // for(var i = 0; i < 4; i++){
     db.EquippedCards.create({
       name: "Ancient Whale",
-      image: "../img/cards/lvl1_ancientWhale.png",
+      image: "/img/cards/lvl1_ancientWhale.png",
       hitPoint: 1300,
       attack: 97,
       defense: 130,
@@ -159,7 +159,7 @@ module.exports = {
     // for(var i = 0; i < 4; i++){
     db.InventoryCards.create({
       name: "Dragon Zombie",
-      image: "../img/cards/lvl1_dragonZombie.jpg",
+      image: "/img/cards/lvl1_dragonZombie.jpg",
       hitPoint: 920,
       attack: 113,
       defense: 92,
