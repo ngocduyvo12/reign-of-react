@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-<<<<<<< HEAD
-import ReactDOM from "react-dom";
-=======
 import ReactDOM from "react-dom"
 import { withRouter } from "react-router";
->>>>>>> master
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper";
@@ -21,30 +17,6 @@ var MAP = {
 
 class Map extends Component {
     
-
-    constructor() {
-        super();
-
-        this.state = {
-            modalIsOpen: false
-        };
-
-        this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-    }
-
-    openModal(area) {
-        this.setState({ modalIsOpen: true, currentArea: area });
-    }
-
-    afterOpenModal() {
-        this.subtitle.style.color = "black";
-    }
-
-    closeModal() {
-        this.setState({ modalIsOpen: false });
-    }
 
     constructor() {
         super();
@@ -118,6 +90,11 @@ class Map extends Component {
         
     }
 
+    handleAttackClick = (name) => {
+        this.props.handleLocationClick(this.state.currentArea.name)
+        // this.props.history.push("/combat/"+name+"/"+this.props.match.params.id)
+    }
+
     render() {
         return (
             <>
@@ -131,7 +108,7 @@ class Map extends Component {
                                 src="../img/map/map.png"
                                 map={MAP}
                                 width={1844}
-                                onClick={area => this.props.handleLocationClick(area.name)}
+                                onClick={area => this.getMapInfoHandler(area)}
                             ></ImageMapper>
                         </div>
                     </Draggable>
@@ -156,7 +133,7 @@ class Map extends Component {
                     {this.renderMonsters(this.state.currentArea.monsters)} 
                     <h2>joins your team</h2>
                     <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
-                    <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.closeModal}>Attack Region</button>
+                    <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
                     <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
                    
                 </Modal>

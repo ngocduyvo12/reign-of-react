@@ -27,7 +27,7 @@ var EquippedSchema = new Schema({
     required: true
   },
   //HP
-  hitPoint: {
+  hitPoints: {
     type: Number,
     required: true
   },

@@ -50,12 +50,19 @@ class Login extends Component {
       password: this.state.passwordSignup,
       exp: 0
     })
-    .then(res => alert(`Welcome ${res.data.userName}`))
+    .then(res => {
+      alert(`Welcome ${res.data.userName}`)
+      // alert(alert(res.data._id));
+      API.initCards(res.data._id)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+    })
     .catch(err => {
       console.log(err.response.status)
       if(err.response.status === 422){
         alert("Username already exist")
       }} )
+
 
   }
 
