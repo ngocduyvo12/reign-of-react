@@ -24,6 +24,8 @@ class Combat extends Component {
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
         myEnemyHealth: characters[monsterID].hitpoints,
+        locationData: {},
+        monster: {},
     }
 
     componentDidMount() {
@@ -31,6 +33,7 @@ class Combat extends Component {
         this.loadUserInfo();
         this.loadUserCharacter();
         // this.loadAttack();
+        this.loadLocationAndMonsterInfo();
     }
 
     loadUserInfo = () => {
@@ -43,6 +46,15 @@ class Combat extends Component {
         API.getUserId(this.props.match.params.id)
             .then(res => this.setState({ myPlayer: res.data }))
             .catch(err => console.log(err))
+    }
+
+    loadLocationAndMonsterInfo = () => {
+        const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
+        const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
+        this.setState({
+            locationData: locData,
+            monster: characters[monsterID]
+        });
     }
 
     // loadAttack = () => {
@@ -61,10 +73,10 @@ class Combat extends Component {
                                 <div className="map-info col-md-12">
                                     <div>
                                         <MapInfoCombat
-                                            mapName={mapJSON[0].name}
-                                            mapLevel={mapJSON[0].tier}
-                                            mapMonsters={mapJSON[0].monsters}
-                                            mapExp={mapJSON[0].experience}
+                                            mapName={this.state.locationData.name}
+                                            mapLevel={this.state.locationData.tier}
+                                            mapMonsters={this.state.locationData.monsters}
+                                            mapExp={this.state.locationData.experience}
                                         />
                                     </div>
                                 </div>
@@ -77,8 +89,8 @@ class Combat extends Component {
                                 <div className="enemy-cards col-md-9">
                                     <div>
                                         <EnemyCards
-                                            name={characters[monsterID].name}
-                                            image={characters[monsterID].image}
+                                            name={this.state.monster.name}
+                                            image={this.state.monster.image}
                                             hitpoints={this.state.myEnemyHealth}
                                             attack={this.state.myEnemyAttack}
                                             defense={this.state.myEnemyDefense}
