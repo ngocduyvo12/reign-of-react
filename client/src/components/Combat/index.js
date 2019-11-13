@@ -28,6 +28,9 @@ class Combat extends Component {
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
         myEnemyHealth: characters[monsterID].hitpoints,
+        calcEnemyAttack: 0,
+        calcEnemyDefense: 0,
+        calcEnemyHealth: 0,
         locationData: {},
         monster: {},
         round: false,
@@ -75,8 +78,17 @@ class Combat extends Component {
         this.setState({ myTotalHealth : healthNow, myHealth : healthNow})
     }
 
+    calcEnemyStats = () => {
+        this.setState ({ 
+            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 2),
+            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 2),
+            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 2)
+        })
+    }
+
     startRound = () => {
         this.calcTotalHealth();
+        this.calcEnemyStats();
         this.setState({ round: true })
     }
 
@@ -89,8 +101,8 @@ class Combat extends Component {
     }
 
     attackNow = (event) => {
-        const thisAttack = event.target.getAttribute("data-attack")
-        this.setState({ myEnemyHealth: (this.state.myEnemyHealth - thisAttack)})
+        let thisAttack = event.target.getAttribute("data-attack")
+        this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack)})
         this.checkMyAttack()
         // get attack and compare with enemy hp
         // update enemy hp with value of player/card attack
@@ -99,7 +111,7 @@ class Combat extends Component {
     }
 
     checkMyAttack = () => {
-        if (this.state.myEnemyHealth <= 0) {
+        if (this.state.calcEnemyHealth <= 0) {
             alert("win")
             this.setState({ endRound: true})
         } else {
@@ -108,7 +120,7 @@ class Combat extends Component {
     }
 
     enemyAttack = () => {
-        this.setState({ myHealth: (this.state.myHealth - this.state.myEnemyAttack)})
+        this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack)})
         if (this.state.myHealth <= 0) {
             alert("lose")
         } else {
@@ -150,9 +162,9 @@ class Combat extends Component {
                                         <EnemyCards
                                             name={this.state.monster.name}
                                             image={this.state.monster.image}
-                                            hitpoints={(this.state.myEnemyHealth * this.state.monStat) * .5}
-                                            attack={this.state.myEnemyAttack * this.state.monStat}
-                                            defense={this.state.myEnemyDefense * this.state.monStat}
+                                            hitpoints={this.state.calcEnemyHealth}
+                                            attack={this.state.calcEnemyAttack}
+                                            defense={this.state.calcEnemyDefense}
                                         />
                                     </div>
                                 </div>
