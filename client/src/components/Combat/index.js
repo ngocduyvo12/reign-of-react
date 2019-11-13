@@ -38,7 +38,10 @@ class Combat extends Component {
 
     loadUserInfo = () => {
         API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myCards: res.data.equippedCards }))
+            .then(res => {
+                console.log(res.data);
+                this.setState({ myCards: res.data.equippedCards })
+            })
             .catch(err => console.log(err))
     }
 
@@ -108,7 +111,7 @@ class Combat extends Component {
                                                 <img
                                                     id={cards._id}
                                                     className="equipped-combat"
-                                                    src={cards.image}
+                                                    src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                                                     alt={cards.name}
                                                 />
                                             </div>
