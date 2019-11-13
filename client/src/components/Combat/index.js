@@ -6,6 +6,7 @@ class Combat extends Component {
     state = {
         items: []
     }
+    //just a random comment
 
     componentDidMount() {
         console.log(this.props.match.params.id)
