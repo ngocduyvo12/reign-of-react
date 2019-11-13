@@ -28,9 +28,9 @@ class Combat extends Component {
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
         myEnemyHealth: characters[monsterID].hitpoints,
-        calcEnemyAttack: 0,
-        calcEnemyDefense: 0,
-        calcEnemyHealth: 0,
+        calcEnemyAttack: "Hidden",
+        calcEnemyDefense: "Hidden",
+        calcEnemyHealth: "Hidden",
         locationData: {},
         monster: {},
         round: false,
@@ -177,15 +177,15 @@ class Combat extends Component {
                                                 aria-valuemin="0"
                                                 aria-valuemax={this.state.myTotalHealth}
                                                 style={{ width: `${(this.state.myHealth / this.state.myTotalHealth) * 100}%` }}>
-                                                Current Health
+                                                Current Health : {`${((this.state.myHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
                                                 </div>
                                         </div>
                                         <PlayerCards
                                             userName={this.state.myPlayer.userName}
                                             lvl={this.loadUserLevel()}
-                                            attack={this.loadUserLevel() * 54}
-                                            defense={this.loadUserLevel() * 59}
-                                            health={(this.loadUserLevel() * 83) + 820}
+                                            attack={this.loadUserLevel() * 32}
+                                            defense={this.loadUserLevel() * 41}
+                                            health={(this.loadUserLevel() * 234) + 550}
 
                                         />
                                         {this.state.myCards.map(cards => (
