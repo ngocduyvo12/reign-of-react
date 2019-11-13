@@ -14,13 +14,16 @@ let randomMonster = Math.floor(Math.random() * 3)
 let monsterID = mapJSON[0].monsters[randomMonster]
 
 class Combat extends Component {
+
     state = {
         items: [],
         myCards: [],
         myPlayer: [],
+        mapTier: 0,
         myAttack: 0,
         myDefense: 0,
         myHealth: 0,
+        monStat: 1,
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
         myEnemyHealth: characters[monsterID].hitpoints,
@@ -49,17 +52,18 @@ class Combat extends Component {
 
     loadLocationAndMonsterInfo = () => {
         const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
+        const tierData = locData.tier
+        const MonsterData = parseInt(tierData * [Math.floor(Math.random() * 2) + 1])
+        console.log("Monster Data " + MonsterData)
         const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
         this.setState({
             locationData: locData,
-            monster: characters[monsterID]
+            monster: characters[monsterID],
+            mapTier: tierData,
+            monStat: MonsterData
         });
     }
 
-    // loadAttack = () => {
-    //     let oldAttack = (this.state.myPlayer.exp)
-    //     this.setState({ myAttack: oldAttack })
-    // }
 
     render() {
         return (
@@ -90,9 +94,9 @@ class Combat extends Component {
                                         <EnemyCards
                                             name={this.state.monster.name}
                                             image={this.state.monster.image}
-                                            hitpoints={this.state.myEnemyHealth}
-                                            attack={this.state.myEnemyAttack}
-                                            defense={this.state.myEnemyDefense}
+                                            hitpoints={(this.state.myEnemyHealth * this.state.monStat) * .5}
+                                            attack={this.state.myEnemyAttack  * this.state.monStat}
+                                            defense={this.state.myEnemyDefense  * this.state.monStat}
                                         />
                                     </div>
                                 </div>
@@ -113,14 +117,12 @@ class Combat extends Component {
                                             </div>
                                         ))}
                                     </>
-                                    {/* /img/cards/lvl3_armorDragon.png
-                                    ../img/cards/lvl1_ancientWhale.png */}
                                 </div>
                                 <div className="player-character col-md-12">
                                     <PlayerCards
                                         userName={this.state.myPlayer.userName}
                                         exp={this.state.myPlayer.exp}
-                                    // attack={this.state.myAttack}
+                                        attack={this.state.myAttack}
                                     //  defense="Defense"
                                     //  health="Health"
                                     />
