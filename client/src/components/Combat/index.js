@@ -10,8 +10,8 @@ import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
 
 let randomMonster = Math.floor(Math.random() * 3)
-
 let monsterID = mapJSON[0].monsters[randomMonster]
+let totalHealth = 0
 
 class Combat extends Component {
 
@@ -20,9 +20,10 @@ class Combat extends Component {
         myCards: [],
         myPlayer: [],
         mapTier: 0,
-        myAttack: 0,
-        myDefense: 0,
-        myHealth: 0,
+        myAttack: 1,
+        myDefense: 1,
+        myHealth: 1,
+        myLevel: 1,
         monStat: 1,
         myEnemyAttack: characters[monsterID].attack,
         myEnemyDefense: characters[monsterID].defense,
@@ -64,6 +65,25 @@ class Combat extends Component {
         });
     }
 
+    loadUserLevel = () => {
+        const expThreshHold = 300
+        let level = Math.floor((1 + Math.sqrt(1 + 8 * this.state.myPlayer.exp / expThreshHold)) / 2)
+        return level
+    }
+
+    calcHealth = () => {
+        this.state.myCards.map(cards => (
+            totalHealth += parseInt(cards.hitPoint)
+        ))
+        return (totalHealth / 2)
+    }
+
+    attackNow = (event) => {
+        const thisAttack = event.target.attackvalue
+        const id = event.target.value
+        console.log(id)
+    }
+
 
     render() {
         return (
@@ -95,13 +115,31 @@ class Combat extends Component {
                                             name={this.state.monster.name}
                                             image={this.state.monster.image}
                                             hitpoints={(this.state.myEnemyHealth * this.state.monStat) * .5}
-                                            attack={this.state.myEnemyAttack  * this.state.monStat}
-                                            defense={this.state.myEnemyDefense  * this.state.monStat}
+                                            attack={this.state.myEnemyAttack * this.state.monStat}
+                                            defense={this.state.myEnemyDefense * this.state.monStat}
                                         />
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
                                     <>
+                                        <div className="progress">
+                                            <div className="progress-bar progress-bar-danger"
+                                                role="progressbar"
+                                                aria-valuenow="70"
+                                                aria-valuemin="0"
+                                                aria-valuemax={this.calcHealth() + ((this.loadUserLevel() * 83) + 820)}
+                                                style={{ width: "70%" }}>
+                                                Current Health
+                                                </div>
+                                        </div>
+                                        <PlayerCards
+                                            userName={this.state.myPlayer.userName}
+                                            lvl={this.loadUserLevel()}
+                                            attack={this.loadUserLevel() * 55}
+                                            defense={this.loadUserLevel() * 70}
+                                            health={(this.loadUserLevel() * 83) + 820}
+
+                                        />
                                         {this.state.myCards.map(cards => (
                                             <div key={cards._id} className="player-equipped">
                                                 <h4> Name: {cards.name}</h4>
@@ -109,23 +147,16 @@ class Combat extends Component {
                                                 <h5> Attack: {cards.attack}</h5>
                                                 <h5> Defense: {cards.defense}</h5>
                                                 <img
-                                                    id={cards._id}
-                                                    className="equipped-combat"
+                                                    // id={cards._id}
                                                     src={cards.image}
                                                     alt={cards.name}
+                                                    value={cards.attack}
+                                                    onClick={this.attackNow}
+                                                    className="equipped-combat"
                                                 />
                                             </div>
                                         ))}
                                     </>
-                                </div>
-                                <div className="player-character col-md-12">
-                                    <PlayerCards
-                                        userName={this.state.myPlayer.userName}
-                                        exp={this.state.myPlayer.exp}
-                                        attack={this.state.myAttack}
-                                    //  defense="Defense"
-                                    //  health="Health"
-                                    />
                                 </div>
 
                             </div>
