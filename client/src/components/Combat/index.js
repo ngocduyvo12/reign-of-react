@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import "./style.css"
+import EnemyCards from "../EnemyCards";
+import PlayerCards from "../PlayerCards";
+import Fightlogs from "../Fightlogs";
+import MapInfoCombat from "../MapInfoCombat";
+import characters from "../../json/characters.json";
+import mapJSON from "../../json/map.json";
+import API from "../../utils/API";
+
+let randomMonster = Math.floor(Math.random() * 3)
+
+let monsterID = mapJSON[0].monsters[randomMonster]
 
 class Combat extends Component {
     state = {
-        items: []
+        items: [],
+        myCards: [],
+        myPlayer: [],
+        myAttack: 0,
+        myDefense: 0,
+        myHealth: 0,
+        myEnemyAttack: characters[monsterID].attack,
+        myEnemyDefense: characters[monsterID].defense,
+        myEnemyHealth: characters[monsterID].hitpoints,
+        locationData: {},
+        monster: {},
     }
-    //just a random comment
 
     componentDidMount() {
         console.log(this.props.match.params.id)
@@ -50,20 +70,34 @@ class Combat extends Component {
             <>
                 <div>
                     <div className="jumbotron">
-                    <h1>Glorious Combat</h1>
+                        <h1>Welcome To The Arena</h1>
                         <div className="container">
                             <div className="row">
+                                <div className="map-info col-md-12">
+                                    <div>
+                                        <MapInfoCombat
+                                            mapName={this.state.locationData.name}
+                                            mapLevel={this.state.locationData.tier}
+                                            mapMonsters={this.state.locationData.monsters}
+                                            mapExp={this.state.locationData.experience}
+                                        />
+                                    </div>
+                                </div>
 
                                 <div className="combat-log col-md-3">
                                     <div>
-                                        Combat Stats Insert Here
-                                        These are updated Each Round
+                                        <Fightlogs />
                                     </div>
                                 </div>
                                 <div className="enemy-cards col-md-9">
                                     <div>
-                                        Enemy Cards Insert Here
-                                        Append Each
+                                        <EnemyCards
+                                            name={this.state.monster.name}
+                                            image={this.state.monster.image}
+                                            hitpoints={this.state.myEnemyHealth}
+                                            attack={this.state.myEnemyAttack}
+                                            defense={this.state.myEnemyDefense}
+                                        />
                                     </div>
                                 </div>
                                 <div className="player-cards col-md-12">
