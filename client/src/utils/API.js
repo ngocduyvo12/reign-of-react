@@ -23,8 +23,8 @@ export default {
     return axios.post("/api/user", userData);
   },
   //get equippedCards from user id in url
-  getEquippedCards: function(id){
-    return axios.get("/api/user/getEquippedCards/" + id);
+  getAllCards: function(id){
+    return axios.get("/api/user/getAllCards/" + id);
   },
   //get inventory cards from user id in url
   getInventoryCards: function(id){

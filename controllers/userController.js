@@ -14,8 +14,10 @@ module.exports = {
 
   //unused?
   findById: function (req, res) {
+    console.log(req.params.id)
     db.User
       .findById(req.params.id)
+      .populate("equippedCards")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -59,9 +61,9 @@ module.exports = {
   },
 
   //get info from equipped cards
-  getEquippedCards: function (req, res) {
+  getAllCards: function (req, res) {
     db.User.findOne({_id: req.params.id})
-    .populate("equippedCards")
+    .populate(["equippedCards", "inventoryCards"])
     .then(function(dbCards){
       res.json(dbCards)
     }).catch(err => res.status(422).json(err))
@@ -143,7 +145,7 @@ module.exports = {
     })
       .then(function (dbSeed) {
         return db.User.findOneAndUpdate({
-          _id: "5dca9e21d35d772e8c7a008d"
+          _id: "5dcafd2b446e4514fca90e76"
         },
           { $push: { "equippedCards": dbSeed._id } },
           { new: true });
@@ -165,7 +167,7 @@ module.exports = {
     })
       .then(function (dbSeed) {
         return db.User.findOneAndUpdate({
-          _id: "5dca9e21d35d772e8c7a008d"
+          _id: "5dcafd2b446e4514fca90e76"
         },
           { $push: { "inventoryCards": dbSeed._id } },
           { new: true });

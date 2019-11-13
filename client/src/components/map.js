@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom"
+import { withRouter } from "react-router";
 import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper";
@@ -15,6 +16,7 @@ var MAP = {
 }
 
 class Map extends Component {
+    
 
     constructor() {
         super();
@@ -101,7 +103,7 @@ class Map extends Component {
                                 src="../img/map/map.png"
                                 map={MAP}
                                 width={1844}
-                                onClick={area => this.getMapInfoHandler(area)}
+                                onClick={area => this.props.handleLocationClick(area.name)}
                             ></ImageMapper>
                         </div>
                     </Draggable>
