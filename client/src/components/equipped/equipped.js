@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom"
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import API from "../utils/API";
+import API from "../../utils/API";
 import { Link } from "react-router-dom";
 
 

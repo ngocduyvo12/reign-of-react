@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable';
 // Both at the same time
-import Equipped from "../components/equipped";
+import Equipped from "../components/equipped/equipped";
 import "../styles/inventory.css"
 import API from "../utils/API";
 
@@ -79,7 +79,7 @@ class Inventory extends Component {
   //call API route to remove this card id from equippedCard array in database and add it to the inventoryCard array in database
   unEquip = (event) => {
     const id = event.target.id
-
+    console.log(event.target)
     for(let i = 0; i < this.state.equippedCards.length; i++){
       if(id === this.state.equippedCards[i]._id){
         const newActiveState = {...this.state.equippedCards[i]}
