@@ -1,3 +1,4 @@
+const characters = require("../client/src/json/characters.json");
 const db = require("../models");
 
 // Defining methods for the UserController
@@ -14,12 +15,17 @@ module.exports = {
 
   //unused?
   findById: function (req, res) {
-    console.log(req.params.id)
+    // console.log("user findbyid");
+    // console.log(req.params.id)
     db.User
       .findById(req.params.id)
-      .populate("equippedCards")
-      .then(dbModel => res.json(dbModel))
+      .populate(["inventoryCards", "equippedCards"])
+      .then(dbModel => {
+        console.log("user: ", dbModel);
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
+    // console.log(this.getAllCards());
   },
 
   //route for creating new user data
@@ -62,29 +68,29 @@ module.exports = {
 
   //get info from equipped cards
   getAllCards: function (req, res) {
-    db.User.findOne({_id: req.params.id})
-    .populate(["equippedCards", "inventoryCards"])
-    .then(function(dbCards){
-      res.json(dbCards)
-    }).catch(err => res.status(422).json(err))
+    db.User.findOne({ _id: req.params.id })
+      .populate(["equippedCards", "inventoryCards"])
+      .then(function (dbCards) {
+        res.json(dbCards)
+      }).catch(err => res.status(422).json(err))
   },
 
   //get info from inventory cards
   getInventoryCards: function (req, res) {
     // console.log(req.params.id) -- OK!
-    db.User.findOne({_id: req.params.id})
-    .populate("inventoryCards")
-    .then(function(dbCards){
-      res.json(dbCards)
-    }).catch(err => res.status(422).json(err))
+    db.User.findOne({ _id: req.params.id })
+      .populate("inventoryCards")
+      .then(function (dbCards) {
+        res.json(dbCards)
+      }).catch(err => res.status(422).json(err))
   },
 
-  updateEquippedCard: function (req, res){
+  updateEquippedCard: function (req, res) {
     // console.log(req.body)
     db.EquippedCards.create({
       name: req.body.name,
       image: req.body.image,
-      hitPoint: req.body.hitPoint,
+      hitPoints: req.body.hitPoints,
       attack: req.body.attack,
       defense: req.body.defense,
       rarity: req.body.rarity
@@ -95,36 +101,36 @@ module.exports = {
         },
           { $push: { "equippedCards": dbSeed._id } },
           { new: true });
-      }).then(function(dbModel){
+      }).then(function (dbModel) {
         // console.log(req.body)
         return db.InventoryCards.findByIdAndDelete(req.body._id)
-      }).then(function(dbMod){
-        return db.User.findByIdAndUpdate(req.body.userID, {$pull: {inventoryCards: {_id: req.body._id}}})
+      }).then(function (dbMod) {
+        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { inventoryCards: { _id: req.body._id } } })
       })
       .then(function (result) {
         res.json(result)
       }).catch(err => console.log(err))
   },
 
-  unEquipCard: function (req, res){
+  unEquipCard: function (req, res) {
     // console.log(req.body)
     db.InventoryCards.create({
       name: req.body.name,
       image: req.body.image,
-      hitPoint: req.body.hitPoint,
+      hitPoints: req.body.hitPoints,
       attack: req.body.attack,
       defense: req.body.defense,
       rarity: req.body.rarity
     })
       .then(function (dbSeed) {
-        return db.User.findOneAndUpdate({ _id: req.body.userID},
-          { $push: { "inventoryCards": dbSeed._id }},
+        return db.User.findOneAndUpdate({ _id: req.body.userID },
+          { $push: { "inventoryCards": dbSeed._id } },
           { new: true });
-      }).then(function(dbModel){
+      }).then(function (dbModel) {
         // console.log(req.body)
         return db.EquippedCards.findByIdAndDelete(req.body._id)
-      }).then(function(dbMod){
-        return db.User.findByIdAndUpdate(req.body.userID, {$pull: {equippedCards: {_id: req.body._id}}})
+      }).then(function (dbMod) {
+        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: { _id: req.body._id } } })
       })
       .then(function (result) {
         res.json(result)
@@ -175,5 +181,42 @@ module.exports = {
         res.json(result)
       }).catch(err => console.log(err))
     // }
+  },
+
+  initCards: function (req, res) {
+    // console.log(characters);
+    // res.json(req.params.id);
+    const rarityOneMonsters = characters.filter(c => c.rarity === 1);
+    for (let i = 0; i < 4; i++) {
+      const card = rarityOneMonsters[Math.floor(Math.random() * rarityOneMonsters.length)];
+      // console.log(card.hitpoints);
+      db.InventoryCards.create({
+        name: card.name,
+        image: card.image,
+        hitPoints: parseInt(card.hitpoints),
+        attack: parseInt(card.attack),
+        defense: parseInt(card.defense),
+        rarity: parseInt(card.rarity)
+      })
+        .then(function (newInvCard) {
+          console.log(newInvCard);
+          db.User.findOneAndUpdate({ _id: req.params.id }, { $push: { "inventoryCards": newInvCard._id } }, { new: true }).then(res => console.log(res));
+
+          db.EquippedCards.create({
+            name: card.name,
+            image: card.image,
+            hitPoints: parseInt(card.hitpoints),
+            attack: parseInt(card.attack),
+            defense: parseInt(card.defense),
+            rarity: parseInt(card.rarity)
+          }).then(function (newEquippedCard) {
+            db.User.findOneAndUpdate({ _id: req.params.id }, { $push: { "equippedCards": newEquippedCard._id } }, { new: true }).then(res => console.log(res));
+          }
+          )
+            .then(function (result) {
+              res.json(result)
+            }).catch(err => console.log(err));
+        })
+    }
   }
 };

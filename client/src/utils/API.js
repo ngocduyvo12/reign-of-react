@@ -37,6 +37,12 @@ export default {
   //un-equip a card and add to inventory
   unEquipCard: function(data){
     return axios.post("/api/user/unEquipCard", data)
+  },
+  initCards: function (data) {
+    // console.log(data)
+    // console.log("in api initcards")
+    // return console.log(data);
+    return axios.get("/api/user/initcards/" + data)
   }
 };
 
