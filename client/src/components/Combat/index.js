@@ -23,6 +23,7 @@ class Combat extends Component {
         myAttack: 1,
         myDefense: 1,
         myHealth: 1,
+        myTotalHealth: 1,
         myLevel: 1,
         monStat: 1,
         myEnemyAttack: characters[monsterID].attack,
@@ -30,6 +31,7 @@ class Combat extends Component {
         myEnemyHealth: characters[monsterID].hitpoints,
         locationData: {},
         monster: {},
+        round: false,
     }
 
     componentDidMount() {
@@ -64,29 +66,58 @@ class Combat extends Component {
         return level
     }
 
-    calcHealth = () => {
+    calcTotalHealth = () => {
+        let healthNow = 0
         this.state.myCards.map(cards => (
-            totalHealth += parseInt(cards.hitPoint)
+            healthNow += parseInt(cards.hitPoint)
         ))
-        return (totalHealth / 2)
+        console.log("health now:" + healthNow)
+        this.setState({ myTotalHealth : healthNow, myHealth : healthNow})
+    }
+
+    startRound = () => {
+        this.calcTotalHealth();
+        this.setState({ round: true })
+    }
+
+    checkCombat = (event) => {
+        if (this.state.round) {
+            this.attackNow(event)
+        } else {
+            alert ("Must Start Round")
+        }
     }
 
     attackNow = (event) => {
         const thisAttack = event.target.getAttribute("data-attack")
-        console.log(thisAttack)
+        this.checkMyAttack()
+        this.setState({ myEnemyHealth: (this.state.myEnemyHealth - thisAttack)})
         // get attack and compare with enemy hp
         // update enemy hp with value of player/card attack
         // check if won, if so end combat if  and bring up rewards
         // if no win, call enemyAttack
     }
 
+    checkMyAttack = () => {
+        if (this.state.myEnemyHealth <= 0) {
+            alert("win")
+        } else {
+            this.enemyAttack()
+        }
+    }
+
     enemyAttack = () => {
+        this.setState({ myHealth: (this.state.myHealth - this.state.myEnemyAttack)})
+        if (this.state.myHealth <= 0) {
+            alert("lose")
+        } else {
+            return
+        }
         // get attack and compare with player hp
         // update player hp with value of attack equation
         // check if player lost, if so end combat and bring up loss modal
         // if combat continues, then return
     }
-
 
     render() {
         return (
@@ -94,6 +125,7 @@ class Combat extends Component {
                 <div>
                     <div className="jumbotron">
                         <h1>Welcome To The Arena</h1>
+                        <button onClick={this.startRound}>Start Round</button>
                         <div className="container">
                             <div className="row">
                                 <div className="map-info col-md-12">
@@ -128,10 +160,10 @@ class Combat extends Component {
                                         <div className="progress">
                                             <div className="progress-bar progress-bar-danger"
                                                 role="progressbar"
-                                                aria-valuenow="70"
+                                                aria-valuenow={this.state.myHealth}
                                                 aria-valuemin="0"
-                                                aria-valuemax={this.calcHealth() + ((this.loadUserLevel() * 83) + 820)}
-                                                style={{ width: "70%" }}>
+                                                aria-valuemax={this.state.myTotalHealth}
+                                                style={{ width: `${(this.state.myHealth / this.state.myTotalHealth) * 100}%` }}>
                                                 Current Health
                                                 </div>
                                         </div>
@@ -154,7 +186,7 @@ class Combat extends Component {
                                                     src={cards.image}
                                                     alt={cards.name}
                                                     data-attack={cards.attack}
-                                                    onClick={this.attackNow}
+                                                    onClick={this.checkCombat}
                                                     className="equipped-combat"
                                                 />
                                             </div>
