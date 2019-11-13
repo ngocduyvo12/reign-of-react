@@ -35,19 +35,12 @@ class Combat extends Component {
     componentDidMount() {
         console.log(this.props.match.params.id)
         this.loadUserInfo();
-        this.loadUserCharacter();
         this.loadLocationAndMonsterInfo();
     }
 
     loadUserInfo = () => {
         API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myCards: res.data.equippedCards }))
-            .catch(err => console.log(err))
-    }
-
-    loadUserCharacter = () => {
-        API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myPlayer: res.data }))
+            .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
             .catch(err => console.log(err))
     }
 
@@ -79,9 +72,19 @@ class Combat extends Component {
     }
 
     attackNow = (event) => {
-        const thisAttack = event.target.attackvalue
-        const id = event.target.value
-        console.log(id)
+        const thisAttack = event.target.getAttribute("data-attack")
+        console.log(thisAttack)
+        // get attack and compare with enemy hp
+        // update enemy hp with value of player/card attack
+        // check if won, if so end combat if  and bring up rewards
+        // if no win, call enemyAttack
+    }
+
+    enemyAttack = () => {
+        // get attack and compare with player hp
+        // update player hp with value of attack equation
+        // check if player lost, if so end combat and bring up loss modal
+        // if combat continues, then return
     }
 
 
@@ -135,8 +138,8 @@ class Combat extends Component {
                                         <PlayerCards
                                             userName={this.state.myPlayer.userName}
                                             lvl={this.loadUserLevel()}
-                                            attack={this.loadUserLevel() * 55}
-                                            defense={this.loadUserLevel() * 70}
+                                            attack={this.loadUserLevel() * 54}
+                                            defense={this.loadUserLevel() * 59}
                                             health={(this.loadUserLevel() * 83) + 820}
 
                                         />
@@ -147,10 +150,10 @@ class Combat extends Component {
                                                 <h5> Attack: {cards.attack}</h5>
                                                 <h5> Defense: {cards.defense}</h5>
                                                 <img
-                                                    // id={cards._id}
+                                                    id={cards._id}
                                                     src={cards.image}
                                                     alt={cards.name}
-                                                    value={cards.attack}
+                                                    data-attack={cards.attack}
                                                     onClick={this.attackNow}
                                                     className="equipped-combat"
                                                 />
