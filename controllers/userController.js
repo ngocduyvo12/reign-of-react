@@ -143,15 +143,15 @@ module.exports = {
     // for(var i = 0; i < 4; i++){
     db.EquippedCards.create({
       name: "Ancient Whale",
-      image: "../img/cards/lvl1_ancientWhale.png",
-      hitPoints: 1300,
+      image: "/img/cards/lvl1_ancientWhale.png",
+      hitPoint: 1300,
       attack: 97,
       defense: 130,
       rarity: 1
     })
       .then(function (dbSeed) {
         return db.User.findOneAndUpdate({
-          _id: "5dcafd2b446e4514fca90e76"
+          _id: "5dcc6c6a0c717b18f8de60ef"
         },
           { $push: { "equippedCards": dbSeed._id } },
           { new: true });
@@ -165,15 +165,15 @@ module.exports = {
     // for(var i = 0; i < 4; i++){
     db.InventoryCards.create({
       name: "Dragon Zombie",
-      image: "../img/cards/lvl1_dragonZombie.jpg",
-      hitPoints: 920,
+      image: "/img/cards/lvl1_dragonZombie.jpg",
+      hitPoint: 920,
       attack: 113,
       defense: 92,
       rarity: 1
     })
       .then(function (dbSeed) {
         return db.User.findOneAndUpdate({
-          _id: "5dcafd2b446e4514fca90e76"
+          _id: "5dcc6c6a0c717b18f8de60ef"
         },
           { $push: { "inventoryCards": dbSeed._id } },
           { new: true });
