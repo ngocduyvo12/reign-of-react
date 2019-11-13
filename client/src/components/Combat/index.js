@@ -11,7 +11,6 @@ import API from "../../utils/API";
 
 let randomMonster = Math.floor(Math.random() * 3)
 let monsterID = mapJSON[0].monsters[randomMonster]
-let totalHealth = 0
 
 class Combat extends Component {
 
@@ -32,6 +31,7 @@ class Combat extends Component {
         locationData: {},
         monster: {},
         round: false,
+        endRound: false,
     }
 
     componentDidMount() {
@@ -81,17 +81,17 @@ class Combat extends Component {
     }
 
     checkCombat = (event) => {
-        if (this.state.round) {
+        if (this.state.round && !this.state.endRound) {
             this.attackNow(event)
         } else {
-            alert ("Must Start Round")
+            alert ("Must Start Round Or Round is Over")
         }
     }
 
     attackNow = (event) => {
         const thisAttack = event.target.getAttribute("data-attack")
-        this.checkMyAttack()
         this.setState({ myEnemyHealth: (this.state.myEnemyHealth - thisAttack)})
+        this.checkMyAttack()
         // get attack and compare with enemy hp
         // update enemy hp with value of player/card attack
         // check if won, if so end combat if  and bring up rewards
@@ -101,6 +101,7 @@ class Combat extends Component {
     checkMyAttack = () => {
         if (this.state.myEnemyHealth <= 0) {
             alert("win")
+            this.setState({ endRound: true})
         } else {
             this.enemyAttack()
         }
