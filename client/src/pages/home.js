@@ -15,9 +15,9 @@ class Home extends Component {
     render() {
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid map-hold">
                 <div className="row">
-                    <div className="col col-lg-8">
+                    <div className="col-md-8">
                         {/* Map div */}
                         <div id="map-box">
                             {/* call on map component */}
@@ -26,20 +26,14 @@ class Home extends Component {
                         </div>
                     </div>
 
-                    <div className="col col-lg-4">
+                    <div className="col-md-4">
                         {/* player stats div */}
-                        <div className="row">
-                            <div className="col">
                                 <div id="player-stat-box">
                                     <Help />
-                                    <div className="row align-items-center">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
 
                         {/* equipped card div */}
-                        <div className="row">
+                        <div className="col-md-12">
                             {/* logic to display current equipped cards */}
                             <Equipped {...this.props} />
                         </div>

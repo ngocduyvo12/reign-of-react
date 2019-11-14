@@ -2,9 +2,12 @@
     overflow: hidden;
     width: 98%;
     height: 700px;
-    /* background-color: red; */
-    background-image: url(./background.png);
+    background-image: url(/static/media/background.5f055dfe.png);
     position: absolute;
+    margin-top: 1rem;
+    border-radius: 18px;
+    border-style: solid;
+    border-width: 4px;
 }
 
 #text-box {
@@ -18,4 +21,10 @@
 
 area {
     cursor: pointer;
+}
+
+.map-hold {
+    background: brown;
+    height: 740px;
+    border-radius: 18px;
 }

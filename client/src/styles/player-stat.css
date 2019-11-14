@@ -1,8 +1,7 @@
 #player-stat-box {
-    background-color: blue;
-    height: 500px;
+    background-color: black;
+    height: 700px;
+    border-radius: 18px;
+    margin-top: 1rem;
 }
 
-.equippedImages {
-    /* height: 200px; */
-}
