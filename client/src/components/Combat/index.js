@@ -53,7 +53,6 @@ class Combat extends Component {
         const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
         const tierData = locData.tier
         const MonsterData = parseInt(tierData * [Math.floor(Math.random() * 2) + 1])
-        console.log("Monster Data " + MonsterData)
         const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
         this.setState({
             locationData: locData,
@@ -74,45 +73,68 @@ class Combat extends Component {
         this.state.myCards.map(cards => (
             healthNow += parseInt(cards.hitPoint)
         ))
-        console.log("health now:" + healthNow)
         this.setState({ myTotalHealth : healthNow, myHealth : healthNow})
     }
 
     calcEnemyStats = () => {
         this.setState ({ 
-            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 2),
-            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 2),
-            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 2)
+            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 1),
+            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 1),
+            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 1)
         })
     }
 
     startRound = () => {
-        this.calcTotalHealth();
-        this.calcEnemyStats();
-        this.setState({ round: true })
+        if (!this.state.round) {
+            this.calcTotalHealth();
+            this.calcEnemyStats();
+            this.setState({ round: true })
+        } else {
+            alert("you cant fight again here")
+        }
     }
 
     checkCombat = (event) => {
-        if (this.state.round && !this.state.endRound) {
+        if (this.state.endRound) {
+            alert("this combat is over")
+        } else if (this.state.round) {
             this.attackNow(event)
         } else {
-            alert ("Must Start Round Or Round is Over")
+            alert("You must start the round")
+        }
+    }
+
+    checkResolution = () => {
+        if (!this.state.endRound) {
+            if (this.state.calcEnemyHealth <= 0) {
+                alert("YOU WON YAY")
+                this.setState({ endRound: true})
+            } else if (this.state.myHealth <= 0) {
+                alert("NO YOU LOST")
+                this.setState({ endRound: true, myHealth: 500})
+            }
         }
     }
 
     attackNow = (event) => {
-        let thisAttack = event.target.getAttribute("data-attack")
-        this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack)})
-        this.checkMyAttack()
-        // get attack and compare with enemy hp
-        // update enemy hp with value of player/card attack
-        // check if won, if so end combat if  and bring up rewards
-        // if no win, call enemyAttack
+        if (this.state.calcEnemyHealth <= 0) {
+            alert("you've won")
+            this.setState({ endRound: true})
+        } else {
+            let thisAttack = event.target.getAttribute("data-attack")
+            this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack)})
+            if (this.state.calcEnemyHealth <= 0) {
+                alert("you have now won the combat")
+            } else {
+                this.checkMyAttack()
+            }
+        }
     }
 
     checkMyAttack = () => {
         if (this.state.calcEnemyHealth <= 0) {
             alert("win")
+            // will be replaced with rewards modal
             this.setState({ endRound: true})
         } else {
             this.enemyAttack()
@@ -120,19 +142,17 @@ class Combat extends Component {
     }
 
     enemyAttack = () => {
-        this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack)})
         if (this.state.myHealth <= 0) {
             alert("lose")
+            this.setState({ endRound: true})
+            // will be replaced with lose card / xp modal
         } else {
-            return
+            this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack)})
         }
-        // get attack and compare with player hp
-        // update player hp with value of attack equation
-        // check if player lost, if so end combat and bring up loss modal
-        // if combat continues, then return
     }
 
     render() {
+        this.checkResolution()
         return (
             <>
                 <div>
@@ -186,7 +206,6 @@ class Combat extends Component {
                                             attack={this.loadUserLevel() * 32}
                                             defense={this.loadUserLevel() * 41}
                                             health={(this.loadUserLevel() * 234) + 550}
-
                                         />
                                         {this.state.myCards.map(cards => (
                                             <div key={cards._id} className="player-equipped">
