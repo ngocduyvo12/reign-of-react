@@ -4,6 +4,7 @@ import "./style.css"
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
 import Fightlogs from "../Fightlogs";
+import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
@@ -47,9 +48,10 @@ class Combat extends Component {
         API.getUserId(this.props.match.params.id)
             // .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
             .then(res => {
-                this.setState({ 
+                this.setState({
                     myCards: res.data.equippedCards,
-                    myPlayer: res.data })
+                    myPlayer: res.data
+                })
             })
             .catch(err => console.log(err))
     }
@@ -84,14 +86,14 @@ class Combat extends Component {
         this.state.myCards.map(cards => (
             healthNow += parseInt(cards.hitPoint)
         ))
-        this.setState({ myTotalHealth : healthNow, myHealth : healthNow})
+        this.setState({ myTotalHealth: healthNow, myHealth: healthNow })
     }
 
     calcEnemyStats = () => {
-        this.setState ({ 
-            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 1),
-            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 1),
-            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 1)
+        this.setState({
+            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 2),
+            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 2),
+            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 2)
         })
     }
 
@@ -119,10 +121,10 @@ class Combat extends Component {
         if (!this.state.endRound) {
             if (this.state.calcEnemyHealth <= 0) {
                 alert("YOU WON YAY")
-                this.setState({ endRound: true})
+                this.setState({ endRound: true })
             } else if (this.state.myHealth <= 0) {
                 alert("NO YOU LOST")
-                this.setState({ endRound: true})
+                this.setState({ endRound: true })
             }
         }
     }
@@ -130,10 +132,10 @@ class Combat extends Component {
     attackNow = (event) => {
         if (this.state.calcEnemyHealth <= 0) {
             alert("you've won")
-            this.setState({ endRound: true})
+            this.setState({ endRound: true })
         } else {
             let thisAttack = event.target.getAttribute("data-attack")
-            this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack)})
+            this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack) })
             if (this.state.calcEnemyHealth <= 0) {
                 alert("you have now won the combat")
             } else {
@@ -146,7 +148,7 @@ class Combat extends Component {
         if (this.state.calcEnemyHealth <= 0) {
             alert("win")
             // will be replaced with rewards modal
-            this.setState({ endRound: true})
+            this.setState({ endRound: true })
         } else {
             this.enemyAttack()
         }
@@ -155,10 +157,10 @@ class Combat extends Component {
     enemyAttack = () => {
         if (this.state.myHealth <= 0) {
             alert("lose")
-            this.setState({ endRound: true})
+            this.setState({ endRound: true })
             // will be replaced with lose card / xp modal
         } else {
-            this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack)})
+            this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack) })
         }
     }
 
@@ -170,6 +172,7 @@ class Combat extends Component {
                     <div className="jumbotron">
                         <h1>Welcome To The Arena</h1>
                         <button onClick={this.startRound}>Start Round</button>
+                        <PreCombat />
                         <div className="container">
                             <div className="row">
                                 <div className="map-info col-md-12">
@@ -209,7 +212,7 @@ class Combat extends Component {
                                                 aria-valuemax={this.state.myTotalHealth}
                                                 style={{ width: `${(this.state.myHealth / this.state.myTotalHealth) * 100}%` }}>
                                                 Current Health : {`${((this.state.myHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
-                                                </div>
+                                            </div>
                                         </div>
                                         <PlayerCards
                                             userName={this.state.myPlayer.userName}
