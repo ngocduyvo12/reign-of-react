@@ -4,7 +4,7 @@ import Map from "../components/map"
 import Help from "../components/Help"
 import "../styles/map.css";
 import "../styles/player-stat.css"
-import Equipped from "../components/equipped"
+import Equipped from "../components/equipped/equipped"
 
 class Home extends Component {
 

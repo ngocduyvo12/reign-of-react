@@ -45,7 +45,18 @@ class Combat extends Component {
 
     loadUserInfo = () => {
         API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
+            // .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
+            .then(res => {
+                this.setState({ 
+                    myCards: res.data.equippedCards,
+                    myPlayer: res.data })
+            })
+            .catch(err => console.log(err))
+    }
+
+    loadUserCharacter = () => {
+        API.getUserId(this.props.match.params.id)
+            .then(res => this.setState({ myPlayer: res.data }))
             .catch(err => console.log(err))
     }
 
@@ -215,7 +226,8 @@ class Combat extends Component {
                                                 <h5> Defense: {cards.defense}</h5>
                                                 <img
                                                     id={cards._id}
-                                                    src={cards.image}
+                                                    // src={cards.image}
+                                                    src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                                                     alt={cards.name}
                                                     data-attack={cards.attack}
                                                     onClick={this.checkCombat}
