@@ -81,8 +81,8 @@ class Map extends Component {
         // return monsterInfo;
         return <div>
             {monsterInfo.map(item => (
-                <div>
-                    <img key={item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt=""></img>
+                <div className="monsters-rendered">
+                    <img key={item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt={item.name}></img>
                     <p>{item.name}</p>
                 </div>
             ))}
@@ -123,22 +123,28 @@ class Map extends Component {
                                 // style={customStyles}
                                 contentLabel="Example Modal"
                             >
-                                <div className="modal-title">
+
+                                <div className="modal-title col-md-12">
                                     <h1 ref={subtitle => this.subtitle = subtitle}>{this.state.currentArea.name}</h1>
                                     <h2 ref={subtitle => this.subtitle = subtitle}>Tier: {this.state.currentArea.tier}</h2>
                                 </div>
-                                <div className="modal-enemy">
+
+                                <div className="modal-monster col-md-6">
                                     <h2 ref={subtitle => this.subtitle = subtitle}>Resides in this area:</h2>
                                     {this.renderMonsters(this.state.currentArea.monsters)}
                                 </div>
-                                <h2>joins your team</h2>
-                                <div className="modal-reward">
-                                    <span ref={subtitle => this.subtitle = subtitle}>Possible Rewards:</span>
+
+                                <div className="modal-reward col-md-6">
+                                    <h2 ref={subtitle => this.subtitle = subtitle}>Possible Rewards:</h2>
+                                    <h2>Joins your team</h2>
+                                    <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
                                     {this.renderMonsters(this.state.currentArea.monsters)}
                                 </div>
-                                <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
-                                <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
-                                <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
+
+                                <div className="modal-leave col-md-12">
+                                    <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
+                                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
+                                </div>
 
                             </Modal>
 
