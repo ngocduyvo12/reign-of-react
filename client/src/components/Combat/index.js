@@ -138,66 +138,6 @@ class Combat extends Component {
     }
   }
 
-  //original combat logic
-  // checkCombat = (event) => {
-  //   if (this.state.endRound) {
-  //     alert("this combat is over")
-  //   } else if (this.state.round) {
-  //     this.attackNow(event)
-  //   } else {
-  //     alert("You must start the round")
-  //   }
-  // }
-
-  // checkResolution = () => {
-  //   if (!this.state.endRound) {
-  //     if (this.state.myEnemyCurrentHealth <= 0) {
-  //       alert("YOU WON YAY")
-  //       this.setState({ endRound: true })
-  //     } else if (this.state.myCurrentHealth <= 0) {
-  //       alert("NO YOU LOST")
-  //       this.setState({ endRound: true })
-  //     }
-  //   }
-  // }
-
-  // attackNow = (event) => {
-  //   if (this.state.myEnemyCurrentHealth <= 0) {
-  //     alert("you've won")
-  //     this.setState({ endRound: true })
-  //   } else {
-  //     let thisAttack = event.target.getAttribute("data-attack")
-  //     this.setState(
-  //       { myEnemyCurrentHealth: (this.state.myEnemyCurrentHealth - thisAttack) }
-  //     )
-  //     if (this.state.myEnemyCurrentHealth <= 0) {
-  //       alert("you have now won the combat")
-  //     } else {
-  //       this.checkMyAttack()
-  //     }
-  //   }
-  // }
-
-  // checkMyAttack = () => {
-  //   if (this.state.myEnemyCurrentHealth <= 0) {
-  //     alert("win")
-  //     // will be replaced with rewards modal
-  //     this.setState({ endRound: true })
-  //   } else {
-  //     this.enemyAttack()
-  //   }
-  // }
-
-  // enemyAttack = () => {
-  //   if (this.state.myCurrentHealth <= 0) {
-  //     alert("lose")
-  //     this.setState({ endRound: true })
-  //     // will be replaced with lose card / xp modal
-  //   } else {
-  //     this.setState({ myCurrentHealth: (this.state.myCurrentHealth - this.state.myEnemyAttack) })
-  //   }
-  // }
-
   //modified combat logic:
 
   //function to console log data for testing:
@@ -270,12 +210,12 @@ class Combat extends Component {
       this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
 
       //check winning condition here with out waiting for state to set in
-      if (enemyHealthAfterAttack <= 0){
+      if (enemyHealthAfterAttack <= 0) {
         alert("You have won")
         //toggle reward modal here
       }
       //if enemy not dead after attack, call enemyAttack
-      else{
+      else {
         this.enemyAttack()
       }
     }
@@ -285,11 +225,6 @@ class Combat extends Component {
     //loop through player team and attack a random card with state of alive
     //use filter to get an array of still alive cards
     var currentTeamCombat = this.state.myTeam.filter(card => card.alive === true)
-    // if(currentTeamCombat.length < 1){
-    //   //penalty modal here
-    //   alert("You ded")
-    //   return
-    // }
 
     console.log("current combat team")
     console.log(currentTeamCombat)
@@ -297,7 +232,7 @@ class Combat extends Component {
 
     //pick a random card in the currentTeamCombat array:
     //get the index of the card
-    const randomCardIndex= Math.floor(Math.random()*currentTeamCombat.length)
+    const randomCardIndex = Math.floor(Math.random() * currentTeamCombat.length)
     const cardGettingAttacked = currentTeamCombat[randomCardIndex]
     console.log("card getting attacked: ")
     console.log(cardGettingAttacked)
@@ -308,15 +243,15 @@ class Combat extends Component {
     //update current health of the attacked card
     //set state of current health for this card. Use card's ID to update its health in state
     //use for loop to use card id of the attacked card and cross reference to this card in state
-    for(let i = 0; i < currentTeamCombat.length; i++){
+    for (let i = 0; i < currentTeamCombat.length; i++) {
       // console.log(currentTeamCombat[i])
-      if(cardGettingAttacked._id === currentTeamCombat[i]._id){
+      if (cardGettingAttacked._id === currentTeamCombat[i]._id) {
         console.log("current combat team after updated health:")
         currentTeamCombat[i].currentHealth = myCardHealthAfterAttack
-        if(currentTeamCombat[i].currentHealth <= 0){
+        if (currentTeamCombat[i].currentHealth <= 0) {
           currentTeamCombat[i].alive = false;
         }
-        
+
         console.log(currentTeamCombat)
         console.log("team in state: ")
         console.log(this.state.myTeam)
@@ -332,9 +267,9 @@ class Combat extends Component {
 
     function checkLosingCondition() {
       var checkLost = currentTeamCombat.filter(card => card.alive === true)
-      if(checkLost.length < 1){
+      if (checkLost.length < 1) {
         //penalty modal here
-        alert("You ded")  
+        alert("You ded")
       }
     }
   }
@@ -388,20 +323,23 @@ class Combat extends Component {
                         Current Health : {`${((this.state.myCurrentHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
                       </div>
                     </div>
-                    {/* {this.state.myTeam.map(team => (
-                    <PlayerCards
-                      id = {team.id}
-                      userName={team.userName}
-                      lvl={team.lvl}
-                      attack={team.attack}
-                      defense={team.defense}
-                      health={(team.health)}
-                    />
-                    ))} */}
+
                     {this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
                         <h4> Name: {cards.name}</h4>
                         {/* health will probably be changed to current health for each card */}
+
+                        <div className="progress">
+                          <div className="progress-bar progress-bar-danger"
+                            role="progressbar"
+                            aria-valuenow={cards.currentHealth}
+                            aria-valuemin="0"
+                            aria-valuemax={cards.hitPoint}
+                            style={{ width: `${(cards.currentHealth / cards.hitPoint) * 100}%` }}>
+                            Current Health : {`${((cards.currentHealth / cards.hitPoint) * 100).toFixed(2)}%`}
+                          </div>
+                        </div>
+
                         <h5> Health: {cards.currentHealth}</h5>
                         <h5> Attack: {cards.attack}</h5>
                         <h5> Defense: {cards.defense}</h5>
@@ -412,8 +350,8 @@ class Combat extends Component {
                           // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                           alt={cards.name}
                           data-attack={cards.attack}
-                          data-alive = {cards.alive}
-                          disabled = {cards.alive ? false : true}
+                          data-alive={cards.alive}
+                          disabled={cards.alive ? false : true}
                           //need data for current health and max health
                           onClick={this.attackNow}
                           className="equipped-combat"
