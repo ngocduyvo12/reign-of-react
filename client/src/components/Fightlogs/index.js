@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./style.css";
 
-class Fightlogs extends Component {
-    render () {
-        return (
-            <h2>This is a test, but for the combat logs</h2>
-        )
-    }
-}
+function FightLogs(props) {
+    console.log(props.children)
+    return (
 
-export default Fightlogs;
+        props.children.map(log => (
+            <h2>{log}</h2>
+        ))
+    )
+    // return <h2>something</h2>
+}
+export default FightLogs;
