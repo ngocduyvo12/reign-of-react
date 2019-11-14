@@ -34,4 +34,38 @@ area {
 
 .ReactModal__Content {
     border-radius: 18px;
+    background: black;
+}
+
+.modal-title {
+    margin-bottom: 2rem;
+}
+
+.modal-monster {
+    float: left;
+    border-style: solid;
+    margin-left: 5rem;
+    border-radius: 18px;
+}
+
+.modal-reward {
+    float: right;
+    border-style: solid;
+    margin-right: 5rem;
+    border-radius: 18px;
+}
+
+.monsters-rendered {
+    float: left;
+    margin-left: 13%;
+}
+
+.ReactModal__Content--after-open {
+    color: black;
+}
+
+.modal-wrap {
+    background: black;
+    color: white;
+    border-radius: 18px;
 }

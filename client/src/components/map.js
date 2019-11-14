@@ -26,16 +26,11 @@ class Map extends Component {
         };
 
         this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
 
     openModal(area) {
         this.setState({ modalIsOpen: true, currentArea: area });
-    }
-
-    afterOpenModal() {
-        this.subtitle.style.color = "black";
     }
 
     closeModal() {
@@ -120,30 +115,30 @@ class Map extends Component {
                                 isOpen={this.state.modalIsOpen}
                                 onAfterOpen={this.afterOpenModal}
                                 onRequestClose={this.closeModal}
-                                // style={customStyles}
                                 contentLabel="Example Modal"
                             >
+                                <div className="modal-wrap">
+                                    <div className="modal-title col-md-12">
+                                        <h1>{this.state.currentArea.name}</h1>
+                                        <h2>Region Tier: {this.state.currentArea.tier}</h2>
+                                    </div>
 
-                                <div className="modal-title col-md-12">
-                                    <h1 ref={subtitle => this.subtitle = subtitle}>{this.state.currentArea.name}</h1>
-                                    <h2 ref={subtitle => this.subtitle = subtitle}>Tier: {this.state.currentArea.tier}</h2>
-                                </div>
+                                    <div className="modal-monster col-md-5">
+                                        <h3>Resides in this area:</h3>
+                                        <hr />
+                                        {this.renderMonsters(this.state.currentArea.monsters)}
+                                    </div>
 
-                                <div className="modal-monster col-md-6">
-                                    <h2 ref={subtitle => this.subtitle = subtitle}>Resides in this area:</h2>
-                                    {this.renderMonsters(this.state.currentArea.monsters)}
-                                </div>
+                                    <div className="modal-reward col-md-5">
+                                        <h3>You Gain {this.state.currentArea.experience}XP and A Shot At these Cards:</h3>
+                                        <hr />
+                                        {this.renderMonsters(this.state.currentArea.monsters)}
+                                    </div>
 
-                                <div className="modal-reward col-md-6">
-                                    <h2 ref={subtitle => this.subtitle = subtitle}>Possible Rewards:</h2>
-                                    <h2>Joins your team</h2>
-                                    <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
-                                    {this.renderMonsters(this.state.currentArea.monsters)}
-                                </div>
-
-                                <div className="modal-leave col-md-12">
-                                    <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
-                                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
+                                    <div className="modal-leave col-md-12">
+                                        <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
+                                        <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
+                                    </div>
                                 </div>
 
                             </Modal>
