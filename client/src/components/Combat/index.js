@@ -32,7 +32,7 @@ class Combat extends Component {
     monster: {},
     round: true,
     endRound: false,
-    winCard: characters[Math.floor(Math.random()*characters.length)]
+    winCard: characters[Math.floor(Math.random() * characters.length)]
   }
 
   componentDidMount() {
@@ -40,6 +40,7 @@ class Combat extends Component {
     this.loadUserInfo();
     this.loadLocationAndMonsterInfo();
     // this.consoleLog();
+    console.log("wincard", this.state.winCard);
   }
 
   loadUserInfo = () => {
@@ -90,6 +91,7 @@ class Combat extends Component {
 
     //get a random monster from location data
     const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
+    // console.log("mon:",characters[monsterID]);
     this.setState({
       locationData: locData,
       monster: characters[monsterID],
@@ -207,6 +209,10 @@ class Combat extends Component {
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
         alert("You have won")
+
+        API.addInventory(this.state.winCard, this.props.match.params.id)
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
         //toggle reward modal here
       }
       //if enemy not dead after attack, call enemyAttack
@@ -235,7 +241,7 @@ class Combat extends Component {
     let thisAttack = this.state.myEnemyAttack;
     //get health after attack:
     let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttack), 0);
-    
+
     //update current health of the attacked card
     //set state of current health for this card. Use card's ID to update its health in state
     //use for loop to use card id of the attacked card and cross reference to this card in state
@@ -257,17 +263,25 @@ class Combat extends Component {
         // this.setState({myTeam: currentTeamCombat})
 
         //checking if any card is alive still
-        checkLosingCondition()
-      }
-    }
+        var checkLost = currentTeamCombat.filter(card => card.alive === true)
+        if (checkLost.length < 1) {
+          //penalty modal here
+          // this.handleResult(false);
+          // console.log(this.state.winCard);
+          const lostCard = this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)];
+          API.removeInventory(lostCard, this.props.match.params.id)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
 
-    function checkLosingCondition() {
-      var checkLost = currentTeamCombat.filter(card => card.alive === true)
-      if (checkLost.length < 1) {
-        //penalty modal here
-        alert("You ded")
+          alert("You ded")
+        }
       }
     }
+  }
+
+
+  handleResult = (result) => {
+    console.log("result", result);
   }
 
   render() {
@@ -330,7 +344,7 @@ class Combat extends Component {
                       type="image"
                       id={cards._id}
                       // src={cards.image}
-                      src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                      src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
                       alt={cards.name}
                       data-attack={cards.attack}
                       data-alive={cards.alive}

@@ -39,7 +39,11 @@ export default {
     return axios.post("/api/user/unEquipCard", data)
   },
   addInventory: function(card, userid) {
-    return axios.post("/api/user/add-inventory", {card, userid})
+    console.log("API addInv: ", card, userid);
+    return axios.post("/api/user/add-inventory", {card: card, userid: userid})
+  },
+  removeInventory: function(card, userid) {
+    return axios.post("/api/user/remove-inventory", {card: card, userid: userid})
   },
   initCards: function (data) {
     // console.log(data)

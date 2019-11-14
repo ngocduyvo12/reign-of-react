@@ -49,7 +49,13 @@ router
 
 router
     .route("/add-inventory")
+    // .post(() => alert("in route"))
     .post(userController.addInventory)
+
+router
+    .route("/remove-inventory")
+    // .post(() => alert("in route"))
+    .post(userController.removeInventory)
 
 router
     .route("/initcards/:id")

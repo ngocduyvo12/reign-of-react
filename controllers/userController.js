@@ -34,7 +34,8 @@ module.exports = {
       .create(req.body)
       .then(dbModel => {
         console.log(dbModel)
-        res.json(dbModel)})
+        res.json(dbModel)
+      })
       .catch(err => res.status(422).json(err));
   },
 
@@ -132,7 +133,7 @@ module.exports = {
         // console.log(req.body)
         return db.EquippedCards.findByIdAndDelete(req.body._id)
       }).then(function (dbMod) {
-        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: req.body._id  } })
+        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: req.body._id } })
       })
       .then(function (result) {
         res.json(result)
@@ -185,9 +186,10 @@ module.exports = {
     // }
   },
 
-  addInventory: function (data) {
-    const card = data.card;
-    const userid = data.userid;
+  addInventory: function (req, res) {
+    // console.log("bang:", req);
+    const card = req.body.card;
+    const userid = req.body.userid;
     db.InventoryCards.create({
       name: card.name,
       image: card.image,
@@ -197,15 +199,47 @@ module.exports = {
       rarity: parseInt(card.rarity)
     })
       .then(function (newCard) {
-        return db.User.findOneAndUpdate({
+        console.log("then", newCard);
+        db.User.findOneAndUpdate({
           _id: userid
         },
           { $push: { "inventoryCards": newCard._id } },
-          { new: true });
-      }).then(function (result) {
-        res.json(result)
-      }).catch(err => console.log(err))
+          { new: true })
+          .then(function (result) {
+            console.log("should add to user", userid);
+            res.json(result)
+          }).catch(err => console.log(err));
+      })
     // }
+  },
+
+  removeInventory: function (req, res) {
+    // console.log("bang:", req);
+    const card = req.body.card;
+    const userid = req.body.userid;
+
+    db.EquippedCards.findByIdAndDelete(card)
+      .then(function (removedCard) {
+        db.User.findByIdAndUpdate(userid, { $pull: { equippedCards: card._id } })
+          .then(res => {
+
+            db.User.findOne({ _id: userid })
+              .populate("inventoryCards")
+              .then(function (invCards) {
+                // console.log("invCardId: ", invCards.inventoryCards.map(i => i.name), card.name);
+
+                db.InventoryCards.findByIdAndDelete(card)
+                  .then(function (removedCard) {
+                    const id = invCards.inventoryCards.find(element => element.name === card.name);
+                    // console.log("derp",invCards)
+                    db.User.findByIdAndUpdate(userid, { $pull: { inventoryCards: id } })
+                      .then(res => res)
+                  });
+
+              }).catch(err => res.status(422).json(err))
+
+          })
+      });
   },
 
   initCards: function (req, res) {
@@ -226,12 +260,12 @@ module.exports = {
         .then(function (newInvCard) {
           // console.log(newInvCard);
           db.User.findOneAndUpdate(
-            { _id: req.params.id }, 
-            { $push: { "inventoryCards": newInvCard._id } }, 
+            { _id: req.params.id },
+            { $push: { "inventoryCards": newInvCard._id } },
             { new: true })
-            .then(res => 
+            .then(res =>
               console.log(res)
-              );
+            );
 
           db.EquippedCards.create({
             name: card.name,
@@ -241,16 +275,16 @@ module.exports = {
             defense: parseInt(card.defense),
             rarity: parseInt(card.rarity)
           }).
-          then(function (newEquippedCard) {
-            db.User.findOneAndUpdate(
-              { _id: req.params.id }, 
-              { $push: { "equippedCards": newEquippedCard._id } }, 
-              { new: true })
-              .then(res => 
-                console.log(res)
+            then(function (newEquippedCard) {
+              db.User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $push: { "equippedCards": newEquippedCard._id } },
+                { new: true })
+                .then(res =>
+                  console.log(res)
                 );
-          }
-          )
+            }
+            )
             .then(function (result) {
               res.json(result)
             }).catch(err => console.log(err));
