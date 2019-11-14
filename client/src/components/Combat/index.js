@@ -8,243 +8,428 @@ import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
-
-let randomMonster = Math.floor(Math.random() * 3)
-let monsterID = mapJSON[0].monsters[randomMonster]
+import player from "../../json/player.json"
 
 class Combat extends Component {
 
-    state = {
-        items: [],
-        myCards: [],
-        myPlayer: [],
-        mapTier: 0,
-        myAttack: 1,
-        myDefense: 1,
-        myHealth: 1,
-        myTotalHealth: 1,
-        myLevel: 1,
-        monStat: 1,
-        myEnemyAttack: characters[monsterID].attack,
-        myEnemyDefense: characters[monsterID].defense,
-        myEnemyHealth: characters[monsterID].hitpoints,
-        calcEnemyAttack: "Hidden",
-        calcEnemyDefense: "Hidden",
-        calcEnemyHealth: "Hidden",
-        locationData: {},
-        monster: {},
-        round: false,
-        endRound: false,
-    }
+  state = {
+    //my stats
+    items: [],
+    myCards: [],
+    myPlayer: [],
+    mapTier: 0,
+    myAttack: 1,
+    myDefense: 1,
+    myCurrentHealth: 1,
+    myTotalHealth: 1,
+    myLevel: 1,
+    myTeam: [],
 
-    componentDidMount() {
-        console.log(this.props.match.params.id)
-        this.loadUserInfo();
-        this.loadLocationAndMonsterInfo();
-    }
+    //Enemy stats
+    // monStat: 1,
+    myEnemyAttack: 1,
+    myEnemyDefense: 1,
+    //enemy max health
+    myEnemyTotalHealth: 1,
+    // calcEnemyAttack: "Hidden",
+    // calcEnemyDefense: "Hidden",
+    myEnemyCurrentHealth: 1,
+    locationData: {},
+    monster: {},
+    round: true,
+    endRound: false,
+  }
 
-    loadUserInfo = () => {
-        API.getUserId(this.props.match.params.id)
-            // .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
-            .then(res => {
-                this.setState({ 
-                    myCards: res.data.equippedCards,
-                    myPlayer: res.data })
-            })
-            .catch(err => console.log(err))
-    }
+  componentDidMount() {
+    // console.log(this.props.match.params.id)
+    this.loadUserInfo();
+    this.loadLocationAndMonsterInfo();
+    // this.consoleLog();
+  }
 
-    loadUserCharacter = () => {
-        API.getUserId(this.props.match.params.id)
-            .then(res => this.setState({ myPlayer: res.data }))
-            .catch(err => console.log(err))
-    }
-
-    loadLocationAndMonsterInfo = () => {
-        const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
-        const tierData = locData.tier
-        const MonsterData = parseInt(tierData * [Math.floor(Math.random() * 2) + 1])
-        const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
-        this.setState({
-            locationData: locData,
-            monster: characters[monsterID],
-            mapTier: tierData,
-            monStat: MonsterData
-        });
-    }
-
-    loadUserLevel = () => {
+  loadUserInfo = () => {
+    API.getUserId(this.props.match.params.id)
+      // .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
+      .then(res => {
+        //use exp to get level
         const expThreshHold = 300
-        let level = Math.floor((1 + Math.sqrt(1 + 8 * this.state.myPlayer.exp / expThreshHold)) / 2)
-        return level
-    }
+        let level = Math.floor((1 + Math.sqrt(1 + 8 * res.data.exp / expThreshHold)) / 2)
 
-    calcTotalHealth = () => {
-        let healthNow = 0
-        this.state.myCards.map(cards => (
-            healthNow += parseInt(cards.hitPoint)
+        //use equippedCards and user level to get total health and current health at the start of the game:
+        let healthNow = (level * 234) + 550
+        res.data.equippedCards.map(cards => (
+          healthNow += parseInt(cards.hitPoint)
         ))
-        this.setState({ myTotalHealth : healthNow, myHealth : healthNow})
-    }
+        // console.log(healthNow)
 
-    calcEnemyStats = () => {
-        this.setState ({ 
-            calcEnemyAttack: ((this.state.myEnemyAttack * this.state.monStat) * 1),
-            calcEnemyHealth: ((this.state.myEnemyHealth * this.state.monStat) * 1),
-            calcEnemyDefense: ((this.state.myEnemyDefense * this.state.monStat) * 1)
+        //call function to create my team:
+        this.createTeam(res, level)
+
+        //set state with data response
+        this.setState({
+          myCards: res.data.equippedCards,
+          myPlayer: res.data,
+          myLevel: level,
+          myCurrentHealth: healthNow,
+          myTotalHealth: healthNow
         })
-    }
+      })
+      .catch(err => console.log(err))
+  }
 
-    startRound = () => {
-        if (!this.state.round) {
-            this.calcTotalHealth();
-            this.calcEnemyStats();
-            this.setState({ round: true })
-        } else {
-            alert("you cant fight again here")
+  //load location and monster info based on name of the map in param.
+  loadLocationAndMonsterInfo = () => {
+    //get the data of the map using the name in params
+    const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
+    // console.log(locData)
+    //get map tier
+    const tierData = locData.tier
+
+    //monster stat modifier based on map tier.
+    //Do a switch case here to determine enemy stat modifier based on map tier
+    //probably better to do a function?
+    const monStatModifier = this.monsterStatModifier(tierData)
+    // console.log(monStatModifier)
+
+    // const MonsterData = parseInt(tierData * [Math.floor(Math.random() * 2) + 1])
+
+    //get a random monster from location data
+    const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
+    this.setState({
+      locationData: locData,
+      monster: characters[monsterID],
+      mapTier: tierData,
+      //set state modifier for monster. Need to be stored in state?
+      // monStat: monStatModifier,
+      myEnemyAttack: characters[monsterID].attack * monStatModifier.ADModifier,
+      myEnemyDefense: characters[monsterID].defense * monStatModifier.ADModifier,
+      myEnemyTotalHealth: characters[monsterID].hitpoints * monStatModifier.HPModifier,
+      myEnemyCurrentHealth: characters[monsterID].hitpoints * monStatModifier.HPModifier,
+    });
+  }
+
+  //function to calculate monster stat modifier based on map tier
+  monsterStatModifier = (tierData) => {
+    switch (tierData) {
+      //if map is tier 1 double enemy HP stats
+      case 1:
+        return {
+          //HP modifier
+          HPModifier: tierData * 2,
+          //attack and defense modifier
+          ADModifier: 1
+        }
+      //if map is tier 2 quadruple enemy HP and random attack defense modifier between 1.5-2
+      case 2:
+        return {
+          //HP modifier
+          HPModifier: tierData * 2,
+          //attack and defense modifier
+          ADModifier: (Math.random() * (2 - 1.5) + 1.5).toFixed(1)
+        }
+      //if map is tier 3 sextuple enemy stats and random attack and defense modifier between 2 - 2.5
+      case 3:
+        return {
+          //HP modifier
+          HPModifier: tierData * 2,
+          //attack and defense modifier
+          ADModifier: (Math.random() * (2.5 - 2) + 2).toFixed(1)
         }
     }
+  }
 
-    checkCombat = (event) => {
-        if (this.state.endRound) {
-            alert("this combat is over")
-        } else if (this.state.round) {
-            this.attackNow(event)
-        } else {
-            alert("You must start the round")
+  //original combat logic
+  // checkCombat = (event) => {
+  //   if (this.state.endRound) {
+  //     alert("this combat is over")
+  //   } else if (this.state.round) {
+  //     this.attackNow(event)
+  //   } else {
+  //     alert("You must start the round")
+  //   }
+  // }
+
+  // checkResolution = () => {
+  //   if (!this.state.endRound) {
+  //     if (this.state.myEnemyCurrentHealth <= 0) {
+  //       alert("YOU WON YAY")
+  //       this.setState({ endRound: true })
+  //     } else if (this.state.myCurrentHealth <= 0) {
+  //       alert("NO YOU LOST")
+  //       this.setState({ endRound: true })
+  //     }
+  //   }
+  // }
+
+  // attackNow = (event) => {
+  //   if (this.state.myEnemyCurrentHealth <= 0) {
+  //     alert("you've won")
+  //     this.setState({ endRound: true })
+  //   } else {
+  //     let thisAttack = event.target.getAttribute("data-attack")
+  //     this.setState(
+  //       { myEnemyCurrentHealth: (this.state.myEnemyCurrentHealth - thisAttack) }
+  //     )
+  //     if (this.state.myEnemyCurrentHealth <= 0) {
+  //       alert("you have now won the combat")
+  //     } else {
+  //       this.checkMyAttack()
+  //     }
+  //   }
+  // }
+
+  // checkMyAttack = () => {
+  //   if (this.state.myEnemyCurrentHealth <= 0) {
+  //     alert("win")
+  //     // will be replaced with rewards modal
+  //     this.setState({ endRound: true })
+  //   } else {
+  //     this.enemyAttack()
+  //   }
+  // }
+
+  // enemyAttack = () => {
+  //   if (this.state.myCurrentHealth <= 0) {
+  //     alert("lose")
+  //     this.setState({ endRound: true })
+  //     // will be replaced with lose card / xp modal
+  //   } else {
+  //     this.setState({ myCurrentHealth: (this.state.myCurrentHealth - this.state.myEnemyAttack) })
+  //   }
+  // }
+
+  //modified combat logic:
+
+  //function to console log data for testing:
+  consoleLog = () => {
+    //this function will alway get the data. Write function in here and call them
+    console.log("my player data: ")
+    console.log(this.state.myPlayer)
+    console.log("my equipped card data: ")
+    console.log(this.state.myCards)
+  }
+
+  //turn the player into a card
+  //push to my team array
+  //push equipped cards into my team array as well
+  //create an array object of the player's team:
+
+  createTeam = (res, level) => {
+    var myTeamArray = []
+    //determine with image to place based on level:
+    var imageSrc = "/img/player/"
+    if (level < 10) {
+      imageSrc += player[0].image
+      console.log(imageSrc)
+    }
+    //make a player card:
+    var myPlayerObj = {
+      _id: res.data._id,
+      name: res.data.userName,
+      lvl: level,
+      attack: level * 32,
+      defense: level * 41,
+      hitPoint: (level * 234) + 550,
+      currentHealth: (level * 234) + 550,
+      image: imageSrc,
+      alive: true
+    }
+    //push player card to team array
+    myTeamArray.push(myPlayerObj)
+    console.log(res.data.equippedCards)
+
+    //push my cards into team array:
+    res.data.equippedCards.map(card => (
+      card.alive = true,
+      card.currentHealth = card.hitPoint,
+      myTeamArray.push(card)
+    ))
+    //set myTeam state to myTeamArray:
+    this.setState({ myTeam: myTeamArray })
+    // console.log(this.state.myTeam)
+  }
+
+  //on click of image, attack the enemy card like the original logic.
+  //after player finished attacking, check to see if enemy health is lesser or equal to zero. 
+  //If it is end combat and toggle reward modal. 
+  //If not then update enemy current health
+  //then enemy will loop through the player's team and attack card that still have the state of alive.
+  //after enemy attack check health of each member of the player team. If any card have an hp of <= 0. change status to dead.
+  //if the number team member alive is >= 0. update health and end this turn by using return to break out of the loop
+
+
+  attackNow = (event) => {
+    //if enemy is already dead, prevent further action. Probably wont be needing this
+    if (this.state.myEnemyCurrentHealth <= 0) {
+      alert("Enemy is dead")
+      return
+    } else {
+      //player's attack logic
+      let thisAttack = event.target.getAttribute("data-attack");
+      let enemyHealthAfterAttack = this.state.myEnemyCurrentHealth - thisAttack
+      this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
+
+      //check winning condition here with out waiting for state to set in
+      if (enemyHealthAfterAttack <= 0){
+        alert("You have won")
+        //toggle reward modal here
+      }
+      //if enemy not dead after attack, call enemyAttack
+      else{
+        this.enemyAttack()
+      }
+    }
+  }
+
+  enemyAttack = () => {
+    //loop through player team and attack a random card with state of alive
+    //use filter to get an array of still alive cards
+    var currentTeamCombat = this.state.myTeam.filter(card => card.alive === true)
+    // if(currentTeamCombat.length < 1){
+    //   //penalty modal here
+    //   alert("You ded")
+    //   return
+    // }
+
+    console.log("current combat team")
+    console.log(currentTeamCombat)
+    //get enemy attack and attack a random card in the currentTeamCombat:
+
+    //pick a random card in the currentTeamCombat array:
+    //get the index of the card
+    const randomCardIndex= Math.floor(Math.random()*currentTeamCombat.length)
+    const cardGettingAttacked = currentTeamCombat[randomCardIndex]
+    console.log("card getting attacked: ")
+    console.log(cardGettingAttacked)
+    //get enemy attack:
+    let thisAttack = this.state.myEnemyAttack;
+    //get health after attack:
+    let myCardHealthAfterAttack = cardGettingAttacked.currentHealth - thisAttack
+    //update current health of the attacked card
+    //set state of current health for this card. Use card's ID to update its health in state
+    //use for loop to use card id of the attacked card and cross reference to this card in state
+    for(let i = 0; i < currentTeamCombat.length; i++){
+      // console.log(currentTeamCombat[i])
+      if(cardGettingAttacked._id === currentTeamCombat[i]._id){
+        console.log("current combat team after updated health:")
+        currentTeamCombat[i].currentHealth = myCardHealthAfterAttack
+        if(currentTeamCombat[i].currentHealth <= 0){
+          currentTeamCombat[i].alive = false;
         }
+        
+        console.log(currentTeamCombat)
+        console.log("team in state: ")
+        console.log(this.state.myTeam)
+        //set current health of the card in current combat team
+        //set myTeam array state to this current combat team
+        //WHY IS THIS WORKING WITHOUT SETTING STATE????????
+        // this.setState({myTeam: currentTeamCombat})
+
+        //checking if any card is alive still
+        checkLosingCondition()
+      }
     }
 
-    checkResolution = () => {
-        if (!this.state.endRound) {
-            if (this.state.calcEnemyHealth <= 0) {
-                alert("YOU WON YAY")
-                this.setState({ endRound: true})
-            } else if (this.state.myHealth <= 0) {
-                alert("NO YOU LOST")
-                this.setState({ endRound: true})
-            }
-        }
+    function checkLosingCondition() {
+      var checkLost = currentTeamCombat.filter(card => card.alive === true)
+      if(checkLost.length < 1){
+        //penalty modal here
+        alert("You ded")  
+      }
     }
+  }
 
-    attackNow = (event) => {
-        if (this.state.calcEnemyHealth <= 0) {
-            alert("you've won")
-            this.setState({ endRound: true})
-        } else {
-            let thisAttack = event.target.getAttribute("data-attack")
-            this.setState({ calcEnemyHealth: (this.state.calcEnemyHealth - thisAttack)})
-            if (this.state.calcEnemyHealth <= 0) {
-                alert("you have now won the combat")
-            } else {
-                this.checkMyAttack()
-            }
-        }
-    }
-
-    checkMyAttack = () => {
-        if (this.state.calcEnemyHealth <= 0) {
-            alert("win")
-            // will be replaced with rewards modal
-            this.setState({ endRound: true})
-        } else {
-            this.enemyAttack()
-        }
-    }
-
-    enemyAttack = () => {
-        if (this.state.myHealth <= 0) {
-            alert("lose")
-            this.setState({ endRound: true})
-            // will be replaced with lose card / xp modal
-        } else {
-            this.setState({ myHealth: (this.state.myHealth - this.state.calcEnemyAttack)})
-        }
-    }
-
-    render() {
-        this.checkResolution()
-        return (
-            <>
-                <div>
-                    <div className="jumbotron">
-                        <h1>Welcome To The Arena</h1>
-                        <button onClick={this.startRound}>Start Round</button>
-                        <div className="container">
-                            <div className="row">
-                                <div className="map-info col-md-12">
-                                    <div>
-                                        <MapInfoCombat
-                                            mapName={this.state.locationData.name}
-                                            mapLevel={this.state.locationData.tier}
-                                            mapMonsters={this.state.locationData.monsters}
-                                            mapExp={this.state.locationData.experience}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="combat-log col-md-3">
-                                    <div>
-                                        <Fightlogs />
-                                    </div>
-                                </div>
-                                <div className="enemy-cards col-md-9">
-                                    <div>
-                                        <EnemyCards
-                                            name={this.state.monster.name}
-                                            image={this.state.monster.image}
-                                            hitpoints={this.state.calcEnemyHealth}
-                                            attack={this.state.calcEnemyAttack}
-                                            defense={this.state.calcEnemyDefense}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="player-cards col-md-12">
-                                    <>
-                                        <div className="progress">
-                                            <div className="progress-bar progress-bar-danger"
-                                                role="progressbar"
-                                                aria-valuenow={this.state.myHealth}
-                                                aria-valuemin="0"
-                                                aria-valuemax={this.state.myTotalHealth}
-                                                style={{ width: `${(this.state.myHealth / this.state.myTotalHealth) * 100}%` }}>
-                                                Current Health : {`${((this.state.myHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
-                                                </div>
-                                        </div>
-                                        <PlayerCards
-                                            userName={this.state.myPlayer.userName}
-                                            lvl={this.loadUserLevel()}
-                                            attack={this.loadUserLevel() * 32}
-                                            defense={this.loadUserLevel() * 41}
-                                            health={(this.loadUserLevel() * 234) + 550}
-                                        />
-                                        {this.state.myCards.map(cards => (
-                                            <div key={cards._id} className="player-equipped">
-                                                <h4> Name: {cards.name}</h4>
-                                                <h5> Health: {cards.hitPoint}</h5>
-                                                <h5> Attack: {cards.attack}</h5>
-                                                <h5> Defense: {cards.defense}</h5>
-                                                <img
-                                                    id={cards._id}
-                                                    src={cards.image}
-                                                    // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
-                                                    alt={cards.name}
-                                                    data-attack={cards.attack}
-                                                    onClick={this.checkCombat}
-                                                    className="equipped-combat"
-                                                />
-                                            </div>
-                                        ))}
-                                    </>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+  render() {
+    // this.consoleLog()
+    return (
+      <>
+        <div>
+          <div className="jumbotron">
+            <h1>Welcome To The Arena</h1>
+            {/* <button onClick={this.startRound}>Start Round</button> */}
+            <div className="container">
+              <div className="row">
+                <div className="map-info col-md-12">
+                  <div>
+                    <MapInfoCombat
+                      mapName={this.state.locationData.name}
+                      mapLevel={this.state.locationData.tier}
+                      mapMonsters={this.state.locationData.monsters}
+                      mapExp={this.state.locationData.experience}
+                    />
+                  </div>
                 </div>
-            </>
-        )
-    }
+
+                <div className="combat-log col-md-3">
+                  <div>
+                    <Fightlogs />
+                  </div>
+                </div>
+                <div className="enemy-cards col-md-9">
+                  <div>
+                    <EnemyCards
+                      name={this.state.monster.name}
+                      image={this.state.monster.image}
+                      hitpoints={this.state.myEnemyCurrentHealth}
+                      attack={this.state.myEnemyAttack}
+                      defense={this.state.myEnemyDefense}
+                    />
+                  </div>
+                </div>
+                <div className="player-cards col-md-12">
+                  <>
+                    <div className="progress">
+                      <div className="progress-bar progress-bar-danger"
+                        role="progressbar"
+                        aria-valuenow={this.state.myCurrentHealth}
+                        aria-valuemin="0"
+                        aria-valuemax={this.state.myTotalHealth}
+                        style={{ width: `${(this.state.myCurrentHealth / this.state.myTotalHealth) * 100}%` }}>
+                        Current Health : {`${((this.state.myCurrentHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
+                      </div>
+                    </div>
+                    {/* {this.state.myTeam.map(team => (
+                    <PlayerCards
+                      id = {team.id}
+                      userName={team.userName}
+                      lvl={team.lvl}
+                      attack={team.attack}
+                      defense={team.defense}
+                      health={(team.health)}
+                    />
+                    ))} */}
+                    {this.state.myTeam.map(cards => (
+                      <div key={cards._id} className="player-equipped">
+                        <h4> Name: {cards.name}</h4>
+                        {/* health will probably be changed to current health for each card */}
+                        <h5> Health: {cards.currentHealth}</h5>
+                        <h5> Attack: {cards.attack}</h5>
+                        <h5> Defense: {cards.defense}</h5>
+                        <input
+                          type="image"
+                          id={cards._id}
+                          src={cards.image}
+                          // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                          alt={cards.name}
+                          data-attack={cards.attack}
+                          data-alive = {cards.alive}
+                          disabled = {cards.alive ? false : true}
+                          //need data for current health and max health
+                          onClick={this.attackNow}
+                          className="equipped-combat"
+                        />
+                      </div>
+                    ))}
+                  </>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
 }
 
 export default Combat;
