@@ -32,7 +32,9 @@ module.exports = {
   create: function (req, res) {
     db.User
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => {
+        console.log(dbModel)
+        res.json(dbModel)})
       .catch(err => res.status(422).json(err));
   },
 
@@ -105,7 +107,7 @@ module.exports = {
         // console.log(req.body)
         return db.InventoryCards.findByIdAndDelete(req.body._id)
       }).then(function (dbMod) {
-        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { inventoryCards: { _id: req.body._id } } })
+        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { inventoryCards: req.body._id } })
       })
       .then(function (result) {
         res.json(result)
@@ -130,7 +132,7 @@ module.exports = {
         // console.log(req.body)
         return db.EquippedCards.findByIdAndDelete(req.body._id)
       }).then(function (dbMod) {
-        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: { _id: req.body._id } } })
+        return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: req.body._id  } })
       })
       .then(function (result) {
         res.json(result)
@@ -144,7 +146,7 @@ module.exports = {
     db.EquippedCards.create({
       name: "Ancient Whale",
       image: "/img/cards/lvl1_ancientWhale.png",
-      hitPoint: 1300,
+      hitPoints: 1300,
       attack: 97,
       defense: 130,
       rarity: 1
@@ -166,7 +168,7 @@ module.exports = {
     db.InventoryCards.create({
       name: "Dragon Zombie",
       image: "/img/cards/lvl1_dragonZombie.jpg",
-      hitPoint: 920,
+      hitPoints: 920,
       attack: 113,
       defense: 92,
       rarity: 1

@@ -34,10 +34,10 @@ class Equipped extends Component {
                             // <div className="col col-md-3" key={cards._id}>
                             <div className="col" key={cards._id}>
                                 <Link 
-                                to={"/inventory/" + this.props.match.params.id}>
+                                to={"../inventory/" + this.props.match.params.id}>
                                     <img
                                         className="equippedImages"
-                                        src={cards.image}
+                                        src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
                                         alt={cards.name}
                                     />
                                 </Link>
