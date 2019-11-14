@@ -114,7 +114,7 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="inventoryCardImage"
-                        src={cards.image}
+                        src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                         alt={cards.name}
                         onClick={this.equip}
                       />
@@ -137,7 +137,7 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="equippedImages"
-                        src={cards.image}
+                        src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                         alt={cards.name}
                         onClick={this.unEquip}
                       />

@@ -38,6 +38,9 @@ export default {
   unEquipCard: function(data){
     return axios.post("/api/user/unEquipCard", data)
   },
+  addInventory: function(card, userid) {
+    return axios.post("/api/user/add-inventory", {card, userid})
+  },
   initCards: function (data) {
     // console.log(data)
     // console.log("in api initcards")

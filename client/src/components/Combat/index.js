@@ -35,6 +35,7 @@ class Combat extends Component {
         monster: {},
         round: false,
         endRound: false,
+        winCard: characters[Math.floor(Math.random()*characters.length)]
     }
 
     componentDidMount() {
@@ -120,6 +121,7 @@ class Combat extends Component {
             if (this.state.calcEnemyHealth <= 0) {
                 alert("YOU WON YAY")
                 this.setState({ endRound: true})
+                
             } else if (this.state.myHealth <= 0) {
                 alert("NO YOU LOST")
                 this.setState({ endRound: true})
@@ -226,8 +228,7 @@ class Combat extends Component {
                                                 <h5> Defense: {cards.defense}</h5>
                                                 <img
                                                     id={cards._id}
-                                                    src={cards.image}
-                                                    // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                                                    src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                                                     alt={cards.name}
                                                     data-attack={cards.attack}
                                                     onClick={this.checkCombat}

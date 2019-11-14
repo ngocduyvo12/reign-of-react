@@ -37,7 +37,7 @@ class Equipped extends Component {
                                 to={"/inventory/" + this.props.match.params.id}>
                                     <img
                                         className="equippedImages"
-                                        src={cards.image}
+                                        src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                                         alt={cards.name}
                                     />
                                 </Link>

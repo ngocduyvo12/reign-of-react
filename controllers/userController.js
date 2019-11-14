@@ -183,6 +183,29 @@ module.exports = {
     // }
   },
 
+  addInventory: function (data) {
+    const card = data.card;
+    const userid = data.userid;
+    db.InventoryCards.create({
+      name: card.name,
+      image: card.image,
+      hitPoints: parseInt(card.hitpoints),
+      attack: parseInt(card.attack),
+      defense: parseInt(card.defense),
+      rarity: parseInt(card.rarity)
+    })
+      .then(function (newCard) {
+        return db.User.findOneAndUpdate({
+          _id: userid
+        },
+          { $push: { "inventoryCards": newCard._id } },
+          { new: true });
+      }).then(function (result) {
+        res.json(result)
+      }).catch(err => console.log(err))
+    // }
+  },
+
   initCards: function (req, res) {
     // console.log(characters);
     // res.json(req.params.id);

@@ -14,12 +14,12 @@ class Player extends Component {
     componentDidMount() {
         // console.log(this.props.match.params.id);
         console.log(this.props.userid);
-         API.getUserId(this.props.userid)
-         .then(data => {
-             console.log(data.data);
-            //  this.setState({player: data.data})
-        })
-         .catch(err => console.log(err))
+        API.getUserId(this.props.userid)
+            .then(data => {
+                console.log(data.data);
+                //  this.setState({player: data.data})
+            })
+            .catch(err => console.log(err))
         // const user = 
     }
 
@@ -27,9 +27,12 @@ class Player extends Component {
         return (
             <>
                 <div id="player-stat-box">
-                        <p>Player: {this.state.player}</p>
-                        <p>Class: {this.state.class}</p>
-                        <p>Hit Points: {this.state.hp}</p>
+                    <h2>Name: {this.props.userName}</h2>
+                    <h2>Level: {this.props.lvl}</h2>
+                    <h2>Attack: {this.props.attack}</h2>
+                    <h2>Defense: {this.props.defense}</h2>
+                    <h2>Health: {this.props.health}</h2>
+                    <h2>Level: {this.props.lvl}</h2>
                 </div>
             </>
         )

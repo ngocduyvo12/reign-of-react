@@ -48,6 +48,10 @@ router
     .get(userController.devSeedInvent)
 
 router
+    .route("/add-inventory")
+    .post(userController.addInventory)
+
+router
     .route("/initcards/:id")
     .get(userController.initCards)
 
