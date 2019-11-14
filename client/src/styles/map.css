@@ -31,3 +31,7 @@ area {
     border-width: 5px;
     border-color: black;
 }
+
+.ReactModal__Content {
+    border-radius: 18px;
+}

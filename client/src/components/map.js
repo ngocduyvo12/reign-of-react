@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom"
 import { withRouter } from "react-router";
-import "../styles/map.css";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper";
 import mapJSON from "../json/map.json";
 import Help from "../components/Help";
 import Modal from "react-modal";
 import characters from "../json/characters.json"
+import "../styles/map.css";
 
 var MAP = {
     name: "my-map",
@@ -16,7 +16,7 @@ var MAP = {
 }
 
 class Map extends Component {
-    
+
 
     constructor() {
         super();
@@ -73,7 +73,7 @@ class Map extends Component {
         console.log(area);
         this.openModal(area);
     }
-    
+
 
     renderMonsters = (monsters) => {
         console.log(monsters)
@@ -82,12 +82,12 @@ class Map extends Component {
         return <div>
             {monsterInfo.map(item => (
                 <div>
-                        <img key= {item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt=""></img>
-                        <p>{item.name}</p>
+                    <img key={item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt=""></img>
+                    <p>{item.name}</p>
                 </div>
-                    ))}
+            ))}
         </div>
-        
+
     }
 
     handleAttackClick = (name) => {
@@ -112,56 +112,58 @@ class Map extends Component {
                             ></ImageMapper>
                         </div>
                     </Draggable>
-                
-                {this.state.currentArea ?
-                (
 
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    // style={customStyles}
-                    contentLabel="Example Modal"
-                    >
+                    {this.state.currentArea ?
+                        (
 
+                            <Modal
+                                isOpen={this.state.modalIsOpen}
+                                onAfterOpen={this.afterOpenModal}
+                                onRequestClose={this.closeModal}
+                                // style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+                                <div className="modal-title">
+                                    <h1 ref={subtitle => this.subtitle = subtitle}>{this.state.currentArea.name}</h1>
+                                    <h2 ref={subtitle => this.subtitle = subtitle}>Tier: {this.state.currentArea.tier}</h2>
+                                </div>
+                                <div className="modal-enemy">
+                                    <h2 ref={subtitle => this.subtitle = subtitle}>Resides in this area:</h2>
+                                    {this.renderMonsters(this.state.currentArea.monsters)}
+                                </div>
+                                <h2>joins your team</h2>
+                                <div className="modal-reward">
+                                    <span ref={subtitle => this.subtitle = subtitle}>Possible Rewards:</span>
+                                    {this.renderMonsters(this.state.currentArea.monsters)}
+                                </div>
+                                <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
+                                <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
+                                <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
 
-                    <h1 ref={subtitle => this.subtitle = subtitle}>{this.state.currentArea.name}</h1>
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Tier: {this.state.currentArea.tier}</h2>
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Resides in this area: </h2>
-                    {this.renderMonsters(this.state.currentArea.monsters)}
-                    <h2 ref={subtitle => this.subtitle = subtitle}>Possible Rewards:</h2> 
-                    {this.renderMonsters(this.state.currentArea.monsters)} 
-                    <h2>joins your team</h2>
-                    <h2>You Gain: {this.state.currentArea.experience}XP!</h2>
-                    <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
-                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
-                   
-                </Modal>
+                            </Modal>
 
-                ) : ( 
+                        ) : (
 
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal}
-                    // style={customStyles}
-                    contentLabel="Example Modal"
-                    >
+                            <Modal
+                                isOpen={this.state.modalIsOpen}
+                                onAfterOpen={this.afterOpenModal}
+                                onRequestClose={this.closeModal}
+                                // style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+                                <h2 ref={subtitle => this.subtitle = subtitle}>None</h2>
+                                <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
 
-
-                    <h2 ref={subtitle => this.subtitle = subtitle}>None</h2>
-                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
-                
-                </Modal>
-                )
-                }
+                            </Modal>
+                        )
+                    }
                 </div>
 
-                
+
             </>
         )
     }
-    
+
 }
 
 export default Map;
