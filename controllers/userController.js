@@ -222,8 +222,14 @@ module.exports = {
         rarity: parseInt(card.rarity)
       })
         .then(function (newInvCard) {
-          console.log(newInvCard);
-          db.User.findOneAndUpdate({ _id: req.params.id }, { $push: { "inventoryCards": newInvCard._id } }, { new: true }).then(res => console.log(res));
+          // console.log(newInvCard);
+          db.User.findOneAndUpdate(
+            { _id: req.params.id }, 
+            { $push: { "inventoryCards": newInvCard._id } }, 
+            { new: true })
+            .then(res => 
+              console.log(res)
+              );
 
           db.EquippedCards.create({
             name: card.name,
@@ -232,8 +238,15 @@ module.exports = {
             attack: parseInt(card.attack),
             defense: parseInt(card.defense),
             rarity: parseInt(card.rarity)
-          }).then(function (newEquippedCard) {
-            db.User.findOneAndUpdate({ _id: req.params.id }, { $push: { "equippedCards": newEquippedCard._id } }, { new: true }).then(res => console.log(res));
+          }).
+          then(function (newEquippedCard) {
+            db.User.findOneAndUpdate(
+              { _id: req.params.id }, 
+              { $push: { "equippedCards": newEquippedCard._id } }, 
+              { new: true })
+              .then(res => 
+                console.log(res)
+                );
           }
           )
             .then(function (result) {
