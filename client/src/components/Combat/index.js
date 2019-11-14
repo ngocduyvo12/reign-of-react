@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import "./style.css"
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
 import Fightlogs from "../Fightlogs";
+import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
@@ -24,15 +24,9 @@ class Combat extends Component {
     myTotalHealth: 1,
     myLevel: 1,
     myTeam: [],
-
-    //Enemy stats
-    // monStat: 1,
     myEnemyAttack: 1,
     myEnemyDefense: 1,
-    //enemy max health
     myEnemyTotalHealth: 1,
-    // calcEnemyAttack: "Hidden",
-    // calcEnemyDefense: "Hidden",
     myEnemyCurrentHealth: 1,
     locationData: {},
     monster: {},
