@@ -171,7 +171,7 @@ class Combat extends Component {
                 <div>
                     <div className="jumbotron">
                         <h1>Welcome To The Arena</h1>
-                        <PreCombat startRound={this.startRound}/>
+                        {/* <PreCombat startRound={this.startRound}/> */}
                         <div className="container">
                             <div className="row">
                                 <div className="map-info col-md-12">
