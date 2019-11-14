@@ -1,3 +1,13 @@
 .equippedImages, .inventoryCardImage, .cursor {
-    cursor: pointer
+    cursor: pointer;
+    padding: 1rem;
+    margin: 1rem 2rem;
+}
+
+.inventory-inventory {
+    background: yellow;
+}
+
+.inventory-equipped {
+    background: orange;
 }

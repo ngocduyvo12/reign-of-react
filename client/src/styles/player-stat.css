@@ -5,3 +5,15 @@
     margin-top: 1rem;
 }
 
+#player-cards-home {
+    background: brown;
+    margin-bottom: 5rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+    margin-top: 3rem;
+    border-radius: 18px;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    opacity: .9;
+}

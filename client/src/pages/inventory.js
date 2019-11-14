@@ -102,15 +102,16 @@ class Inventory extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid inventory-inventory">
         <div className="row">
-          <div className="col col-md-7">
+          <div className="col-md-7">
+          <h2>Current Inventory</h2>
             {/* inventory go here */}
             <div className="row">
               {this.state.inventoryCard.length ? (
                 <>
                   {this.state.inventoryCard.map(cards => (
-                    <div className="col" key={cards._id}>
+                    <div key={cards._id}>
                       <img
                         id={cards._id}
                         className="inventoryCardImage"
@@ -126,14 +127,15 @@ class Inventory extends Component {
             </div>
           </div>
 
-          <div className="col col-md-5">
+          <div className="col-md-5 inventory-equipped">
+          <h2>Currently Equipped</h2>
             <div className="row">
               {/* equipped cards go here */}
               {this.state.equippedCards.length ? (
                 <>
                   {this.state.equippedCards.map(cards => (
                     // <div className="col col-md-3" key={cards._id}>
-                    <div className="col" key={cards._id}>
+                    <div key={cards._id}>
                       <img
                         id={cards._id}
                         className="equippedImages"

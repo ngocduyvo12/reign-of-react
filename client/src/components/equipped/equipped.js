@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
+import "./style.css";
 
 
 class Equipped extends Component {
@@ -32,7 +33,7 @@ class Equipped extends Component {
                     <>
                         {this.state.cards.map(cards => (
                             // <div className="col col-md-3" key={cards._id}>
-                            <div className="col" key={cards._id}>
+                            <div className="style-equipped" key={cards._id}>
                                 <Link 
                                 to={"/inventory/" + this.props.match.params.id}>
                                     <img
