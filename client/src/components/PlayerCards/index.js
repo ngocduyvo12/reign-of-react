@@ -4,7 +4,8 @@ import "./style.css";
 function PlayerCards(props) {
     // console.log(props)
     return (
-        <div className="Player-stat">
+        <div className="Player-stat"
+        id = {props.id}>
             <h2>Name: {props.userName}</h2>
             <h2>Level: {props.lvl}</h2>
             <h2>Attack: {props.attack}</h2>
