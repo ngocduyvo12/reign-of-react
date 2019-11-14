@@ -9,11 +9,11 @@ import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
 import player from "../../json/player.json"
+import "./style.css"
 
 class Combat extends Component {
 
   state = {
-    //my stats
     items: [],
     myCards: [],
     myPlayer: [],
@@ -273,29 +273,16 @@ class Combat extends Component {
     return (
       <>
         <div>
-          <div className="jumbotron">
-            <h1>Welcome To The Arena</h1>
-            {/* <button onClick={this.startRound}>Start Round</button> */}
+          <div className="jumbotron battle-wrapper">
+            <h1>Welcome To The {this.state.locationData.name} Arena</h1>
             <div className="container">
               <div className="row">
-                <div className="map-info col-md-12">
-                  <div>
-                    <MapInfoCombat
-                      mapName={this.state.locationData.name}
-                      mapLevel={this.state.locationData.tier}
-                      mapMonsters={this.state.locationData.monsters}
-                      mapExp={this.state.locationData.experience}
-                    />
-                  </div>
-                </div>
-
                 <div className="combat-log col-md-3">
                   <div>
                     <Fightlogs />
                   </div>
                 </div>
                 <div className="enemy-cards col-md-9">
-                  <div>
                     <EnemyCards
                       name={this.state.monster.name}
                       image={this.state.monster.image}
@@ -303,26 +290,14 @@ class Combat extends Component {
                       attack={this.state.myEnemyAttack}
                       defense={this.state.myEnemyDefense}
                     />
-                  </div>
                 </div>
                 <div className="player-cards col-md-12">
                   <>
-                    <div className="progress">
-                      <div className="progress-bar progress-bar-danger"
-                        role="progressbar"
-                        aria-valuenow={this.state.myCurrentHealth}
-                        aria-valuemin="0"
-                        aria-valuemax={this.state.myTotalHealth}
-                        style={{ width: `${(this.state.myCurrentHealth / this.state.myTotalHealth) * 100}%` }}>
-                        Current Health : {`${((this.state.myCurrentHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
-                      </div>
-                    </div>
-
                     {this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
                         <h4> Name: {cards.name}</h4>
                         {/* health will probably be changed to current health for each card */}
-
+                        <h5> Health: {cards.currentHealth}</h5>
                         <div className="progress">
                           <div className="progress-bar progress-bar-danger"
                             role="progressbar"
@@ -333,10 +308,6 @@ class Combat extends Component {
                             Current Health : {`${((cards.currentHealth / cards.hitPoint) * 100).toFixed(2)}%`}
                           </div>
                         </div>
-
-                        <h5> Health: {cards.currentHealth}</h5>
-                        <h5> Attack: {cards.attack}</h5>
-                        <h5> Defense: {cards.defense}</h5>
                         <input
                           type="image"
                           id={cards._id}
@@ -350,6 +321,8 @@ class Combat extends Component {
                           onClick={this.attackNow}
                           className="equipped-combat"
                         />
+                        <h5> Attack: {cards.attack}</h5>
+                        <h5> Defense: {cards.defense}</h5>
                       </div>
                     ))}
                   </>

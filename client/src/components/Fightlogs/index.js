@@ -4,7 +4,7 @@ import "./style.css";
 class Fightlogs extends Component {
     render () {
         return (
-            <h2>This is a test, but for the combat logs</h2>
+            <h3>This is a test, but for the combat logs</h3>
         )
     }
 }

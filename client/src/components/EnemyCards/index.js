@@ -4,9 +4,8 @@ import "./style.css";
 function EnemyCards(props) {
 
         return (
-
-            <div>
-                <div className="img-container">
+            <>
+                <div className="enemy-img-container">
                     <img alt={props.name} src={`${process.env.PUBLIC_URL}/img/cards/${props.image}`} />
                 </div>
                 <div className="enemy-stats">
@@ -15,8 +14,7 @@ function EnemyCards(props) {
                     <p>Attack: {props.attack}</p>
                     <p>Defense: {props.defense}</p>
                 </div>
-            </div>
-
+            </>
         )
 }
 

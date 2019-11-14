@@ -124,7 +124,7 @@ class Map extends Component {
                                     </div>
 
                                     <div className="modal-monster col-md-5">
-                                        <h3>Resides in this area:</h3>
+                                        <h3>The follwoing reside in this area:</h3>
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
                                     </div>
