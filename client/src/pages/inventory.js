@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable';
 // Both at the same time
 import Equipped from "../components/equipped/equipped";
+import { Link } from "react-router-dom";
 import "../styles/inventory.css"
 import API from "../utils/API";
 
@@ -102,9 +103,10 @@ class Inventory extends Component {
 
   render() {
     return (
-      <div className="container-fluid inventory-inventory">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col-md-7">
+        <button className="btn-lg btn-dark" id="return-home"><Link to={"/home/" + this.props.match.params.id}>Return Home</Link></button>
+          <div className="col-md-6 inventory-inventory">
           <h2>Current Inventory</h2>
             {/* inventory go here */}
             <div className="row">
