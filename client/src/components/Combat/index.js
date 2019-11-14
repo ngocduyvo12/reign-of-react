@@ -164,7 +164,7 @@ class Combat extends Component {
       lvl: level,
       attack: level * 32,
       defense: level * 41,
-      hitPoint: (level * 234) + 550,
+      hitPoints: (level * 234) + 550,
       currentHealth: (level * 234) + 550,
       image: imageSrc,
       alive: true
@@ -176,7 +176,7 @@ class Combat extends Component {
     //push my cards into team array:
     res.data.equippedCards.map(card => (
       card.alive = true,
-      card.currentHealth = card.hitPoint,
+      card.currentHealth = card.hitPoints,
       myTeamArray.push(card)
     ))
     //set myTeam state to myTeamArray:
@@ -234,7 +234,8 @@ class Combat extends Component {
     //get enemy attack:
     let thisAttack = this.state.myEnemyAttack;
     //get health after attack:
-    let myCardHealthAfterAttack = cardGettingAttacked.currentHealth - thisAttack
+    let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttack), 0);
+    
     //update current health of the attacked card
     //set state of current health for this card. Use card's ID to update its health in state
     //use for loop to use card id of the attacked card and cross reference to this card in state
@@ -306,55 +307,40 @@ class Combat extends Component {
                     />
                   </div>
                 </div>
-                <div className="player-cards col-md-12">
-                  <>
+
+                {this.state.myTeam.map(cards => (
+                  <div key={cards._id} className="player-equipped">
+                    <h4> Name: {cards.name}</h4>
+                    {/* health will probably be changed to current health for each card */}
                     <div className="progress">
                       <div className="progress-bar progress-bar-danger"
                         role="progressbar"
-                        aria-valuenow={this.state.myCurrentHealth}
+                        aria-valuenow={cards.currentHealth}
                         aria-valuemin="0"
-                        aria-valuemax={this.state.myTotalHealth}
-                        style={{ width: `${(this.state.myCurrentHealth / this.state.myTotalHealth) * 100}%` }}>
-                        Current Health : {`${((this.state.myCurrentHealth / this.state.myTotalHealth) * 100).toFixed(2)}%`}
+                        aria-valuemax={cards.hitPoints}
+                        style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
+                        Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
                       </div>
                     </div>
 
-                    {this.state.myTeam.map(cards => (
-                      <div key={cards._id} className="player-equipped">
-                        <h4> Name: {cards.name}</h4>
-                        {/* health will probably be changed to current health for each card */}
-
-                        <div className="progress">
-                          <div className="progress-bar progress-bar-danger"
-                            role="progressbar"
-                            aria-valuenow={cards.currentHealth}
-                            aria-valuemin="0"
-                            aria-valuemax={cards.hitPoint}
-                            style={{ width: `${(cards.currentHealth / cards.hitPoint) * 100}%` }}>
-                            Current Health : {`${((cards.currentHealth / cards.hitPoint) * 100).toFixed(2)}%`}
-                          </div>
-                        </div>
-
-                        <h5> Health: {cards.currentHealth}</h5>
-                        <h5> Attack: {cards.attack}</h5>
-                        <h5> Defense: {cards.defense}</h5>
-                        <input
-                          type="image"
-                          id={cards._id}
-                          src={cards.image}
-                          // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
-                          alt={cards.name}
-                          data-attack={cards.attack}
-                          data-alive={cards.alive}
-                          disabled={cards.alive ? false : true}
-                          //need data for current health and max health
-                          onClick={this.attackNow}
-                          className="equipped-combat"
-                        />
-                      </div>
-                    ))}
-                  </>
-                </div>
+                    <h5> Health: {cards.currentHealth}</h5>
+                    <h5> Attack: {cards.attack}</h5>
+                    <h5> Defense: {cards.defense}</h5>
+                    <input
+                      type="image"
+                      id={cards._id}
+                      // src={cards.image}
+                      src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                      alt={cards.name}
+                      data-attack={cards.attack}
+                      data-alive={cards.alive}
+                      disabled={cards.alive ? false : true}
+                      //need data for current health and max health
+                      onClick={this.attackNow}
+                      className="equipped-combat"
+                    />
+                  </div>
+                ))}
 
               </div>
             </div>
