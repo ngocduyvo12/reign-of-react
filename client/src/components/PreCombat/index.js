@@ -51,10 +51,9 @@ class PreCombat extends Component {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-
                     <h2 ref={subtitle => this.subtitle = subtitle}>REIGN OF REACT</h2>
-                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Blank</button>
-                    <div>Start of Combat, more information</div>
+                    <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Begin Combat Now</button>
+                    <div>Welcome to Reign of React</div>
                 </Modal>
             </div>
         );
