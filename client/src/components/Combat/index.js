@@ -122,7 +122,7 @@ class Combat extends Component {
                 this.setState({ endRound: true})
             } else if (this.state.myHealth <= 0) {
                 alert("NO YOU LOST")
-                this.setState({ endRound: true, myHealth: 500})
+                this.setState({ endRound: true})
             }
         }
     }
@@ -226,8 +226,8 @@ class Combat extends Component {
                                                 <h5> Defense: {cards.defense}</h5>
                                                 <img
                                                     id={cards._id}
-                                                    // src={cards.image}
-                                                    src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                                                    src={cards.image}
+                                                    // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                                                     alt={cards.name}
                                                     data-attack={cards.attack}
                                                     onClick={this.checkCombat}
