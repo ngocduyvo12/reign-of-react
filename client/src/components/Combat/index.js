@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import "./style.css"
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
 import Fightlogs from "../Fightlogs";
@@ -9,6 +8,7 @@ import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
+import "./style.css";
 
 let randomMonster = Math.floor(Math.random() * 3)
 let monsterID = mapJSON[0].monsters[randomMonster]
@@ -171,8 +171,7 @@ class Combat extends Component {
                 <div>
                     <div className="jumbotron">
                         <h1>Welcome To The Arena</h1>
-                        <button onClick={this.startRound}>Start Round</button>
-                        <PreCombat />
+                        <PreCombat startRound={this.startRound}/>
                         <div className="container">
                             <div className="row">
                                 <div className="map-info col-md-12">
