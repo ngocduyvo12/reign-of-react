@@ -4,21 +4,43 @@
     margin-bottom: 3%;
 }
 
-.class-available {
-    background: forestgreen;
-}
+/* .class-available {
+
+} */
 
 .class-description {
-    background: orange;
     height: 20rem;
 }
 
 .random-card {
-    background: brown;
+    height: 20rem;
+}
+
+#class-choice {
+    background-image: url("https://t4.ftcdn.net/jpg/02/36/90/29/240_F_236902910_UhRX71lYWhv8DT5fJhvjNHL4WYoU3Z3N.jpg");
+    background-repeat: repeat;
+    border-style: solid;
+    border-width: 5px;
 }
 
 .btn-dark {
     width: 80%;
     padding: 1rem;
     margin-bottom: 1rem;
+}
+
+.btn-danger {
+    width: 80%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-success {
+    width: 80%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+#play-now {
+    margin-top: 10%;
 }

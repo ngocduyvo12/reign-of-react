@@ -1,8 +1,9 @@
 #player-stat-box {
-    background-color: black;
     height: 520px;
     border-radius: 18px;
     margin-top: 1rem;
+    background-image: url("https://t4.ftcdn.net/jpg/02/36/90/29/240_F_236902910_UhRX71lYWhv8DT5fJhvjNHL4WYoU3Z3N.jpg");
+    background-repeat: repeat;
 }
 
 #player-cards-home {

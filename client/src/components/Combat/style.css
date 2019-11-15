@@ -76,6 +76,14 @@
     padding: 1rem;
 }
 
+#combat-wrap {
+    background-image: url("https://www.robbiegraham.uk/upload/2019/04/18/dark-stone-images-reverse-search-dark-stone-wall-s-79492e0646b1015c.jpg");
+    background-repeat: repeat;
+    border-style: solid;
+    border-width: 5px;
+    border-color: darkred;
+}
+
 #combat-stats {
     background: black;
     height: 300px;

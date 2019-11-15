@@ -277,7 +277,7 @@ class Combat extends Component {
     return (
       <>
         <div>
-          <div className="jumbotron battle-wrapper">
+          <div className="jumbotron battle-wrapper" id="combat-wrap">
             <h1>Welcome To The {this.state.locationData.name} Arena</h1>
             <div className="container">
               <div className="row">

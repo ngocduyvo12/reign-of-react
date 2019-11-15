@@ -73,7 +73,7 @@ class Login extends Component {
   render() {
     return (
       <>
-        <div className="jumbotron">
+        <div className="jumbotron" id="login-page">
           <h1>Welcome to Reign of React!</h1>
           <h3>Sign in or register a new account with us to play</h3>
           <form id="sign-in">

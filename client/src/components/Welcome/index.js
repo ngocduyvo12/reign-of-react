@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-// import Modal from "react-modal";
 import { Link } from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import "./style.css";
 import Druid from "../Druid"
 import Warrior from "../Warrior"
+import "./style.css";
 
 class Welcome extends Component {
 
@@ -26,9 +24,9 @@ class Welcome extends Component {
 
     showPlay = () => {
         if (this.state.redirect) {
-            return <Link to="/home"><button className="btn-lg btn-dark">Play Now</button></Link>
+            return <Link to="/home"><button className="btn-lg btn-dark" id="play-now">Play Now</button></Link>
         } else {
-            return <h3>Please Choose A Class Above!</h3>
+            return <h3>Please Choose A Class Above To Start Playing!</h3>
         }
     }
 
@@ -52,21 +50,15 @@ class Welcome extends Component {
 
     render() {
         return (
-            <div className="container jumbotron">
+            <div className="container jumbotron" id="class-choice">
                 <h1>Welcome To Reign of React</h1>
-                <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-                <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-                <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" /> <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-                <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-                <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-
                 <p>Thank you for joining us on this adventure, to begin playing, please select from available classes below.</p>
                 <p>Once you have selected a class, you will be awarded with four random cards and the game will begin, best of luck!</p>
                 <div className="row">
                     <div className="col-md-4 class-available">
-                        <p>Currently Available Classes:</p>
-                        <button className="btn-lg btn-dark" onClick={this.selectDruid}>Druid</button>
-                        <button className="btn-lg btn-dark" onClick={this.selectWarrior}>Warrior</button>
+                        <h3>Currently Available Classes:</h3>
+                        <button className="btn-lg btn-success" onClick={this.selectDruid}>Druid</button>
+                        <button className="btn-lg btn-danger" onClick={this.selectWarrior}>Warrior</button>
                     </div>
                     <div className="col-md-8 class-description">
                         {this.classInfo()}

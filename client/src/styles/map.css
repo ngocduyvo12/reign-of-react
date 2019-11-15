@@ -62,7 +62,8 @@ area {
 }
 
 .modal-wrap {
-    background: black;
+    background-image: url("https://www.stockvault.net/data/2013/10/20/149512/preview16.jpg");
+    background-repeat: repeat;
     color: white;
     border-radius: 18px;
     padding: 1rem;

@@ -106,6 +106,7 @@ class Inventory extends Component {
       <div className="container-fluid">
         <div className="row">
         <button className="btn-lg btn-dark" id="return-home"><Link to={"/home/" + this.props.match.params.id}>Return Home</Link></button>
+        {/* <Link to="/home"><button className="btn-lg btn-dark">Play Now</button></Link> */}
           <div className="col-md-6 inventory-inventory">
           <h2>Current Inventory</h2>
             {/* inventory go here */}
