@@ -7,7 +7,7 @@ function EnemyCards(props) {
 
             <div>
                 <div className="img-container">
-                    <img alt={props.name} src={`${process.env.PUBLIC_URL}/img/cards/${props.image}`} />
+                    <img alt={props.monster ? props.monster.name : ""} src={`${process.env.PUBLIC_URL}/img/cards/${props.monster ? props.monster.image : ""}`} />
                 </div>
                 <div className="enemy-stats">
                     <p>Name: {props.name}</p>
