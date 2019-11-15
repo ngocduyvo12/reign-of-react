@@ -1,14 +1,11 @@
 const router = require("express").Router();
 const userController = require("../../controllers/userController");
 
-// .get(() => console.log("testttt"))
 // Matches with "/api/user"
 router
     .route("/")
     .get(userController.findAll)
     .post(userController.create);
-
-
 
 //Matches with "/api/user/login"
 router
@@ -46,6 +43,14 @@ router
 router
     .route("/dev/seed-inventory")
     .get(userController.devSeedInvent)
+
+router
+    .route("/add-inventory")
+    .post(userController.addInventory)
+
+router
+    .route("/remove-inventory")
+    .post(userController.removeInventory)
 
 router
     .route("/initcards/:id")
