@@ -8,9 +8,9 @@ function MapInfoCombat(props) {
 
         <div>
             <div className="map-stats">
-                <p>Tier: {props.mapLevel}</p>
-                <p>Name: {props.mapName}</p>
-                <p>Experience: {props.mapExp}</p>
+                <p>Tier: {props.locdata ? props.locdata.tier : ""}</p>
+                <p>Name: {props.locdata ? props.locdata.name : ""}</p>
+                <p>Experience: {props.locdata ? props.locdata.experience : ""}</p>
             </div>
         </div>
 

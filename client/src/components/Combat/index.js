@@ -36,36 +36,40 @@ class Combat extends Component {
     winCard: characters[Math.floor(Math.random() * characters.length)]
   }
 
-//   constructor() {
-//     super();
+  constructor() {
+    super();
 
-//     this.state = {
-//         modalIsOpen: false
-//     };
+    this.state = {
+      modalIsOpen: false
+    };
 
-//     this.openModal = this.openModal.bind(this);
-//     this.afterOpenModal = this.afterOpenModal.bind(this);
-//     this.closeModal = this.closeModal.bind(this);
-//     }
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
 
-//     openModal(area) {
-//         this.setState({ modalIsOpen: true});
-//     }
+  openModal(area) {
+    this.setState({ modalIsOpen: true });
+  }
 
-//     afterOpenModal() {
-//         this.subtitle.style.color = "black";
-//     }
+  afterOpenModal() {
+    this.subtitle.style.color = "black";
+  }
 
-//     closeModal() {
-//         this.setState({ modalIsOpen: false });
-//     }
+  closeModal() {
+    this.setState({ modalIsOpen: false });
+  }
 
   componentDidMount() {
     // console.log(this.props.match.params.id)
     this.loadUserInfo();
     this.loadLocationAndMonsterInfo();
+    console.log("locdata:", this.state.locationData);
     // this.consoleLog();
-    console.log("wincard", this.state.winCard);
+    this.setState({
+      winCard: characters[Math.floor(Math.random() * characters.length)]
+    });
+    // console.log("wincard", characters[Math.floor(Math.random() * characters.length)]);
   }
 
   loadUserInfo = () => {
@@ -128,6 +132,7 @@ class Combat extends Component {
       myEnemyTotalHealth: characters[monsterID].hitpoints * monStatModifier.HPModifier,
       myEnemyCurrentHealth: characters[monsterID].hitpoints * monStatModifier.HPModifier,
     });
+    console.log("in", this.state.locationData);
   }
 
   //function to calculate monster stat modifier based on map tier
@@ -233,12 +238,13 @@ class Combat extends Component {
 
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
-        alert("You have won")
+        // alert("You have won")
 
         API.addInventory(this.state.winCard, this.props.match.params.id)
           .then(res => console.log(res))
           .catch(err => console.log(err))
         //toggle reward modal here
+          this.openModal();
       }
       //if enemy not dead after attack, call enemyAttack
       else {
@@ -294,11 +300,13 @@ class Combat extends Component {
           // this.handleResult(false);
           // console.log(this.state.winCard);
           const lostCard = this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)];
+          this.setState({ lostCard: lostCard });
           API.removeInventory(lostCard, this.props.match.params.id)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
-          alert("You ded")
+          // alert("You ded")
+          this.openModal();
         }
       }
     }
@@ -307,6 +315,10 @@ class Combat extends Component {
 
   handleResult = (result) => {
     console.log("result", result);
+  }
+
+  goHome = () => {
+    this.props.history.push("/home/" + this.props.match.params.id)
   }
 
   render() {
@@ -320,123 +332,141 @@ class Combat extends Component {
             <div className="container">
               <div className="row">
                 <div className="map-info col-md-12">
-                  <div>
-                    <MapInfoCombat
-                      mapName={this.state.locationData.name}
-                      mapLevel={this.state.locationData.tier}
-                      mapMonsters={this.state.locationData.monsters}
-                      mapExp={this.state.locationData.experience}
-                    />
-                  </div>
+                  <MapInfoCombat
+                    locdata={this.state.locationData}
+                  />
                 </div>
 
                 <div className="combat-log col-md-3">
-                  <div>
-                    <Fightlogs />
-                  </div>
+                  <Fightlogs />
                 </div>
                 <div className="enemy-cards col-md-9">
-                  <div>
-                    <EnemyCards
-                      name={this.state.monster.name}
-                      image={this.state.monster.image}
-                      hitpoints={this.state.myEnemyCurrentHealth}
-                      attack={this.state.myEnemyAttack}
-                      defense={this.state.myEnemyDefense}
-                    />
-                  </div>
+                  <EnemyCards
+                    monster={this.state.monster}
+                    hitpoints={this.state.myEnemyCurrentHealth}
+                    attack={this.state.myEnemyAttack}
+                    defense={this.state.myEnemyDefense}
+                  />
                 </div>
 
-                {this.state.myTeam.map(cards => (
-                  <div key={cards._id} className="player-equipped">
-                    <h4> Name: {cards.name}</h4>
-                    {/* health will probably be changed to current health for each card */}
-                    <div className="progress">
-                      <div className="progress-bar progress-bar-danger"
-                        role="progressbar"
-                        aria-valuenow={cards.currentHealth}
-                        aria-valuemin="0"
-                        aria-valuemax={cards.hitPoints}
-                        style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
-                        Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
+                {this.state.myTeam ? (
+                  this.state.myTeam.map(cards => (
+                    <div key={cards._id} className="player-equipped">
+                      <h4> Name: {cards.name}</h4>
+                      {/* health will probably be changed to current health for each card */}
+                      <div className="progress">
+                        <div className="progress-bar progress-bar-danger"
+                          role="progressbar"
+                          aria-valuenow={cards.currentHealth}
+                          aria-valuemin="0"
+                          aria-valuemax={cards.hitPoints}
+                          style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
+                          Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
+                        </div>
                       </div>
-                    </div>
 
-                    <h5> Health: {cards.currentHealth}</h5>
-                    <h5> Attack: {cards.attack}</h5>
-                    <h5> Defense: {cards.defense}</h5>
-                    <input
-                      type="image"
-                      id={cards._id}
-                      // src={cards.image}
-                      src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
-                      alt={cards.name}
-                      data-attack={cards.attack}
-                      data-alive={cards.alive}
-                      disabled={cards.alive ? false : true}
-                      //need data for current health and max health
-                      onClick={this.attackNow}
-                      className="equipped-combat"
-                    />
-                  </div>
-                ))}
+                      <h5> Health: {cards.currentHealth}</h5>
+                      <h5> Attack: {cards.attack}</h5>
+                      <h5> Defense: {cards.defense}</h5>
+                      <input
+                        type="image"
+                        id={cards._id}
+                        // src={cards.image}
+                        src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
+                        alt={cards.name}
+                        data-attack={cards.attack}
+                        data-alive={cards.alive}
+                        disabled={cards.alive ? false : true}
+                        //need data for current health and max health
+                        onClick={this.attackNow}
+                        className="equipped-combat"
+                      />
+                    </div>
+                  ))
+                ) : ""
+                }
 
               </div>
             </div>
           </div>
         </div>
+
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          // style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <>
+            <div>
+              <div className="jumbotron" ref={subtitle => this.subtitle = subtitle}>
+                <h1 ref={subtitle => this.subtitle = subtitle}>End of Combat</h1>
+                <div className="container" ref={subtitle => this.subtitle = subtitle}>
+                  <div className="row" ref={subtitle => this.subtitle = subtitle}>
+
+                    <div className="combat-result col-md-7" ref={subtitle => this.subtitle = subtitle}>
+                      <div>
+                        {this.state.winCard ?
+                          <>
+                            <h3>You win: {this.state.winCard.name}</h3>
+                            <input
+                              type="image"
+                              id={this.state.winCard._id}
+                              // src={cards.image}
+                              src={process.env.PUBLIC_URL + "/img/cards/" + this.state.winCard.image}
+                              alt={this.state.winCard.name}
+                              data-attack={this.state.winCard.attack}
+                              className="equipped-combat"
+                            />
+                          </>
+                          : ""}
+                      </div>
+                    </div>
+
+                    <div className="card-status col-md-5" ref={subtitle => this.subtitle = subtitle}>
+                      <div>
+                        {this.state.lostCard ?
+                          <>
+                            <h3>You lose: {this.state.lostCard.name}</h3>
+                            <input
+                              type="image"
+                              id={this.state.lostCard._id}
+                              // src={cards.image}
+                              src={process.env.PUBLIC_URL + "/img/cards/" + this.state.lostCard.image}
+                              alt={this.state.lostCard.name}
+                              data-attack={this.state.lostCard.attack}
+                              className="equipped-combat"
+                            />
+                          </>
+                          : ""}
+                      </div>
+                    </div>
+
+                    <div className="card-inventory col-md-12" ref={subtitle => this.subtitle = subtitle}>
+                      <div>
+                        Player stats and card inventory will go here
+                                    </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="btn btn-lg btn-dark result-submit"
+                      onClick={this.goHome}
+                    >Return to Map</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+
+        </Modal>
       </>
     )
   }
 }
 
-{/* <Modal
 
-isOpen={this.state.modalIsOpen}
-onAfterOpen={this.afterOpenModal}
-onRequestClose={this.closeModal}
-// style={customStyles}
-contentLabel="Example Modal"
->
-<>
-                <div>
-                    <div className="jumbotron" ref={subtitle => this.subtitle = subtitle}>
-                    <h1 ref={subtitle => this.subtitle = subtitle}>End of Combat</h1>
-                        <div className="container" ref={subtitle => this.subtitle = subtitle}>
-                            <div className="row" ref={subtitle => this.subtitle = subtitle}>
-
-                                <div className="combat-result col-md-7" ref={subtitle => this.subtitle = subtitle}>
-                                    <div>
-                                        insert whether player won or lost the round
-                                        repercussions of the results
-                                    </div>
-                                </div>
-
-                                <div className="card-status col-md-5" ref={subtitle => this.subtitle = subtitle}>
-                                    <div>
-                                        Append image of card that is being gained
-                                        Append image of card that is lost
-                                    </div>
-                                </div>
-
-                                <div className="card-inventory col-md-12" ref={subtitle => this.subtitle = subtitle}>
-                                    <div>
-                                        Player stats and card inventory will go here
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="btn btn-lg btn-dark result-submit"
-                                    onClick={this.setRedirect}
-                                >Return to Map</button>
-                                
-                            </div>
-                        </div>                    
-                    </div>
-                </div>
-            </>
-
-</Modal> */}
 
 export default Combat;
