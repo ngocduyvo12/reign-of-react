@@ -1,6 +1,42 @@
 [
     {
         "lvl": 1,
-        "image": "place-holder.jpg"
+        "image": "player_1.jpg"
+    },
+    {
+        "lvl": 2,
+        "image": "player_2.jpg"
+    },
+    {
+        "lvl": 3,
+        "image": "player_3.jpg"
+    },
+    {
+        "lvl": 4,
+        "image": "player_4.jpg"
+    },
+    {
+        "lvl": 5,
+        "image": "player_5.jpg"
+    },
+    {
+        "lvl": 6,
+        "image": "player_6.jpg"
+    },
+    {
+        "lvl": 7,
+        "image": "player_7.jpg"
+    },
+    {
+        "lvl": 8,
+        "image": "player_8.jpg"
+    },
+    {
+        "lvl": 9,
+        "image": "player_9.jpg"
+    },
+    {
+        "lvl": 10,
+        "image": "player_10.jpg"
     }
 ]
