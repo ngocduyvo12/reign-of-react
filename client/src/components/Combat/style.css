@@ -1,30 +1,115 @@
+.battle-wrapper {
+    height: 790px;
+}
+
+.image0 {
+    background-image: url("../../styles/arenas/0.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image1 {
+    background-image: url("../../styles/arenas/1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image2 {
+    background-image: url("../../styles/arenas/2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image3 {
+    background-image: url("../../styles/arenas/3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image4 {
+    background-image: url("../../styles/arenas/4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image5 {
+    background-image: url("../../styles/arenas/5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image6 {
+    background-image: url("../../styles/arenas/6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image7 {
+    background-image: url("../../styles/arenas/7.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image8 {
+    background-image: url("../../styles/arenas/8.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image9 {
+    background-image: url("../../styles/arenas/9.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
 .jumbotron {
-    background: black;
+    padding: 1rem;
+}
+
+#combat-wrap {
+    background-image: url("https://www.robbiegraham.uk/upload/2019/04/18/dark-stone-images-reverse-search-dark-stone-wall-s-79492e0646b1015c.jpg");
+    background-repeat: repeat;
+    border-style: solid;
+    border-width: 5px;
+    border-color: darkred;
 }
 
 #combat-stats {
     background: black;
-    height: 400px;
+    height: 300px;
 }
 
 .combat-log {
-    background: red;
-    height: 400px;
+    height: 300px;
+    background-color: black;
+    border-radius: 18px;
+    text-align: center;
+    border-width: 5px;
+    border-style: solid;
+    border-color: maroon;
 }
 
 .enemy-cards {
-    background: orange;
-    height: 400px;
-}
-
-.player-inventory {
-    background: green;
-    height: 400px;
+    height: 300px;
 }
 
 .player-cards {
-    background: blueviolet;
     height: 400px;
+    border-style: solid;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    margin-top: 10px;
 }
 
 .card {
@@ -34,8 +119,72 @@
 .player-equipped {
     width: 20%;
     float: left;
+    margin-top: 1%;
 }
 
 .player-character {
     margin-top: 5rem;
+}
+
+.progress {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+.progress-bar {
+    background-color: red;
+}
+
+.equipped-combat {
+    height: 200px;
+    width: 160px;
+}
+
+.container {
+    max-width: 1300px;
+}
+
+#player-stat-ec {
+    height: 100px;
+    color: white;
+}
+
+#player-ec-lost {
+    height: 300px;
+    color: white;
+}
+
+#player-ec-win {
+    height: 300px;
+    color: white;
+}
+
+#ec-button {
+    width: 200%;
+    margin-left: 0;
+}
+
+#ec-wrapper {
+    background-image: url("https://www.stockvault.net/data/2013/10/20/149512/preview16.jpg");
+    background-repeat: repeat;
+    border-radius: 18px;
+    padding: 1rem;
+}
+
+.my-attack-log {
+    margin-top: 30%;
+}
+
+#ec {
+    color: white;
+}
+
+#enemy-health {
+    background-color: darkorange;
+}
+
+#enemy-hp {
+    width: 60%;
+    height: 30px;
 }

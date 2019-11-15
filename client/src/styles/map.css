@@ -1,10 +1,13 @@
 #map-box {
     overflow: hidden;
     width: 98%;
-    height: 700px;
-    /* background-color: red; */
-    background-image: url(./background.png);
+    height: 520px;
+    background-image: url(/static/media/background.5f055dfe.png);
     position: absolute;
+    margin-top: 1rem;
+    border-radius: 18px;
+    border-style: solid;
+    border-width: 4px;
 }
 
 #text-box {
@@ -18,4 +21,75 @@
 
 area {
     cursor: pointer;
+}
+
+.map-hold {
+    background: brown;
+    height: 560px;
+    border-radius: 18px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black
+}
+
+.ReactModal__Content {
+    border-radius: 18px;
+    background: none;
+    bottom: 105px;
+}
+
+.ReactModal__Content--after-open {
+    background: none;
+    border: none;
+}
+
+.modal-title {
+    margin-bottom: 2rem;
+}
+
+.modal-monster {
+    float: left;
+    border-style: solid;
+    margin-left: 5rem;
+    border-radius: 18px;
+}
+
+.modal-reward {
+    float: right;
+    border-style: solid;
+    margin-right: 5rem;
+    border-radius: 18px;
+}
+
+.monsters-rendered {
+    float: left;
+    margin-left: 11%;
+}
+
+.modal-wrap {
+    background-image: url("https://www.stockvault.net/data/2013/10/20/149512/preview16.jpg");
+    background-repeat: repeat;
+    color: white;
+    border-radius: 18px;
+    padding: 1rem;
+}
+
+#map-box {
+    background-color: #7585b2;
+}
+
+#monsters-modal {
+    height: 140px;
+}
+
+#map-compass {
+    height: 130px;
+    position: absolute;
+    left: 21px;
+    z-index: 3;
+    top: 400px
+}
+
+.ReactModal__Overlay {
+    z-index: 4;
 }

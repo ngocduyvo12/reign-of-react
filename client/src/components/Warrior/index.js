@@ -3,11 +3,12 @@ import "./style.css";
 
 class Warrior extends Component {
 
-    render () {
+    render() {
         return (
             <>
-            <p>The Warrior is a crazed killing machine, capable of facing opponents one on one and coming out ahead in battle. Blessed with incredible strength and fortitude, this class is capable of immense destruction. The Warrior is a great choice for you as you move through the combat arenas within Reign of React.</p>
-            {/* <button className="btn-lg btn-dark">Select The Warrior</button> */}
+                <div id="warrior-info">
+                    <p>The Warrior is a crazed killing machine, capable of facing opponents one on one and coming out ahead in battle. Blessed with incredible strength and fortitude, this class is capable of immense destruction. The Warrior is a great choice for you as you move through the combat arenas within Reign of React.</p>
+                </div>
             </>
         )
     }

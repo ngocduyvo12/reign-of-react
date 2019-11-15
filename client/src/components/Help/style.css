@@ -1,4 +1,17 @@
 #modal-close {
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-top: 0;
+}
+
+.all-info {
+    text-align: left;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.help-wrapper {
+    background: black;
+    color: white;
+    padding-bottom: 2rem;
+    border-radius: 18px;
 }

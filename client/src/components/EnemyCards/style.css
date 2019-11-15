@@ -5,6 +5,10 @@ img {
 
 .enemy-stats {
     width: 50%;
-    margin-top: 10%;
+    margin-top: 5%;
     font-size: 24px;
+}
+
+.enemy-img-container {
+    margin-top: 5%;
 }

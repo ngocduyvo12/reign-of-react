@@ -10,8 +10,13 @@ import API from "../utils/API";
 class Home extends Component {
 
     state = {
+        randomBackground: [],
         player: []
     }
+
+    // background = () => {
+    //     player: []
+    // }
 
     componentDidMount() {
         API.getUserId(this.props.match.params.id)
@@ -34,9 +39,10 @@ class Home extends Component {
     render() {
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid map-hold">
                 <div className="row">
-                    <div className="col col-lg-8">
+                    <div className="col-md-8">
+                    <img id="map-compass" src="../img/map/compass.png" />
                         {/* Map div */}
                         <div id="map-box">
                             {/* call on map component */}
@@ -45,10 +51,9 @@ class Home extends Component {
                         </div>
                     </div>
 
-                    <div className="col col-lg-4">
+                    <div className="col col-md-4">
                         {/* player stats div */}
                         <div className="row">
-                            <div className="col">
                                 <div id="player-stat-box">
                                     <Help />
                                     {/* <div className="row align-items-center"> */}
@@ -60,18 +65,16 @@ class Home extends Component {
                                             health={(this.loadUserLevel() * 234) + 550}
                                         />
                                     {/* </div> */}
-                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* equipped card div */}
-                        <div className="row">
-                            {/* logic to display current equipped cards */}
-                            <Equipped {...this.props} />
-                        </div>
+                    {/* equipped card div */}
+                    <div className="col-md-12" id="player-cards-home">
+                        {/* logic to display current equipped cards */}
+                        <Equipped {...this.props} />
                     </div>
                 </div>
-
             </div>
         )
     }

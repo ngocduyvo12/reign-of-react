@@ -3,21 +3,6 @@
     color: white;
 }
 
-.card-inventory {
-    height: 300px;
-    background-color: green;
-}
-
-.card-status {
-    height: 400px;
-    background: red;
-}
-
-.combat-result {
-    height: 400px;
-    background: blue;
-}
-
 .result-submit {
     margin-left: 200px
 }
