@@ -1,14 +1,11 @@
 const router = require("express").Router();
 const userController = require("../../controllers/userController");
 
-// .get(() => console.log("testttt"))
 // Matches with "/api/user"
 router
     .route("/")
     .get(userController.findAll)
     .post(userController.create);
-
-
 
 //Matches with "/api/user/login"
 router
@@ -49,12 +46,10 @@ router
 
 router
     .route("/add-inventory")
-    // .post(() => alert("in route"))
     .post(userController.addInventory)
 
 router
     .route("/remove-inventory")
-    // .post(() => alert("in route"))
     .post(userController.removeInventory)
 
 router

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import "./style.css"
 import { Redirect } from "react-router-dom"
 import Modal from "react-modal";
