@@ -1,9 +1,75 @@
-/* body {
-    background-image: url("https://cdn.dodowallpaper.com/full/822/fantasy-underwater-wallpapers-1.jpg");
-} */
-
 .battle-wrapper {
     height: 790px;
+}
+
+.image0 {
+    background-image: url("../../styles/arenas/0.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image1 {
+    background-image: url("../../styles/arenas/1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image2 {
+    background-image: url("../../styles/arenas/2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image3 {
+    background-image: url("../../styles/arenas/3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image4 {
+    background-image: url("../../styles/arenas/4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image5 {
+    background-image: url("../../styles/arenas/5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image6 {
+    background-image: url("../../styles/arenas/6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image7 {
+    background-image: url("../../styles/arenas/7.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image8 {
+    background-image: url("../../styles/arenas/8.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
+}
+
+.image9 {
+    background-image: url("../../styles/arenas/9.jpg");
+    background-repeat: no-repeat;
+    background-size: cover, contain;
+    background-attachment: fixed;
 }
 
 .jumbotron {

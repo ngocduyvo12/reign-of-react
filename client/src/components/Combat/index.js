@@ -35,12 +35,16 @@ class Combat extends Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.match.params.id)
     this.loadUserInfo();
     this.loadLocationAndMonsterInfo();
-    // this.consoleLog();
   }
 
+  loadArena = () => {
+    let randomImage = Math.floor(Math.random() * 9)
+    console.log("this is map image" + randomImage)
+    document.body.classList.add(`image${randomImage}`)
+  }
+  
   loadUserInfo = () => {
     API.getUserId(this.props.match.params.id)
       // .then(res => this.setState({ myCards: res.data.equippedCards, myPlayer: res.data }))
@@ -73,6 +77,7 @@ class Combat extends Component {
 
   //load location and monster info based on name of the map in param.
   loadLocationAndMonsterInfo = () => {
+    this.loadArena()
     //get the data of the map using the name in params
     const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
     // console.log(locData)
@@ -269,7 +274,6 @@ class Combat extends Component {
   }
 
   render() {
-    // this.consoleLog()
     return (
       <>
         <div>

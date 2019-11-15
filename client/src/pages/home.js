@@ -8,6 +8,14 @@ import "../styles/player-stat.css";
 
 class Home extends Component {
 
+    state = {
+        randomBackground: []
+    }
+
+    background = () => {
+        
+    }
+
     handleLocationClick = (name) => {
         this.props.history.push("/combat/" + name + "/" + this.props.match.params.id)
     }
