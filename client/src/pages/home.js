@@ -18,13 +18,13 @@ class Home extends Component {
             <div className="container-fluid map-hold">
                 <div className="row">
                     <div className="col-md-8">
+                    <img id="map-compass" src="../img/map/compass.png" />
                         {/* Map div */}
                         <div id="map-box">
                             {/* call on map component */}
                             {/* <MapWithRouter userid={this.props.match.params.id} /> */}
                             <Map handleLocationClick={this.handleLocationClick} />
                         </div>
-                        <img id="map-compass" src="../img/map/compass.png" />
                     </div>
 
                     {/* player stats div */}
