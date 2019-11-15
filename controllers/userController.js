@@ -179,6 +179,7 @@ module.exports = {
   addInventory: function (req, res) {
     const card = req.body.card;
     const userid = req.body.userid;
+    const exp = req.body.exp;
     db.InventoryCards.create({
       name: card.name,
       image: card.image,
@@ -191,7 +192,7 @@ module.exports = {
         db.User.findOneAndUpdate({
           _id: userid
         },
-          { $push: { "inventoryCards": newCard._id } },
+          { $push: { "inventoryCards": newCard._id }, $inc: {"exp": exp} },
           { new: true })
           .then(function (result) {
             res.json(result)
@@ -203,6 +204,7 @@ module.exports = {
   removeInventory: function (req, res) {
     const card = req.body.card;
     const userid = req.body.userid;
+    const exp = req.body.exp;
 
     db.EquippedCards.findByIdAndDelete(card)
       .then(function (removedCard) {
@@ -215,7 +217,7 @@ module.exports = {
                 db.InventoryCards.findByIdAndDelete(card)
                   .then(function (removedCard) {
                     const id = invCards.inventoryCards.find(element => element.name === card.name);
-                    db.User.findByIdAndUpdate(userid, { $pull: { inventoryCards: id } })
+                    db.User.findByIdAndUpdate(userid, { $pull: { inventoryCards: id }, $inc: {"exp": exp} })
                       .then(res => res)
                   });
 

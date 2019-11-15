@@ -22,9 +22,9 @@ export default {
   //un-equip a card and add to inventory
   unEquipCard: (data) => axios.post("/api/user/unEquipCard", data),
 
-  addInventory: (card, userid) => axios.post("/api/user/add-inventory", {card: card, userid: userid}),
+  addInventory: (card, userid, exp) => axios.post("/api/user/add-inventory", {card: card, userid: userid, exp: exp}),
 
-  removeInventory: (card, userid) => axios.post("/api/user/remove-inventory", {card: card, userid: userid}),
+  removeInventory: (card, userid, exp) => axios.post("/api/user/remove-inventory", {card: card, userid: userid, exp: exp}),
 
   initCards: (data) => axios.get("/api/user/initcards/" + data)
 };
