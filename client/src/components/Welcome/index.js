@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import Druid from "../Druid"
 import Warrior from "../Warrior"
+import API from "../../utils/API"
 import "./style.css";
 
 class Welcome extends Component {
@@ -10,6 +10,17 @@ class Welcome extends Component {
     state = {
         class: "",
         redirect: false
+    }
+
+    componentDidMount() {
+        this.createNewCardsForUser()
+    }
+    
+    createNewCardsForUser = () => {
+        API.initCards(this.props.match.params.id)
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
+
     }
 
     classInfo = () => {
@@ -24,7 +35,7 @@ class Welcome extends Component {
 
     showPlay = () => {
         if (this.state.redirect) {
-            return <Link to="/home"><button className="btn-lg btn-dark" id="play-now">Play Now</button></Link>
+            return <Link to={`/home/${this.props.match.params.id}`}><button className="btn-lg btn-dark">Play Now</button></Link>
         } else {
             return <h3>Please Choose A Class Above To Start Playing!</h3>
         }

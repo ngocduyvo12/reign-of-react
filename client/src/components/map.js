@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom"
-import { withRouter } from "react-router";
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
+import Draggable from 'react-draggable'; // Both at the same time
 import ImageMapper from "react-image-mapper";
 import mapJSON from "../json/map.json";
-import Help from "../components/Help";
 import Modal from "react-modal";
 import characters from "../json/characters.json"
 import "../styles/map.css";
@@ -39,40 +36,37 @@ class Map extends Component {
 
     //function for moving map:
     moveMap(event) {
-        console.log(`Pressed ${event.keyCode}`)
+        const element = document.getElementById("text-box");
         switch (event.keyCode) {
             //UP
             case 38:
-                var element = document.getElementById("text-box");
                 element.style.top = parseInt(element.style.top) + 20 + "px"
                 break;
             //DOWN
             case 40:
-                var element = document.getElementById("text-box");
                 element.style.top = parseInt(element.style.top) - 20 + "px"
                 break;
             //LEFT
             case 37:
-                var element = document.getElementById("text-box");
                 element.style.left = parseInt(element.style.left) + 20 + "px"
                 break;
             //RIGHT
             case 39:
-                var element = document.getElementById("text-box");
                 element.style.left = parseInt(element.style.left) - 20 + "px"
+                break;
+            default:
+                break;
         }
     }
 
 
     getMapInfoHandler = (area) => {
-        console.log(area);
         this.openModal(area);
     }
 
 
     renderMonsters = (monsters) => {
-        console.log(monsters)
-        var monsterInfo = monsters.map(monster => (characters.filter(character => character.id == monster))[0]);
+        var monsterInfo = monsters.map(monster => (characters.filter(character => character.id === monster))[0]);
         // return monsterInfo;
         return <div>
             {monsterInfo.map(item => (

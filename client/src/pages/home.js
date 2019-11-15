@@ -1,23 +1,38 @@
 import React, { Component } from "react";
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
-import Map from "../components/map";
-import Help from "../components/Help";
-import Equipped from "../components/equipped/equipped";
+import Map from "../components/map"
+import Help from "../components/Help"
+import Player from "../components/Player";
 import "../styles/map.css";
-import "../styles/player-stat.css";
+import "../styles/player-stat.css"
+import Equipped from "../components/equipped/equipped"
+import API from "../utils/API";
 
 class Home extends Component {
 
-    state = {
-        randomBackground: []
-    }
+    // state = {
+    //     randomBackground: []
+    // }
 
-    background = () => {
-        
+    // background = () => {
+    //     player: []
+    // }
+
+    componentDidMount() {
+        API.getUserId(this.props.match.params.id)
+            .then(data => {
+                this.setState({ player: data.data })
+            })
+            .catch(err => console.log(err))
     }
 
     handleLocationClick = (name) => {
         this.props.history.push("/combat/" + name + "/" + this.props.match.params.id)
+    }
+
+    loadUserLevel = () => {
+        const expThreshHold = 300
+        let level = Math.floor((1 + Math.sqrt(1 + 8 * this.state.player.exp / expThreshHold)) / 2)
+        return level
     }
 
     render() {
@@ -35,10 +50,21 @@ class Home extends Component {
                         </div>
                     </div>
 
-                    {/* player stats div */}
-                    <div className="col-md-4">
-                        <div id="player-stat-box">
-                            <Help />
+                    <div className="col col-md-4">
+                        {/* player stats div */}
+                        <div className="row">
+                                <div id="player-stat-box">
+                                    <Help />
+                                    {/* <div className="row align-items-center"> */}
+                                        <Player
+                                            userName={this.state.player.userName}
+                                            lvl={this.loadUserLevel()}
+                                            attack={this.loadUserLevel() * 32}
+                                            defense={this.loadUserLevel() * 41}
+                                            health={(this.loadUserLevel() * 234) + 550}
+                                        />
+                                    {/* </div> */}
+                            </div>
                         </div>
                     </div>
 

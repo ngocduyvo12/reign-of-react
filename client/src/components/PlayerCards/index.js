@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import "./style.css";
 
 function PlayerCards(props) {
-    // console.log(props)
     return (
         <div className="Player-stat"
         id = {props.id}>

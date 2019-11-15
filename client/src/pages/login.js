@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import API from "../utils/API";
 import "../styles/login.css";
 
@@ -32,7 +31,6 @@ class Login extends Component {
       })
         .then(res => { this.props.history.push(`/home/${res.data[0]._id}`) })
         .catch(err => {
-          // console.log(err.response.status)
           if (err.response.status === 404) {
             alert("Incorrect username and password")
           }
@@ -52,19 +50,15 @@ class Login extends Component {
       exp: 0
     })
       .then(res => {
-        alert(`Welcome ${res.data.userName}`)
-        // alert(alert(res.data._id));
-        API.initCards(res.data._id)
-          .then(res => console.log(res))
-          .catch(err => console.log(err))
+        this.props.history.push(`/welcome/${res.data._id}`)
+
       })
       .catch(err => {
-        console.log(err.response.status)
+        console.log(err)
         if (err.response.status === 422) {
           alert("Username already exist")
         }
       })
-
 
   }
 
@@ -80,12 +74,12 @@ class Login extends Component {
             <h3>Sign In</h3>
             <div className="form-group">
               <label
-                for="exampleInputEmail1"
+                htmlFor="loginEmail"
               >Email address</label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="loginEmail"
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
                 name="userNameLogin"
@@ -98,11 +92,11 @@ class Login extends Component {
               >Please Enter Your Email</small>
             </div>
             <div className="form-group">
-              <label for="exampleInputPassword1">Password</label>
+              <label htmlFor="loginPassword">Password</label>
               <input
                 type="password"
                 className="form-control"
-                id="exampleInputPassword1"
+                id="loginPassword"
                 placeholder="Password"
                 name="passwordLogin"
                 value={this.state.passwordLogin}
@@ -124,11 +118,11 @@ class Login extends Component {
           <form id="register">
             <h3>Register New Account</h3>
             <div className="form-group">
-              <label for="exampleInputEmail1">Username</label>
+              <label htmlFor="registerEmail">Username</label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="registerEmail"
                 aria-describedby="emailHelp"
                 placeholder="Enter email"
                 name="userNameSignup"
@@ -138,11 +132,11 @@ class Login extends Component {
             </div>
 
             <div className="form-group">
-              <label for="exampleInputPassword1">Password</label>
+              <label htmlFor="registerPassword">Password</label>
               <input
                 type="password"
                 className="form-control"
-                id="exampleInputPassword1"
+                id="registerPassword"
                 placeholder="Password"
                 name="passwordSignup"
                 value={this.state.passwordSignup}
@@ -151,11 +145,11 @@ class Login extends Component {
             </div>
 
             <div className="form-group">
-              <label for="exampleInputPassword1">Confirm Password</label>
+              <label htmlFor="registerConfirmPassword">Confirm Password</label>
               <input
                 type="password"
                 className="form-control"
-                id="exampleInputPassword1"
+                id="registerConfirmPassword"
                 placeholder="Password"
                 name="rePassword"
                 value={this.state.rePassword}

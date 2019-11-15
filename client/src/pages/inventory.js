@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import Draggable, { DraggableCore } from 'react-draggable';
-// Both at the same time
-import Equipped from "../components/equipped/equipped";
-import { Link } from "react-router-dom";
 import API from "../utils/API";
 import "../styles/inventory.css"
-
-
 
 class Inventory extends Component {
 
@@ -29,7 +23,6 @@ class Inventory extends Component {
       .then(res => {
         this.setState({ equippedCards: res.data.equippedCards })
         this.setState({ inventoryCard: res.data.inventoryCards})
-        // console.log(res.data);
       })
       .catch(err => console.log(err))
   }
@@ -47,12 +40,10 @@ class Inventory extends Component {
   equip = (event) => {
 
     if (this.state.equippedCards.length > 3) {
-      // console.log("clicked")
       alert("No more cards can be equipped");
       return 
     }
 
-    console.log("clicked after if")
     const id = event.target.id
     for (let i = 0; i < this.state.inventoryCard.length; i++){
       if(id === this.state.inventoryCard[i]._id){
@@ -64,7 +55,6 @@ class Inventory extends Component {
   }
   
   equipCard = () => {
-    console.log(this.state.activeCard)
     API.updateEquippedCard(this.state.activeCard)
     .then(res => {
       this.componentDidMount();
@@ -80,22 +70,18 @@ class Inventory extends Component {
   //call API route to remove this card id from equippedCard array in database and add it to the inventoryCard array in database
   unEquip = (event) => {
     const id = event.target.id
-    console.log(event.target)
     for(let i = 0; i < this.state.equippedCards.length; i++){
       if(id === this.state.equippedCards[i]._id){
         const newActiveState = {...this.state.equippedCards[i]}
         newActiveState.userID = this.props.match.params.id
         this.setState({activeCard: newActiveState}, this.cardUnEquip)
-        // console.log(this.state.activeCard)
       }
     }
   }
   
   cardUnEquip = () => {
-    console.log(this.state.activeCard)
     API.unEquipCard(this.state.activeCard)
     .then(res => {
-      console.log("this hit")
       this.componentDidMount();
     })
     .catch(err => console.log(err))
@@ -117,7 +103,7 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="inventoryCardImage"
-                        src={cards.image}
+                        src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
                         alt={cards.name}
                         onClick={this.equip}
                       />
@@ -141,7 +127,7 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="equippedImages"
-                        src={cards.image}
+                        src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
                         alt={cards.name}
                         onClick={this.unEquip}
                       />
