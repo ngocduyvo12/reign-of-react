@@ -327,7 +327,6 @@ class Combat extends Component {
                     ))}
                   </>
                 </div>
-
               </div>
             </div>
           </div>
