@@ -16,3 +16,13 @@
     border-width: 5px;
     opacity: .9;
 }
+
+#player-image {
+    height: 300px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: gold;
+    position: absolute;
+    right: 40px;
+    bottom: 10px;
+}

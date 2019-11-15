@@ -41,7 +41,7 @@ class Help extends Component {
     render() {
         return (
             <div>
-                <button className="btn btn-dark btn-lg" onClick={this.openModal}>Help</button>
+                <button id="button-fix" className="btn btn-dark btn-lg" onClick={this.openModal}>Help</button>
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     onAfterOpen={this.afterOpenModal}

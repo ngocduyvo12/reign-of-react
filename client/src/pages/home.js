@@ -2,38 +2,41 @@ import React, { Component } from "react";
 import Map from "../components/map"
 import Help from "../components/Help"
 import Player from "../components/Player";
+import Equipped from "../components/equipped/equipped"
+import player from "../json/player.json"
+import API from "../utils/API";
 import "../styles/map.css";
 import "../styles/player-stat.css"
-import Equipped from "../components/equipped/equipped"
-import API from "../utils/API";
 
 class Home extends Component {
 
     state = {
         randomBackground: [],
-        player: []
+        player: [],
+        playerImage: "",
+        myLevel: ""
     }
-
-    // background = () => {
-    //     player: []
-    // }
 
     componentDidMount() {
         API.getUserId(this.props.match.params.id)
             .then(data => {
-                this.setState({ player: data.data })
+                const expThreshHold = 300
+                let level = Math.floor((1 + Math.sqrt(1 + 8 * data.data.exp / expThreshHold)) / 2)
+                let imageSrc = ""
+                if (level > 0) {
+                    imageSrc = player[level - 1].image
+                }
+                this.setState({ 
+                    player: data.data,
+                    playerImage : imageSrc,
+                    myLevel : level
+                 })
             })
             .catch(err => console.log(err))
     }
 
     handleLocationClick = (name) => {
         this.props.history.push("/combat/" + name + "/" + this.props.match.params.id)
-    }
-
-    loadUserLevel = () => {
-        const expThreshHold = 300
-        let level = Math.floor((1 + Math.sqrt(1 + 8 * this.state.player.exp / expThreshHold)) / 2)
-        return level
     }
 
     render() {
@@ -59,11 +62,12 @@ class Home extends Component {
                                     {/* <div className="row align-items-center"> */}
                                         <Player
                                             userName={this.state.player.userName}
-                                            lvl={this.loadUserLevel()}
-                                            attack={this.loadUserLevel() * 32}
-                                            defense={this.loadUserLevel() * 41}
-                                            health={(this.loadUserLevel() * 234) + 550}
+                                            lvl={this.state.myLevel}
+                                            attack={this.state.myLevel * 32}
+                                            defense={this.state.myLevel * 41}
+                                            health={(this.state.myLevel * 234) + 550}
                                         />
+                                        <img id="player-image" src={process.env.PUBLIC_URL + "/img/cards/" + this.state.playerImage}></img>
                                     {/* </div> */}
                             </div>
                         </div>

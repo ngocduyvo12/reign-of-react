@@ -6,14 +6,13 @@ class Player extends Component {
     render() {
         return (
             <>
-
-                    <h4>Name: {this.props.userName}</h4>
-                    <br />
-                    <h4>Level: {this.props.lvl}</h4>
-                    <h4>Attack: {this.props.attack}</h4>
-                    <h4>Defense: {this.props.defense}</h4>
-                    <h4>Health: {this.props.health}</h4>
-
+                <div className="player-stat-fix">
+                    <h3>Name: {this.props.userName}</h3>
+                    <h5>Level: {this.props.lvl}</h5>
+                    <h5>Attack: {this.props.attack}</h5>
+                    <h5>Defense: {this.props.defense}</h5>
+                    <h5>Health: {this.props.health}</h5>
+                </div>
             </>
         )
     }

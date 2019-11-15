@@ -15,3 +15,8 @@
     padding-bottom: 2rem;
     border-radius: 18px;
 }
+
+#button-fix {
+    width: 20%;
+    margin-right: -75%;
+}
