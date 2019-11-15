@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import "../styles/login.css";
 import API from "../utils/API";
+import "../styles/login.css";
 
 class Login extends Component {
 
@@ -62,12 +62,10 @@ class Login extends Component {
 
   }
 
-
-
   render() {
     return (
       <>
-        <div className="jumbotron">
+        <div className="jumbotron" id="login-page">
           <h1>Welcome to Reign of React!</h1>
           <h3>Sign in or register a new account with us to play</h3>
           <form id="sign-in">
@@ -163,15 +161,9 @@ class Login extends Component {
                 onClick={this.handleFormSubmitSignup}
               >Submit</button></Link>
           </form>
-
-
-          <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-          <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
-          <img className="front-card" src="https://www.maxplayingcards.com/en/wp-content/uploads/2013/10/KoNW_backLIMITED.png" />
         </div>
       </>
     )
-
   }
 }
 

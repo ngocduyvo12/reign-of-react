@@ -49,26 +49,21 @@ class Help extends Component {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-
-                    <h2 ref={subtitle => this.subtitle = subtitle}>REIGN OF REACT</h2>
+                    <div className="help-wrapper">
+                    <h3 ref={subtitle => this.subtitle = subtitle}>REIGN OF REACT</h3>
                     <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
-                    <div>What is Lorem Ipsum?
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Why do we use it?
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-
-
-Where does it come from?
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
-
-Where can I get some?
-There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</div>
+                        <h4>Welcome to the Reign of React Help Page</h4>
+                    <div className="all-info">
+                        <p>Now that you have chosen a class and set up a character, you can now enjoy all the features of Reign of React. You are currently at the home page, from here you have perform a variety of operations. These include the ability to check your current character statistics, view your currently equipped cards or inventory, to explore the map of Reign of React, and also to engage in combat.</p>
+                        <p>You can access your currently equipped cards and see your entire inventory by clicking any of the cards at the bottom of the home page. At that page, you can change out your party before you continue on your adventures. In Reign of React, you can currently have up to four (4) active party members, while any additional party members will be stored in the inventory. To add a party member from your inventory, you must first select a card from your current party to be stored in the inventory, you can then select any card from your inventory to bring it to your current party. Remember to check your inventory after successful combat, as new cards will be stored here waiting for you.</p>
+                        <p>If you wish to increase your stats or collect additional cards to improve your party and inventory, you must explore the map of Reign of React. Opponents will become increasingly more challenging based on the tier of the region in which they dwell, so make sure not to venture into territories where your level is lower than that of the regional tier. By clicking on a map region, information will be displayed that will show the name of the region, its tier level, how much experience you stand to gain and what cards might be availble for collection upon a successful combat phase. If you decide that you do not want to engage in combat in that zone, simply close the information tab and continue exploring different zones. Success in combat means that you will be granted experience for your player and a chance at a new card for your party, however failure will result in a loss of experience and the loss of a party member, so choose your battles wisely.</p>
+                        <p>In Reign of React, your experience amount determines your current level, which impacts your characters base statistics, collect experience and safeguard it as if it was a party member.</p>
+                        <p>Good Luck!</p>
+                    </div>
+                    </div>
                 </Modal>
             </div>
-        );
+        )
     }
 }
 

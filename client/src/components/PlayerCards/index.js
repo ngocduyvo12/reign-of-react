@@ -10,7 +10,6 @@ function PlayerCards(props) {
             <h2>Attack: {props.attack}</h2>
             <h2>Defense: {props.defense}</h2>
             <h2>Health: {props.health}</h2>
-            <h2>Level: {props.lvl}</h2>
         </div>
     )
 }

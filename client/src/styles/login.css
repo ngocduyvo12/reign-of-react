@@ -1,19 +1,30 @@
+/* font-family: 'Merienda One', cursive;
+font-family: 'Literata', serif; */
+
 body {
     width: 90%;
+    font-family:'Literata', serif;
     margin-left: 5%;
     margin-top: 1%;
     margin-bottom: 1%;
     text-align: center;
-    background-image: url("https://hdwallsource.com/img/2014/2/1080p-fantasy-wallpapers-20499-21016-hd-wallpapers.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-image: url("http://getwallpapers.com/wallpaper/full/e/e/6/333502.jpg");
 }
 
 .jumbotron {
     border-radius: 18px;
-    background-color: black;
     color: white;
+    height: 700px;
+}
+
+#login-page {
+    background-image: url("https://t4.ftcdn.net/jpg/02/36/90/29/240_F_236902910_UhRX71lYWhv8DT5fJhvjNHL4WYoU3Z3N.jpg");
+    background-repeat: repeat;
+    border-style: solid;
+    border-width: 5px;
 }
 
 .btn {
@@ -21,8 +32,8 @@ body {
     width: 60%;
 }
 
-h1 {
-    margin-bottom: 4%;
+h1, h2 {
+    font-family:'Merienda One', cursive;
 }
 
 h3 {

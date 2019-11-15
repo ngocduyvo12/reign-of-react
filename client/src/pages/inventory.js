@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import "../styles/inventory.css"
 import API from "../utils/API";
-
-
+import { Link } from 'react-router-dom';
+import "../styles/inventory.css";
 
 class Inventory extends Component {
 
@@ -93,13 +92,15 @@ class Inventory extends Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col col-md-7">
+          <Link to={"/home/" + this.props.match.params.id} id="return-home"><button className="btn-lg btn-dark" id="other-home">Return Home</button></Link>
+          <div className="col-md-6 inventory-inventory">
+          <h2>Current Inventory</h2>
             {/* inventory go here */}
-            <div className="row">
+            <div className="row" id="style-invetory">
               {this.state.inventoryCard.length ? (
                 <>
                   {this.state.inventoryCard.map(cards => (
-                    <div className="col" key={cards._id}>
+                    <div key={cards._id}>
                       <img
                         id={cards._id}
                         className="inventoryCardImage"
@@ -115,14 +116,15 @@ class Inventory extends Component {
             </div>
           </div>
 
-          <div className="col col-md-5">
-            <div className="row">
+          <div className="col-md-5 inventory-equipped">
+          <h2>Currently Equipped</h2>
+            <div className="row" id="style-equipped">
               {/* equipped cards go here */}
               {this.state.equippedCards.length ? (
                 <>
                   {this.state.equippedCards.map(cards => (
                     // <div className="col col-md-3" key={cards._id}>
-                    <div className="col" key={cards._id}>
+                    <div key={cards._id}>
                       <img
                         id={cards._id}
                         className="equippedImages"

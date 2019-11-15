@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
-import FightLogs from "../Fightlogs";
 import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
@@ -9,11 +8,11 @@ import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
 import player from "../../json/player.json"
 import Modal from "react-modal";
+import "./style.css"
 
 class Combat extends Component {
 
   state = {
-    //my stats
     items: [],
     myCards: [],
     myPlayer: [],
@@ -71,6 +70,12 @@ class Combat extends Component {
     });
   }
 
+  loadArena = () => {
+    let randomImage = Math.floor(Math.random() * 9)
+    console.log("this is map image" + randomImage)
+    document.body.classList.add(`image${randomImage}`)
+  }
+
   loadUserInfo = () => {
     API.getUserId(this.props.match.params.id)
       .then(res => {
@@ -101,6 +106,7 @@ class Combat extends Component {
 
   //load location and monster info based on name of the map in param.
   loadLocationAndMonsterInfo = () => {
+    this.loadArena()
     //get the data of the map using the name in params
     const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
     // console.log(locData)
@@ -160,9 +166,13 @@ class Combat extends Component {
     var myTeamArray = []
     //determine with image to place based on level:
     var imageSrc = ""
-    if (level < 10) {
-      imageSrc += player[0].image
-      // console.log(imageSrc)
+    // if (level < 10) {
+    //   imageSrc += player[0].image
+    //   // console.log(imageSrc)
+    // }
+
+    if (level > 0) {
+      imageSrc = player[level - 1].image
     }
     //make a player card:
     var myPlayerObj = {
@@ -224,7 +234,7 @@ class Combat extends Component {
       //if enemy not dead after attack, call enemyAttack
       else {
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
-        this.setState({combatLog: comment})
+        this.setState({ combatLog: comment })
         // console.log(combatLog)
 
         // setTimeout(this.enemyAttack, 2000)
@@ -288,13 +298,13 @@ class Combat extends Component {
         }
       }
     }
-    
+
     //log out enemy attack:
     let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
-    this.setState({enemyCombatLog: comment})
-  
+    this.setState({ enemyCombatLog: comment })
+
   }
-    
+
   goHome = () => {
     this.props.history.push("/home/" + this.props.match.params.id)
   }
@@ -302,19 +312,14 @@ class Combat extends Component {
   render() {
     return (
       <>
-        <div className="jumbotron">
-          <h1>Welcome To The Arena</h1>
+        <div className="jumbotron battle-wrapper" id="combat-wrap">
+          <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
           <div className="container">
             <div className="row">
-              <div className="map-info col-md-12">
-                <MapInfoCombat
-                  locdata={this.state.locationData}
-                />
+              <div className="combat-log col-md-3 fight-logs">
+                <p className="my-attack-log">{this.state.combatLog}</p>
+                <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
               </div>
-              <div className="combat-log col-md-3 fight-logs">           
-                  <p className="my-attack-log">{this.state.combatLog}</p>
-                  <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
-                </div>
               <div className="enemy-cards col-md-9">
                 <EnemyCards
                   monster={this.state.monster}
@@ -322,45 +327,56 @@ class Combat extends Component {
                   attack={this.state.myEnemyAttack}
                   defense={this.state.myEnemyDefense}
                 />
-              </div>
-
-              {this.state.myTeam ? (
-                this.state.myTeam.map(cards => (
-                  <div key={cards._id} className="player-equipped">
-                    <h4> Name: {cards.name}</h4>
-                    {/* health will probably be changed to current health for each card */}
-                    <div className="progress">
-                      <div className="progress-bar progress-bar-danger"
-                        role="progressbar"
-                        aria-valuenow={cards.currentHealth}
-                        aria-valuemin="0"
-                        aria-valuemax={cards.hitPoints}
-                        style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
-                        Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
-                      </div>
-                    </div>
-
-                    <h5> Health: {Math.floor(cards.currentHealth)}</h5>
-                    <h5> Attack: {cards.attack}</h5>
-                    <h5> Defense: {cards.defense}</h5>
-                    <input
-                      type="image"
-                      id={cards._id}
-                      // src={cards.image}
-                      src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
-                      alt={cards.name}
-                      data-attack={cards.attack}
-                      data-alive={cards.alive}
-                      disabled={cards.alive ? false : true}
-                      //need data for current health and max health
-                      onClick={this.attackNow}
-                      className="equipped-combat"
-                    />
+                <div className="progress" id="enemy-hp">
+                  <div className="progress-bar progress-bar-danger" 
+                    id="enemy-health"
+                    role="progressbar"
+                    aria-valuenow={this.state.myEnemyCurrentHealth}
+                    aria-valuemin="0"
+                    aria-valuemax={this.state.myEnemyTotalHealth}
+                    style={{ width: `${(this.state.myEnemyCurrentHealth/ this.state.myEnemyTotalHealth) * 100}%` }}>
+                    Current Health : {`${((this.state.myEnemyCurrentHealth / this.state.myEnemyTotalHealth) * 100).toFixed(2)}%`}
                   </div>
-                ))
-              ) : ""
-              }
-
+                </div>
+              </div>
+              <div className="player-cards col-md-12">
+                <>
+                  {this.state.myTeam ? (
+                    this.state.myTeam.map(cards => (
+                      <div key={cards._id} className="player-equipped">
+                        <h4> Name: {cards.name}</h4>
+                        {/* health will probably be changed to current health for each card */}
+                        <h5> Health: {cards.currentHealth}</h5>
+                        <div className="progress">
+                          <div className="progress-bar progress-bar-danger"
+                            role="progressbar"
+                            aria-valuenow={cards.currentHealth}
+                            aria-valuemin="0"
+                            aria-valuemax={cards.hitPoints}
+                            style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
+                            Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
+                          </div>
+                        </div>
+                        <input
+                          type="image"
+                          id={cards._id}
+                          // src={cards.image}
+                          src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
+                          alt={cards.name}
+                          data-attack={cards.attack}
+                          data-alive={cards.alive}
+                          disabled={cards.alive ? false : true}
+                          //need data for current health and max health
+                          onClick={this.attackNow}
+                          className="equipped-combat"
+                        />
+                        <h5> Attack: {cards.attack}</h5>
+                        <h5> Defense: {cards.defense}</h5>
+                      </div>
+                    ))
+                  ) : ""}
+                </>
+              </div>
             </div>
           </div>
         </div>
@@ -372,11 +388,11 @@ class Combat extends Component {
           // style={customStyles}
           contentLabel="Example Modal"
         >
-          <div className="jumbotron" ref={subtitle => this.subtitle = subtitle}>
-            <h1 ref={subtitle => this.subtitle = subtitle}>End of Combat</h1>
+          <div className="jumbotron" id="ec-wrapper" ref={subtitle => this.subtitle = subtitle}>
+            <h1 ref={subtitle => this.subtitle = subtitle} id="ec">End of Combat</h1>
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
-                <div className="combat-result col-md-7" ref={subtitle => this.subtitle = subtitle}>
+                <div className="combat-result col-md-7" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.winCard ?
                     <>
                       <h3>You win: {this.state.winCard.name}</h3>
@@ -391,7 +407,7 @@ class Combat extends Component {
                     </>
                     : ""}
                 </div>
-                <div className="card-status col-md-5" ref={subtitle => this.subtitle = subtitle}>
+                <div className="card-status col-md-5" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.lostCard ?
                     <>
                       <h3>You lose: {this.state.lostCard.name}</h3>
@@ -407,12 +423,13 @@ class Combat extends Component {
                     : ""}
                 </div>
 
-                <div className="card-inventory col-md-12" ref={subtitle => this.subtitle = subtitle}>
+                <div className="card-inventory col-md-12" id="player-stat-ec" ref={subtitle => this.subtitle = subtitle}>
                   <div>Player stats and card inventory will go here</div>
                 </div>
 
                 <button
                   type="submit"
+                  id="ec-button"
                   className="btn btn-lg btn-dark result-submit"
                   onClick={this.goHome}
                 >Return to Map</button>
