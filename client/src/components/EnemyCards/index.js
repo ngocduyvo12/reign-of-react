@@ -2,7 +2,6 @@ import React from "react";
 import "./style.css";
 
 function EnemyCards(props) {
-
     return (
         <>
             <div className="img-container enemy-img-container">
@@ -17,6 +16,5 @@ function EnemyCards(props) {
         </>
     )
 }
-
 
 export default EnemyCards;

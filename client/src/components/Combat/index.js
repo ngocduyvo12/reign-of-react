@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
-// import FightLogs from "../Fightlogs";
 import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
@@ -313,14 +312,13 @@ class Combat extends Component {
             <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
             <div className="container">
               <div className="row">
-                <div className="combat-log col-md-3">
-                  {/* <div>
-                    <FightLogs />
-                  </div> */}
+                <div className="combat-log col-md-3 fight-logs">
+                    <p className="my-attack-log">{this.state.combatLog}</p>
+                    <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
                 </div>
                 <div className="enemy-cards col-md-9">
                     <EnemyCards
-                      name={this.state.monster}
+                      monster={this.state.monster}
                       hitpoints={this.state.myEnemyCurrentHealth}
                       attack={this.state.myEnemyAttack}
                       defense={this.state.myEnemyDefense}
@@ -339,16 +337,16 @@ class Combat extends Component {
                             role="progressbar"
                             aria-valuenow={cards.currentHealth}
                             aria-valuemin="0"
-                            aria-valuemax={cards.hitPoint}
-                            style={{ width: `${(cards.currentHealth / cards.hitPoint) * 100}%` }}>
-                            Current Health : {`${((cards.currentHealth / cards.hitPoint) * 100).toFixed(2)}%`}
+                            aria-valuemax={cards.hitPoints}
+                            style={{ width: `${(cards.currentHealth / cards.hitPoints) * 100}%` }}>
+                            Current Health : {`${((cards.currentHealth / cards.hitPoints) * 100).toFixed(2)}%`}
                           </div>
                         </div>
                         <input
                           type="image"
                           id={cards._id}
-                          src={cards.image}
-                          // src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                          // src={cards.image}
+                          src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
                           alt={cards.name}
                           data-attack={cards.attack}
                           data-alive={cards.alive}
