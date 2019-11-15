@@ -6,6 +6,11 @@
 
 .class-description {
     height: 20rem;
+    margin-top: 2%;
+}
+
+.class-available {
+    margin-top: 2%;
 }
 
 .random-card {
@@ -32,6 +37,12 @@
 }
 
 .btn-success {
+    width: 80%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
     width: 80%;
     padding: 1rem;
     margin-bottom: 1rem;
