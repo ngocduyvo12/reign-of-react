@@ -66,7 +66,9 @@ class Combat extends Component {
     this.loadUserInfo();
     this.loadLocationAndMonsterInfo();
     this.setState({
-      winCard: characters[Math.floor(Math.random() * characters.length)]
+      winCard: this.state.locationData ? characters[this.state.locationData.monsters[Math.floor(Math.random() * 3)]] : {},
+      lostCard: this.state.myCards ? this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)] : {},
+      result: 0
     });
   }
 
@@ -224,8 +226,13 @@ class Combat extends Component {
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
         // alert("You have won")
+        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * 3)]];
+        this.setState({ 
+          result: 1, 
+          winCard: winCard
+        })
 
-        API.addInventory(this.state.winCard, this.props.match.params.id)
+        API.addInventory(winCard, this.props.match.params.id, this.state.locationData.experience)
           .then(res => console.log(res))
           .catch(err => console.log(err))
         //toggle reward modal here
@@ -288,8 +295,12 @@ class Combat extends Component {
         var checkLost = currentTeamCombat.filter(card => card.alive === true)
         if (checkLost.length < 1) {
           const lostCard = this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)];
-          this.setState({ lostCard: lostCard });
-          API.removeInventory(lostCard, this.props.match.params.id)
+          this.setState({ 
+            result: 2,
+            lostCard: lostCard
+          });
+
+          API.removeInventory(lostCard, this.props.match.params.id, -this.state.locationData.experience)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
@@ -328,13 +339,13 @@ class Combat extends Component {
                   defense={this.state.myEnemyDefense}
                 />
                 <div className="progress" id="enemy-hp">
-                  <div className="progress-bar progress-bar-danger" 
+                  <div className="progress-bar progress-bar-danger"
                     id="enemy-health"
                     role="progressbar"
                     aria-valuenow={this.state.myEnemyCurrentHealth}
                     aria-valuemin="0"
                     aria-valuemax={this.state.myEnemyTotalHealth}
-                    style={{ width: `${(this.state.myEnemyCurrentHealth/ this.state.myEnemyTotalHealth) * 100}%` }}>
+                    style={{ width: `${(this.state.myEnemyCurrentHealth / this.state.myEnemyTotalHealth) * 100}%` }}>
                     Current Health : {`${((this.state.myEnemyCurrentHealth / this.state.myEnemyTotalHealth) * 100).toFixed(2)}%`}
                   </div>
                 </div>
@@ -393,7 +404,7 @@ class Combat extends Component {
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
                 <div className="combat-result col-md-7" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
-                  {this.state.winCard ?
+                  {this.state.result === 1 ?
                     <>
                       <h3>You win: {this.state.winCard.name}</h3>
                       <input
@@ -408,7 +419,7 @@ class Combat extends Component {
                     : ""}
                 </div>
                 <div className="card-status col-md-5" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
-                  {this.state.lostCard ?
+                {this.state.result === 2 ?
                     <>
                       <h3>You lose: {this.state.lostCard.name}</h3>
                       <input
