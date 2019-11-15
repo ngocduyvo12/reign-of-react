@@ -96,14 +96,14 @@ class Inventory extends Component {
           <div className="col-md-6 inventory-inventory">
           <h2>Current Inventory</h2>
             {/* inventory go here */}
-            <div className="row" id="style-invetory">
+            <div className="row" id="style-inventory">
               {this.state.inventoryCard.length ? (
                 <>
                   {this.state.inventoryCard.map(cards => (
-                    <div key={cards._id}>
+                    <div id="my-inventory" key={cards._id}>
                       <img
                         id={cards._id}
-                        className="inventoryCardImage"
+                        className="equippedImages"
                         src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
                         alt={cards.name}
                         onClick={this.equip}

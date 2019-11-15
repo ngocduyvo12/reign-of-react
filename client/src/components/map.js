@@ -117,17 +117,17 @@ class Map extends Component {
                                         <h2>Region Tier: {this.state.currentArea.tier}</h2>
                                     </div>
 
-                                    <div className="modal-monster col-md-5">
-                                        <h3>The follwoing reside in this area:</h3>
+                                    <div className="modal-monster col-md-10">
+                                        <h3>You have a chance to win one of the cards below that reside here, in addition to{this.state.currentArea.experience} experience points</h3>
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
                                     </div>
-
+{/* 
                                     <div className="modal-reward col-md-5">
                                         <h3>You Gain {this.state.currentArea.experience}XP and A Shot At these Cards:</h3>
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
-                                    </div>
+                                    </div> */}
 
                                     <div className="modal-leave col-md-12">
                                         <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>

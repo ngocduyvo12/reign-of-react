@@ -11,3 +11,7 @@
     background-color: green;
     height: 200px;
 }
+
+.player-stat-fix {
+    margin-top: -70px;
+}

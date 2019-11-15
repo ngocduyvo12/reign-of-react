@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Druid from "../Druid"
 import Warrior from "../Warrior"
+import Mage from "../Mage"
 import API from "../../utils/API"
 import "./style.css";
 
@@ -30,6 +31,8 @@ class Welcome extends Component {
             return <Druid />
         } else if (this.state.class === "Warrior") {
             return <Warrior />
+        } else if (this.state.class === "Mage") {
+            return <Mage />
         }
     }
 
@@ -55,7 +58,13 @@ class Welcome extends Component {
 
     selectWarrior = (event) => {
         event.preventDefault()
-        this.setState({ class: "Warrior" })
+        this.setState({ class: "Warrior" });
+        this.setRedirect();
+    }
+
+    selectMage = (event) => {
+        event.preventDefault()
+        this.setState({ class: "Mage" });
         this.setRedirect();
     }
 
@@ -70,6 +79,7 @@ class Welcome extends Component {
                         <h3>Currently Available Classes:</h3>
                         <button className="btn-lg btn-success" onClick={this.selectDruid}>Druid</button>
                         <button className="btn-lg btn-danger" onClick={this.selectWarrior}>Warrior</button>
+                        <button className="btn-lg btn-primary" onClick={this.selectMage}>Mage</button>
                     </div>
                     <div className="col-md-8 class-description">
                         {this.classInfo()}
