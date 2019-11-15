@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Draggable, { DraggableCore } from 'react-draggable'; // Both at the same time
 import Map from "../components/map"
 import Help from "../components/Help"
 import Player from "../components/Player";

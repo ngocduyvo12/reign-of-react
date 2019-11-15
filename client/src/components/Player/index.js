@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom"
 import "./player-stat.css"
-import API from "../../utils/API";
 
 class Player extends Component {
 
@@ -9,18 +7,6 @@ class Player extends Component {
         player: [],
         class: "Wizard",
         hp: 400
-    }
-
-    componentDidMount() {
-        // console.log(this.props.match.params.id);
-        console.log(this.props.userid);
-        API.getUserId(this.props.userid)
-            .then(data => {
-                console.log(data.data);
-                //  this.setState({player: data.data})
-            })
-            .catch(err => console.log(err))
-        // const user = 
     }
 
     render() {
@@ -38,6 +24,5 @@ class Player extends Component {
         )
     }
 }
-
 
 export default Player;

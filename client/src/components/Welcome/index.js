@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-// import Modal from "react-modal";
 import { Link } from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./style.css";
 import Druid from "../Druid"
 import Warrior from "../Warrior"

@@ -15,17 +15,13 @@ module.exports = {
 
   //unused?
   findById: function (req, res) {
-    // console.log("user findbyid");
-    // console.log(req.params.id)
     db.User
       .findById(req.params.id)
       .populate(["inventoryCards", "equippedCards"])
       .then(dbModel => {
-        console.log("user: ", dbModel);
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
-    // console.log(this.getAllCards());
   },
 
   //route for creating new user data
@@ -33,7 +29,6 @@ module.exports = {
     db.User
       .create(req.body)
       .then(dbModel => {
-        console.log(dbModel)
         res.json(dbModel)
       })
       .catch(err => res.status(422).json(err));
@@ -80,7 +75,6 @@ module.exports = {
 
   //get info from inventory cards
   getInventoryCards: function (req, res) {
-    // console.log(req.params.id) -- OK!
     db.User.findOne({ _id: req.params.id })
       .populate("inventoryCards")
       .then(function (dbCards) {
@@ -89,7 +83,6 @@ module.exports = {
   },
 
   updateEquippedCard: function (req, res) {
-    // console.log(req.body)
     db.EquippedCards.create({
       name: req.body.name,
       image: req.body.image,
@@ -105,7 +98,6 @@ module.exports = {
           { $push: { "equippedCards": dbSeed._id } },
           { new: true });
       }).then(function (dbModel) {
-        // console.log(req.body)
         return db.InventoryCards.findByIdAndDelete(req.body._id)
       }).then(function (dbMod) {
         return db.User.findByIdAndUpdate(req.body.userID, { $pull: { inventoryCards: req.body._id } })
@@ -116,7 +108,6 @@ module.exports = {
   },
 
   unEquipCard: function (req, res) {
-    // console.log(req.body)
     db.InventoryCards.create({
       name: req.body.name,
       image: req.body.image,
@@ -130,7 +121,6 @@ module.exports = {
           { $push: { "inventoryCards": dbSeed._id } },
           { new: true });
       }).then(function (dbModel) {
-        // console.log(req.body)
         return db.EquippedCards.findByIdAndDelete(req.body._id)
       }).then(function (dbMod) {
         return db.User.findByIdAndUpdate(req.body.userID, { $pull: { equippedCards: req.body._id } })
@@ -187,7 +177,6 @@ module.exports = {
   },
 
   addInventory: function (req, res) {
-    // console.log("bang:", req);
     const card = req.body.card;
     const userid = req.body.userid;
     db.InventoryCards.create({
@@ -199,14 +188,12 @@ module.exports = {
       rarity: parseInt(card.rarity)
     })
       .then(function (newCard) {
-        console.log("then", newCard);
         db.User.findOneAndUpdate({
           _id: userid
         },
           { $push: { "inventoryCards": newCard._id } },
           { new: true })
           .then(function (result) {
-            console.log("should add to user", userid);
             res.json(result)
           }).catch(err => console.log(err));
       })
@@ -214,7 +201,6 @@ module.exports = {
   },
 
   removeInventory: function (req, res) {
-    // console.log("bang:", req);
     const card = req.body.card;
     const userid = req.body.userid;
 
@@ -226,12 +212,9 @@ module.exports = {
             db.User.findOne({ _id: userid })
               .populate("inventoryCards")
               .then(function (invCards) {
-                // console.log("invCardId: ", invCards.inventoryCards.map(i => i.name), card.name);
-
                 db.InventoryCards.findByIdAndDelete(card)
                   .then(function (removedCard) {
                     const id = invCards.inventoryCards.find(element => element.name === card.name);
-                    // console.log("derp",invCards)
                     db.User.findByIdAndUpdate(userid, { $pull: { inventoryCards: id } })
                       .then(res => res)
                   });
@@ -243,12 +226,9 @@ module.exports = {
   },
 
   initCards: function (req, res) {
-    // console.log(characters);
-    // res.json(req.params.id);
     const rarityOneMonsters = characters.filter(c => c.rarity === 1);
     for (let i = 0; i < 4; i++) {
       const card = rarityOneMonsters[Math.floor(Math.random() * rarityOneMonsters.length)];
-      // console.log(card.hitpoints);
       db.InventoryCards.create({
         name: card.name,
         image: card.image,
@@ -258,7 +238,6 @@ module.exports = {
         rarity: parseInt(card.rarity)
       })
         .then(function (newInvCard) {
-          // console.log(newInvCard);
           db.User.findOneAndUpdate(
             { _id: req.params.id },
             { $push: { "inventoryCards": newInvCard._id } },

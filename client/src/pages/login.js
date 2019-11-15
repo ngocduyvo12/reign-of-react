@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import "../styles/login.css";
 import API from "../utils/API";
 
@@ -32,7 +31,6 @@ class Login extends Component {
       })
         .then(res => { this.props.history.push(`/home/${res.data[0]._id}`) })
         .catch(err => {
-          // console.log(err.response.status)
           if (err.response.status === 404) {
             alert("Incorrect username and password")
           }
@@ -52,7 +50,6 @@ class Login extends Component {
       exp: 0
     })
       .then(res => {
-        // console.log("user created:", res)
         this.props.history.push(`/welcome/${res.data._id}`)
 
       })
@@ -77,7 +74,7 @@ class Login extends Component {
             <h3>Sign In</h3>
             <div className="form-group">
               <label
-                for="loginEmail"
+                htmlFor="loginEmail"
               >Email address</label>
               <input
                 type="text"
@@ -95,7 +92,7 @@ class Login extends Component {
               >Please Enter Your Email</small>
             </div>
             <div className="form-group">
-              <label for="loginPassword">Password</label>
+              <label htmlFor="loginPassword">Password</label>
               <input
                 type="password"
                 className="form-control"
@@ -121,7 +118,7 @@ class Login extends Component {
           <form id="register">
             <h3>Register New Account</h3>
             <div className="form-group">
-              <label for="registerEmail">Username</label>
+              <label htmlFor="registerEmail">Username</label>
               <input
                 type="text"
                 className="form-control"
@@ -135,7 +132,7 @@ class Login extends Component {
             </div>
 
             <div className="form-group">
-              <label for="registerPassword">Password</label>
+              <label htmlFor="registerPassword">Password</label>
               <input
                 type="password"
                 className="form-control"
@@ -148,7 +145,7 @@ class Login extends Component {
             </div>
 
             <div className="form-group">
-              <label for="registerConfirmPassword">Confirm Password</label>
+              <label htmlFor="registerConfirmPassword">Confirm Password</label>
               <input
                 type="password"
                 className="form-control"
