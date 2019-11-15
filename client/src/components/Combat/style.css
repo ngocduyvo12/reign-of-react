@@ -90,8 +90,13 @@
 }
 
 .combat-log {
-    background: red;
     height: 300px;
+    background-color: black;
+    border-radius: 18px;
+    text-align: center;
+    border-width: 5px;
+    border-style: solid;
+    border-color: maroon;
 }
 
 .enemy-cards {
@@ -138,4 +143,39 @@
 
 .container {
     max-width: 1300px;
+}
+
+#player-stat-ec {
+    height: 100px;
+    color: white;
+}
+
+#player-ec-lost {
+    height: 300px;
+    color: white;
+}
+
+#player-ec-win {
+    height: 300px;
+    color: white;
+}
+
+#ec-button {
+    width: 200%;
+    margin-left: 0;
+}
+
+#ec-wrapper {
+    background-image: url("https://www.stockvault.net/data/2013/10/20/149512/preview16.jpg");
+    background-repeat: repeat;
+    border-radius: 18px;
+    padding: 1rem;
+}
+
+.my-attack-log {
+    margin-top: 30%;
+}
+
+#ec {
+    color: white;
 }

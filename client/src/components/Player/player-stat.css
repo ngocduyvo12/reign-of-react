@@ -3,6 +3,8 @@
     height: 500px;
     width: 100%;
     color: white;
+    margin-right: 2%;
+    margin-left: 1%;
 }
 
 #player-consumable-box {
