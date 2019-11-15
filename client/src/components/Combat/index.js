@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import EnemyCards from "../EnemyCards";
-import Fightlogs from "../Fightlogs";
+import PlayerCards from "../PlayerCards";
+import FightLogs from "../Fightlogs";
+import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
 import mapJSON from "../../json/map.json";
@@ -22,6 +24,7 @@ class Combat extends Component {
     myTotalHealth: 1,
     myLevel: 1,
     myTeam: [],
+    myEnemyName: [],
     myEnemyAttack: 1,
     myEnemyDefense: 1,
     myEnemyTotalHealth: 1,
@@ -30,6 +33,8 @@ class Combat extends Component {
     monster: {},
     round: true,
     endRound: false,
+    combatLog: "",
+    enemyCombatLog: "",
     winCard: {},
     lostCard: {}
   }
@@ -111,6 +116,7 @@ class Combat extends Component {
     const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
     // console.log("mon:",characters[monsterID]);
     this.setState({
+      myEnemyName: characters[monsterID].name,
       locationData: locData,
       monster: characters[monsterID],
       mapTier: tierData,
@@ -153,7 +159,7 @@ class Combat extends Component {
   createTeam = (res, level) => {
     var myTeamArray = []
     //determine with image to place based on level:
-    var imageSrc = "/img/player/"
+    var imageSrc = ""
     if (level < 10) {
       imageSrc += player[0].image
       // console.log(imageSrc)
@@ -217,12 +223,18 @@ class Combat extends Component {
       }
       //if enemy not dead after attack, call enemyAttack
       else {
+        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
+        this.setState({combatLog: comment})
+        // console.log(combatLog)
+
+        // setTimeout(this.enemyAttack, 2000)
         this.enemyAttack()
       }
     }
   }
 
   enemyAttack = () => {
+    // alert("hi")
     //loop through player team and attack a random card with state of alive
     //use filter to get an array of still alive cards
     var currentTeamCombat = this.state.myTeam.filter(card => card.alive === true)
@@ -276,8 +288,13 @@ class Combat extends Component {
         }
       }
     }
+    
+    //log out enemy attack:
+    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
+    this.setState({enemyCombatLog: comment})
+  
   }
-
+    
   goHome = () => {
     this.props.history.push("/home/" + this.props.match.params.id)
   }
@@ -294,10 +311,10 @@ class Combat extends Component {
                   locdata={this.state.locationData}
                 />
               </div>
-
-              <div className="combat-log col-md-3">
-                <Fightlogs />
-              </div>
+              <div className="combat-log col-md-3 fight-logs">           
+                  <p className="my-attack-log">{this.state.combatLog}</p>
+                  <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
+                </div>
               <div className="enemy-cards col-md-9">
                 <EnemyCards
                   monster={this.state.monster}
@@ -323,7 +340,7 @@ class Combat extends Component {
                       </div>
                     </div>
 
-                    <h5> Health: {cards.currentHealth}</h5>
+                    <h5> Health: {Math.floor(cards.currentHealth)}</h5>
                     <h5> Attack: {cards.attack}</h5>
                     <h5> Defense: {cards.defense}</h5>
                     <input
