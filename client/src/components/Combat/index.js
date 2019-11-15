@@ -33,7 +33,8 @@ class Combat extends Component {
     monster: {},
     round: true,
     endRound: false,
-    combatLog: []
+    combatLog: "",
+    enemyCombatLog: ""
   }
 
   componentDidMount() {
@@ -213,10 +214,8 @@ class Combat extends Component {
       }
       //if enemy not dead after attack, call enemyAttack
       else {
-        let combatLog = this.state.combatLog;
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
-        combatLog.push(comment)
-        this.setState({combatLog: combatLog})
+        this.setState({combatLog: comment})
         // console.log(combatLog)
 
         setTimeout(this.enemyAttack, 2000)
@@ -271,6 +270,10 @@ class Combat extends Component {
       }
     }
 
+    //log out enemy attack:
+    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
+    this.setState({enemyCombatLog: comment})
+
     function checkLosingCondition() {
       var checkLost = currentTeamCombat.filter(card => card.alive === true)
       if (checkLost.length < 1) {
@@ -301,15 +304,11 @@ class Combat extends Component {
                   </div>
                 </div>
 
-                <div className="combat-log col-md-3">
-                  <div>
-                    <FightLogs>
-                      {this.state.combatLog}
-                    </FightLogs>
-                    
-                    
-                  </div>
+                <div className="combat-log col-md-3 fight-logs">           
+                  <p className="my-attack-log">{this.state.combatLog}</p>
+                  <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
                 </div>
+                
                 <div className="enemy-cards col-md-9">
                   <div>
                     <EnemyCards
