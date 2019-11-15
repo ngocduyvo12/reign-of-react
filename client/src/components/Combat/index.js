@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EnemyCards from "../EnemyCards";
 import PlayerCards from "../PlayerCards";
-import FightLogs from "../Fightlogs";
+// import FightLogs from "../Fightlogs";
 import PreCombat from "../PreCombat";
 import MapInfoCombat from "../MapInfoCombat";
 import characters from "../../json/characters.json";
@@ -310,18 +310,17 @@ class Combat extends Component {
     return (
       <>
           <div className="jumbotron battle-wrapper" id="combat-wrap">
-            <h1>Welcome To The {this.state.locationData.name} Arena</h1>
+            <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
             <div className="container">
               <div className="row">
                 <div className="combat-log col-md-3">
-                  <div>
-                    <Fightlogs />
-                  </div>
+                  {/* <div>
+                    <FightLogs />
+                  </div> */}
                 </div>
                 <div className="enemy-cards col-md-9">
                     <EnemyCards
-                      name={this.state.monster.name}
-                      image={this.state.monster.image}
+                      name={this.state.monster}
                       hitpoints={this.state.myEnemyCurrentHealth}
                       attack={this.state.myEnemyAttack}
                       defense={this.state.myEnemyDefense}
@@ -329,7 +328,8 @@ class Combat extends Component {
                 </div>
                 <div className="player-cards col-md-12">
                   <>
-                    {this.state.myTeam.map(cards => (
+                  {this.state.myTeam ? (
+                    this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
                         <h4> Name: {cards.name}</h4>
                         {/* health will probably be changed to current health for each card */}
@@ -360,7 +360,8 @@ class Combat extends Component {
                         <h5> Attack: {cards.attack}</h5>
                         <h5> Defense: {cards.defense}</h5>
                       </div>
-                    ))}
+                    ))
+                  ) : "" }
                   </>
                 </div>
             </div>

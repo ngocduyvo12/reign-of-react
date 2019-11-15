@@ -9,9 +9,10 @@ import API from "../utils/API";
 
 class Home extends Component {
 
-    // state = {
-    //     randomBackground: []
-    // }
+    state = {
+        randomBackground: [],
+        player: []
+    }
 
     // background = () => {
     //     player: []

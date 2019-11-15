@@ -62,8 +62,6 @@ class Login extends Component {
 
   }
 
-
-
   render() {
     return (
       <>
@@ -166,7 +164,6 @@ class Login extends Component {
         </div>
       </>
     )
-
   }
 }
 

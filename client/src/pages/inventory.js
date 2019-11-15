@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import "../styles/inventory.css"
+import { Link } from 'react-router-dom';
+import "../styles/inventory.css";
 
 class Inventory extends Component {
 
