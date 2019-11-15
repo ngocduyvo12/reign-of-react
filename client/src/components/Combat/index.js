@@ -75,7 +75,7 @@ class Combat extends Component {
     console.log("this is map image" + randomImage)
     document.body.classList.add(`image${randomImage}`)
   }
-  
+
   loadUserInfo = () => {
     API.getUserId(this.props.match.params.id)
       .then(res => {
@@ -234,7 +234,7 @@ class Combat extends Component {
       //if enemy not dead after attack, call enemyAttack
       else {
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
-        this.setState({combatLog: comment})
+        this.setState({ combatLog: comment })
         // console.log(combatLog)
 
         // setTimeout(this.enemyAttack, 2000)
@@ -298,13 +298,13 @@ class Combat extends Component {
         }
       }
     }
-    
+
     //log out enemy attack:
     let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
-    this.setState({enemyCombatLog: comment})
-  
+    this.setState({ enemyCombatLog: comment })
+
   }
-    
+
   goHome = () => {
     this.props.history.push("/home/" + this.props.match.params.id)
   }
@@ -312,24 +312,35 @@ class Combat extends Component {
   render() {
     return (
       <>
-          <div className="jumbotron battle-wrapper" id="combat-wrap">
-            <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
-            <div className="container">
-              <div className="row">
-                <div className="combat-log col-md-3 fight-logs">
-                    <p className="my-attack-log">{this.state.combatLog}</p>
-                    <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
+        <div className="jumbotron battle-wrapper" id="combat-wrap">
+          <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
+          <div className="container">
+            <div className="row">
+              <div className="combat-log col-md-3 fight-logs">
+                <p className="my-attack-log">{this.state.combatLog}</p>
+                <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
+              </div>
+              <div className="enemy-cards col-md-9">
+                <EnemyCards
+                  monster={this.state.monster}
+                  hitpoints={this.state.myEnemyCurrentHealth}
+                  attack={this.state.myEnemyAttack}
+                  defense={this.state.myEnemyDefense}
+                />
+                <div className="progress" id="enemy-hp">
+                  <div className="progress-bar progress-bar-danger" 
+                    id="enemy-health"
+                    role="progressbar"
+                    aria-valuenow={this.state.myEnemyCurrentHealth}
+                    aria-valuemin="0"
+                    aria-valuemax={this.state.myEnemyTotalHealth}
+                    style={{ width: `${(this.state.myEnemyCurrentHealth/ this.state.myEnemyTotalHealth) * 100}%` }}>
+                    Current Health : {`${((this.state.myEnemyCurrentHealth / this.state.myEnemyTotalHealth) * 100).toFixed(2)}%`}
+                  </div>
                 </div>
-                <div className="enemy-cards col-md-9">
-                    <EnemyCards
-                      monster={this.state.monster}
-                      hitpoints={this.state.myEnemyCurrentHealth}
-                      attack={this.state.myEnemyAttack}
-                      defense={this.state.myEnemyDefense}
-                    />
-                </div>
-                <div className="player-cards col-md-12">
-                  <>
+              </div>
+              <div className="player-cards col-md-12">
+                <>
                   {this.state.myTeam ? (
                     this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
@@ -350,7 +361,7 @@ class Combat extends Component {
                           type="image"
                           id={cards._id}
                           // src={cards.image}
-                          src={process.env.PUBLIC_URL+"/img/cards/"+cards.image}
+                          src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
                           alt={cards.name}
                           data-attack={cards.attack}
                           data-alive={cards.alive}
@@ -363,9 +374,9 @@ class Combat extends Component {
                         <h5> Defense: {cards.defense}</h5>
                       </div>
                     ))
-                  ) : "" }
-                  </>
-                </div>
+                  ) : ""}
+                </>
+              </div>
             </div>
           </div>
         </div>

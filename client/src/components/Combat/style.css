@@ -179,3 +179,12 @@
 #ec {
     color: white;
 }
+
+#enemy-health {
+    background-color: darkorange;
+}
+
+#enemy-hp {
+    width: 60%;
+    height: 30px;
+}
