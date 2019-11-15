@@ -3,8 +3,8 @@ import Draggable, { DraggableCore } from 'react-draggable';
 // Both at the same time
 import Equipped from "../components/equipped/equipped";
 import { Link } from "react-router-dom";
-import "../styles/inventory.css"
 import API from "../utils/API";
+import "../styles/inventory.css"
 
 
 

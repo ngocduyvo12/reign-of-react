@@ -4,7 +4,8 @@
 }
 
 .inventory-inventory {
-    background: maroon;
+    background-image: url("https://cdn.dodowallpaper.com/full/595/dark-blue-wallpapers-13.jpg");
+    background-repeat: repeat;
     border-style: solid;
     border-width: 5px;
     border-color: black;
@@ -15,7 +16,8 @@
 }
 
 .inventory-equipped {
-    background: maroon;
+    background-image: url("https://us.123rf.com/450wm/enkaparmur/enkaparmur1210/enkaparmur121000009/15906739-dark-green-grunge-background.jpg?ver=6");
+    background-repeat: repeat;
     border-style: solid;
     border-width: 5px;
     border-color: black;
