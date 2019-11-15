@@ -24,14 +24,16 @@ class Home extends Component {
                             {/* <MapWithRouter userid={this.props.match.params.id} /> */}
                             <Map handleLocationClick={this.handleLocationClick} />
                         </div>
+                        <img id="map-compass" src="../img/map/compass.png" />
                     </div>
 
+                    {/* player stats div */}
                     <div className="col-md-4">
-                        {/* player stats div */}
                         <div id="player-stat-box">
                             <Help />
                         </div>
                     </div>
+
                     {/* equipped card div */}
                     <div className="col-md-12" id="player-cards-home">
                         {/* logic to display current equipped cards */}

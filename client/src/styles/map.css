@@ -1,7 +1,7 @@
 #map-box {
     overflow: hidden;
     width: 98%;
-    height: 700px;
+    height: 520px;
     background-image: url(/static/media/background.5f055dfe.png);
     position: absolute;
     margin-top: 1rem;
@@ -25,16 +25,16 @@ area {
 
 .map-hold {
     background: brown;
-    height: 740px;
+    height: 560px;
     border-radius: 18px;
     border-style: solid;
     border-width: 5px;
-    border-color: black;
+    border-color: black
 }
 
 .ReactModal__Content {
     border-radius: 18px;
-    background: black;
+    background: none;
 }
 
 .modal-title {
@@ -57,15 +57,24 @@ area {
 
 .monsters-rendered {
     float: left;
-    margin-left: 13%;
-}
-
-.ReactModal__Content--after-open {
-    color: black;
+    margin-left: 11%;
 }
 
 .modal-wrap {
     background: black;
     color: white;
     border-radius: 18px;
+    padding: 1rem;
+}
+
+#map-box {
+    background-color: #7585b2;
+}
+
+#monsters-modal {
+    height: 140px;
+}
+
+#map-compass {
+    height: 85px;
 }

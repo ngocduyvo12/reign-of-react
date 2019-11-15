@@ -1,17 +1,15 @@
 #player-stat-box {
     background-color: black;
-    height: 700px;
+    height: 520px;
     border-radius: 18px;
     margin-top: 1rem;
 }
 
 #player-cards-home {
     background: brown;
-    margin-bottom: 5rem;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
-    margin-top: 3rem;
+    margin-top: 2px;
     border-radius: 18px;
+    margin-top: 20px;
     border-style: solid;
     border-color: black;
     border-width: 5px;

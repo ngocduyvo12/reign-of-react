@@ -77,7 +77,7 @@ class Map extends Component {
         return <div>
             {monsterInfo.map(item => (
                 <div className="monsters-rendered">
-                    <img key={item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt={item.name}></img>
+                    <img key={item.id} src={`${process.env.PUBLIC_URL}/img/cards/${item.image}`} alt={item.name} id="monsters-modal"></img>
                     <p>{item.name}</p>
                 </div>
             ))}
