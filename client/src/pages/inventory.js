@@ -105,12 +105,11 @@ class Inventory extends Component {
     return (
       <div className="container-fluid">
         <div className="row">
-        <button className="btn-lg btn-dark" id="return-home"><Link to={"/home/" + this.props.match.params.id}>Return Home</Link></button>
-        {/* <Link to="/home"><button className="btn-lg btn-dark">Play Now</button></Link> */}
+          <Link to={"/home/" + this.props.match.params.id} id="return-home"><button className="btn-lg btn-dark" id="other-home">Return Home</button></Link>
           <div className="col-md-6 inventory-inventory">
           <h2>Current Inventory</h2>
             {/* inventory go here */}
-            <div className="row">
+            <div className="row" id="style-invetory">
               {this.state.inventoryCard.length ? (
                 <>
                   {this.state.inventoryCard.map(cards => (
@@ -132,7 +131,7 @@ class Inventory extends Component {
 
           <div className="col-md-5 inventory-equipped">
           <h2>Currently Equipped</h2>
-            <div className="row">
+            <div className="row" id="style-equipped">
               {/* equipped cards go here */}
               {this.state.equippedCards.length ? (
                 <>

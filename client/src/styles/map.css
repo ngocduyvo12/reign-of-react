@@ -38,6 +38,11 @@ area {
     bottom: 105px;
 }
 
+.ReactModal__Content--after-open {
+    background: none;
+    border: none;
+}
+
 .modal-title {
     margin-bottom: 2rem;
 }

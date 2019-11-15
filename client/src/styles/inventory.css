@@ -1,6 +1,8 @@
 .equippedImages, .inventoryCardImage, .cursor {
     cursor: pointer;
-    margin: 1rem 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 8%;
 }
 
 .inventory-inventory {
@@ -16,7 +18,7 @@
 }
 
 .inventory-equipped {
-    background-image: url("https://us.123rf.com/450wm/enkaparmur/enkaparmur1210/enkaparmur121000009/15906739-dark-green-grunge-background.jpg?ver=6");
+    background-image: url("https://fsb.zobj.net/crop.php?r=V6dSO909NLkpM_Nh73Qq_WDPKrgUpEvc7ErZMtDTFVtLVzpwCDvlQXP3Gz4czLPx94E0cFxmJn5Apg_jKg5B1zvwFyGT2_yfm_fq67BHMS75dnWeVl708LXJXIjBZHTzsshz_mgh5IF5WGHyIrsYLbH7wr3RlSh5un374kHZ6gcSvDDkrdHeUE1OoY0");
     background-repeat: repeat;
     border-style: solid;
     border-width: 5px;
@@ -29,14 +31,27 @@
 #return-home {
     width: 100%;
     margin-top: 1rem;
+}
+
+#other-home {
+    width: 100%;
+    margin-top: 1rem;
     border-style: solid;
     border-color: black;
     border-width: 5px;
-    border-radius: 18px;
+    border-radius: 18px; 
 }
 
 .container-fluid {
     margin-bottom: 5rem;
+}
+
+#style-equipped {
+    margin-left: 3rem;
+}
+
+#style-invetory {
+    margin-left: 3rem;
 }
 
 a {

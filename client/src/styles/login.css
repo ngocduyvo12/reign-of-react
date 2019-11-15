@@ -1,5 +1,9 @@
+/* font-family: 'Merienda One', cursive;
+font-family: 'Literata', serif; */
+
 body {
     width: 90%;
+    font-family:'Literata', serif;
     margin-left: 5%;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -7,7 +11,7 @@ body {
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-image: url("https://cdn.wallpapersafari.com/58/70/hPwjSr.jpg");
+    background-image: url("http://getwallpapers.com/wallpaper/full/e/e/6/333502.jpg");
 }
 
 .jumbotron {
@@ -26,6 +30,10 @@ body {
 .btn {
     margin-top: 4%;
     width: 60%;
+}
+
+h1, h2 {
+    font-family:'Merienda One', cursive;
 }
 
 h3 {
