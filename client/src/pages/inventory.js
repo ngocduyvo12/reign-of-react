@@ -104,6 +104,7 @@ class Inventory extends Component {
                         className="equippedImages"
                         src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
                         alt={cards.name}
+                        attack={cards.attack}
                         onClick={this.equip}
                       />
                     </div>
