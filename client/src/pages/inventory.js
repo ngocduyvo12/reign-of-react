@@ -106,7 +106,7 @@ class Inventory extends Component {
                         alt={cards.name}
                         attack={cards.attack}
                         onClick={this.equip}
-                      />
+                        />
                     </div>
                   ))}
                 </>

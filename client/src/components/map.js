@@ -118,7 +118,7 @@ class Map extends Component {
                                     </div>
 
                                     <div className="modal-monster col-md-12">
-                                        <h3>You have a chance to win one of the cards below that reside here, in addition to {this.state.currentArea.experience} experience points</h3>
+                                        <h3>The monsters below are those that reside in {this.state.currentArea.name}, in addition to gaining {this.state.currentArea.experience} experience points, you'll have a chance to win one of these cards after a sucessful combat.</h3>
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
                                     </div>
