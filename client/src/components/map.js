@@ -114,7 +114,7 @@ class Map extends Component {
                                 <div className="modal-wrap">
                                     <div className="modal-title col-md-12">
                                         <h1>Welcome to the region of {this.state.currentArea.name}</h1>
-                                        <h2>Region Tier: {this.state.currentArea.tier}</h2>
+                                        <h1>Region Tier: {this.state.currentArea.tier}</h1>
                                     </div>
 
                                     <div className="modal-monster col-md-12">

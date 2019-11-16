@@ -44,13 +44,8 @@ area {
 }
 
 .modal-title {
-    margin-bottom: 2rem;
-}
-
-.modal-monster {
-    float: left;
-    border-style: solid;
-    border-radius: 18px;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
 }
 
 .modal-reward {
