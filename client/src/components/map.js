@@ -113,12 +113,12 @@ class Map extends Component {
                             >
                                 <div className="modal-wrap">
                                     <div className="modal-title col-md-12">
-                                        <h1>{this.state.currentArea.name}</h1>
+                                        <h1>Welcome to the region of {this.state.currentArea.name}</h1>
                                         <h2>Region Tier: {this.state.currentArea.tier}</h2>
                                     </div>
 
-                                    <div className="modal-monster col-md-10">
-                                        <h3>You have a chance to win one of the cards below that reside here, in addition to{this.state.currentArea.experience} experience points</h3>
+                                    <div className="modal-monster col-md-12">
+                                        <h3>You have a chance to win one of the cards below that reside here, in addition to {this.state.currentArea.experience} experience points</h3>
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
                                     </div>

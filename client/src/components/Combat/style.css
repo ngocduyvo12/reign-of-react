@@ -145,23 +145,17 @@
     max-width: 1300px;
 }
 
-#player-stat-ec {
-    height: 100px;
-    color: white;
-}
-
 #player-ec-lost {
     height: 300px;
     color: white;
 }
 
 #player-ec-win {
-    height: 300px;
+    height: 200px;
     color: white;
 }
 
 #ec-button {
-    width: 200%;
     margin-left: 0;
 }
 
@@ -174,6 +168,11 @@
 
 .my-attack-log {
     margin-top: 30%;
+    color: green;
+}
+
+.enemy-attack-log {
+    color: red;
 }
 
 #ec {

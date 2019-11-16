@@ -401,9 +401,15 @@ class Combat extends Component {
         >
           <div className="jumbotron" id="ec-wrapper" ref={subtitle => this.subtitle = subtitle}>
             <h1 ref={subtitle => this.subtitle = subtitle} id="ec">End of Combat</h1>
+            <button
+                  type="submit"
+                  id="ec-button"
+                  className="btn btn-lg btn-dark result-submit"
+                  onClick={this.goHome}
+                >Return to Map</button>
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
-                <div className="combat-result col-md-7" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
+                <div className="combat-result col-md-12" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.result === 1 ?
                     <>
                       <h3>You win: {this.state.winCard.name}</h3>
@@ -418,7 +424,7 @@ class Combat extends Component {
                     </>
                     : ""}
                 </div>
-                <div className="card-status col-md-5" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
+                <div className="card-status col-md-12" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
                 {this.state.result === 2 ?
                     <>
                       <h3>You lose: {this.state.lostCard.name}</h3>
@@ -433,17 +439,6 @@ class Combat extends Component {
                     </>
                     : ""}
                 </div>
-
-                <div className="card-inventory col-md-12" id="player-stat-ec" ref={subtitle => this.subtitle = subtitle}>
-                  <div>Player stats and card inventory will go here</div>
-                </div>
-
-                <button
-                  type="submit"
-                  id="ec-button"
-                  className="btn btn-lg btn-dark result-submit"
-                  onClick={this.goHome}
-                >Return to Map</button>
 
               </div>
             </div>
