@@ -21,7 +21,7 @@ class Inventory extends Component {
     API.getAllCards(this.props.match.params.id)
       .then(res => {
         this.setState({ equippedCards: res.data.equippedCards })
-        this.setState({ inventoryCard: res.data.inventoryCards})
+        this.setState({ inventoryCard: res.data.inventoryCards })
       })
       .catch(err => console.log(err))
   }
@@ -92,7 +92,7 @@ class Inventory extends Component {
         <div className="row">
           <Link to={"/home/" + this.props.match.params.id} id="return-home"><button className="btn-lg btn-dark" id="other-home">Return Home</button></Link>
           <div className="col-md-6 inventory-inventory">
-          <h2>Current Inventory</h2>
+          <h2>Current Inventory: {this.state.inventoryCard.length ? this.state.inventoryCard.length : 0} Cards</h2>
             {/* inventory go here */}
             <div className="row" id="style-inventory">
               {this.state.inventoryCard.length ? (
@@ -110,7 +110,7 @@ class Inventory extends Component {
                   ))}
                 </>
               )
-                : (<h3>No Cards in Inventory</h3>)}
+              : (<h3>No Cards in Inventory</h3>)}
             </div>
           </div>
 
