@@ -122,12 +122,6 @@ class Map extends Component {
                                         <hr />
                                         {this.renderMonsters(this.state.currentArea.monsters)}
                                     </div>
-{/* 
-                                    <div className="modal-reward col-md-5">
-                                        <h3>You Gain {this.state.currentArea.experience}XP and A Shot At these Cards:</h3>
-                                        <hr />
-                                        {this.renderMonsters(this.state.currentArea.monsters)}
-                                    </div> */}
 
                                     <div className="modal-leave col-md-12">
                                         <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
@@ -143,7 +137,6 @@ class Map extends Component {
                                 isOpen={this.state.modalIsOpen}
                                 onAfterOpen={this.afterOpenModal}
                                 onRequestClose={this.closeModal}
-                                // style={customStyles}
                                 contentLabel="Example Modal"
                             >
                                 <h2 ref={subtitle => this.subtitle = subtitle}>None</h2>

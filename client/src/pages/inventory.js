@@ -16,8 +16,6 @@ class Inventory extends Component {
     this.loadCards();
   }
 
-  
-
   //function to get equipped cards:
   loadCards = () => {
     API.getAllCards(this.props.match.params.id)

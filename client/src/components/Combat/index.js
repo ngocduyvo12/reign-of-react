@@ -181,10 +181,10 @@ class Combat extends Component {
       _id: res.data._id,
       name: res.data.userName,
       lvl: level,
-      attack: level * 32,
-      defense: level * 41,
-      hitPoints: (level * 234) + 550,
-      currentHealth: (level * 234) + 550,
+      attack: level * 99,
+      defense: level * 103,
+      hitPoints: (level * 590) + 860,
+      currentHealth: (level * 590) + 860,
       image: imageSrc,
       alive: true
     }
@@ -215,7 +215,7 @@ class Combat extends Component {
   attackNow = (event) => {
     //if enemy is already dead, prevent further action. Probably wont be needing this
     if (this.state.myEnemyCurrentHealth <= 0) {
-      alert("Enemy is dead")
+      alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
       return
     } else {
       //player's attack logic
@@ -412,7 +412,7 @@ class Combat extends Component {
                 <div className="combat-result col-md-12" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.result === 1 ?
                     <>
-                      <h3>You win: {this.state.winCard.name}</h3>
+                      <h3>You won a {this.state.winCard.name}</h3>
                       <input
                         type="image"
                         id={this.state.winCard._id}
@@ -427,7 +427,7 @@ class Combat extends Component {
                 <div className="card-status col-md-12" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
                 {this.state.result === 2 ?
                     <>
-                      <h3>You lose: {this.state.lostCard.name}</h3>
+                      <h3>You lost your {this.state.lostCard.name}</h3>
                       <input
                         type="image"
                         id={this.state.lostCard._id}
