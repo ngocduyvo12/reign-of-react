@@ -51,7 +51,7 @@ class Inventory extends Component {
       console.log("This is for discard: " + id)
       API.discardCard(discardObj)
       .then(res => this.componentDidMount())
-      .catch(err => console.log(err))
+      .catch(err => console.log)
     }else{
 
       

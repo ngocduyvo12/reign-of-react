@@ -12,3 +12,8 @@ img {
 .enemy-img-container {
     margin-top: 5%;
 }
+
+#enemy-img {
+    width: 180px;
+    height: 224px;
+}

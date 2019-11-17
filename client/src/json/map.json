@@ -6,7 +6,7 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [1,2,3],
+        "monsters": [1,2,3,51,52],
         "experience": 100
     },
     {
@@ -16,7 +16,7 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [2,3,4],
+        "monsters": [2,3,4,52,53],
         "experience": 100
     },
     {
@@ -26,8 +26,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [3,4,5],
-        "experience": 100
+        "monsters": [3,4,5,54,51],
+        "experience": 123
     },
     {
         "shape": "poly",
@@ -36,8 +36,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [5,6,7],
-        "experience": 100
+        "monsters": [5,6,7,55,52],
+        "experience": 150
     },
     {
         "shape": "poly",
@@ -46,8 +46,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [7,8,9],
-        "experience": 100
+        "monsters": [7,8,9,56,54],
+        "experience": 150
     },
     {
         "shape": "poly",
@@ -56,8 +56,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [9,10,11],
-        "experience": 100
+        "monsters": [9,10,11, 57, 53],
+        "experience": 175
     },
     {
         "shape": "poly",
@@ -66,8 +66,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [11,12,13],
-        "experience": 100
+        "monsters": [11,12,13, 56, 58],
+        "experience": 200
     },
     {
         "shape": "poly",
@@ -76,8 +76,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [12,13,14],
-        "experience": 100
+        "monsters": [12,13,14,59, 61],
+        "experience": 200
     },
     {
         "shape": "poly",
@@ -86,8 +86,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [14,15,16],
-        "experience": 100
+        "monsters": [14,15,16, 60, 65],
+        "experience": 200
     },
     {
         "shape": "poly",
@@ -96,7 +96,7 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 1,
-        "monsters": [15,16,17]
+        "monsters": [15,16,17, 61, 63]
     },
     {
         "shape": "poly",
@@ -105,8 +105,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [18,19,20],
-        "experience": 200
+        "monsters": [18,19,20, 62, 66],
+        "experience": 250
     },
     {
         "shape": "poly",
@@ -115,8 +115,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [19,20,21],
-        "experience": 200
+        "monsters": [19,20,21, 63,64],
+        "experience": 250
     },
     {
         "shape": "poly",
@@ -124,9 +124,9 @@
         "name": "Final",
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
-        "tier": 2,
-        "monsters": [21,22,23],
-        "experience": 200
+        "tier": 3,
+        "monsters": [97],
+        "experience": 6666
     },
     {
         "shape": "poly",
@@ -135,8 +135,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [23,24,25],
-        "experience": 200
+        "monsters": [23,24,25, 66, 67],
+        "experience": 250
     },
     {
         "shape": "poly",
@@ -145,8 +145,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [24,25,26],
-        "experience": 200
+        "monsters": [24,25,26, 68, 69],
+        "experience": 275
     },
     {
         "shape": "poly",
@@ -155,8 +155,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [25,26,27],
-        "experience": 200
+        "monsters": [25,26,27, 70,71],
+        "experience": 275
     },
     {
         "shape": "poly",
@@ -165,8 +165,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [26,27,28],
-        "experience": 200
+        "monsters": [26,27,28, 72, 73],
+        "experience": 280
     },
     {
         "shape": "poly",
@@ -175,8 +175,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [27,28,29],
-        "experience": 200
+        "monsters": [27,28,29, 74,70],
+        "experience": 290
     },
     {
         "shape": "poly",
@@ -185,8 +185,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [28,29,30],
-        "experience": 200
+        "monsters": [28,29,30, 75,76],
+        "experience": 300
     },
     {
         "shape": "poly",
@@ -195,8 +195,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [29,30,31],
-        "experience": 200
+        "monsters": [29,30,31, 77, 78],
+        "experience": 310
     },
     {
         "shape": "poly",
@@ -205,8 +205,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 2,
-        "monsters": [30,31,32],
-        "experience": 200
+        "monsters": [30,31,32, 79,80],
+        "experience": 310
     },
     {
         "shape": "poly",
@@ -215,8 +215,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [32,33,34],
-        "experience": 300
+        "monsters": [32,33,34, 81,82],
+        "experience": 320
     },
     {
         "shape": "poly",
@@ -225,8 +225,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [34,35,36],
-        "experience": 300
+        "monsters": [34,35,36, 83,84],
+        "experience": 333
     },
     {
         "shape": "poly",
@@ -235,8 +235,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [35,36,37],
-        "experience": 300
+        "monsters": [35,36,37, 85,86],
+        "experience": 350
     },
     {
         "shape": "poly",
@@ -245,8 +245,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [37,38,39],
-        "experience": 300
+        "monsters": [37,38,39, 87, 82],
+        "experience": 375
     },
     {
         "shape": "poly",
@@ -255,8 +255,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [39,40,41],
-        "experience": 300
+        "monsters": [39,40,41, 88,84],
+        "experience": 389
     },
     {
         "shape": "poly",
@@ -265,8 +265,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [41,42,43],
-        "experience": 300
+        "monsters": [41,42,43, 89,83],
+        "experience": 400
     },
     {
         "shape": "poly",
@@ -275,8 +275,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [43,44,45],
-        "experience": 300
+        "monsters": [43,44,45, 90, 89],
+        "experience": 400
     },
     {
         "shape": "poly",
@@ -285,8 +285,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [45,46,47],
-        "experience": 300
+        "monsters": [45,46,47, 91, 92],
+        "experience": 470
     },
     {
         "shape": "poly",
@@ -295,8 +295,8 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [47,48,49],
-        "experience": 300
+        "monsters": [47,48,49, 93,94],
+        "experience": 500
     },
     {
         "shape": "poly",
@@ -305,7 +305,7 @@
         "fillColor": "rgba(255,255,255,0)",
         "strokeColor": "rgba(255,255,255,0)",
         "tier": 3,
-        "monsters": [48,49,50],
-        "experience": 300
+        "monsters": [48,49,50, 95,96],
+        "experience": 600
     }
 ]

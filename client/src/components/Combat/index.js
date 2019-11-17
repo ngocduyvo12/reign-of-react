@@ -74,7 +74,7 @@ class Combat extends Component {
 
   loadArena = () => {
     let randomImage = Math.floor(Math.random() * 9)
-    console.log("this is map image" + randomImage)
+    // console.log("this is map image" + randomImage)
     document.body.classList.add(`image${randomImage}`)
   }
 
@@ -119,12 +119,13 @@ class Combat extends Component {
     //Do a switch case here to determine enemy stat modifier based on map tier
     //probably better to do a function?
     const monsterStatModifier = this.monsterStatModifier(tierData);
-    console.log("Monster stat modifier: ")
-    console.log(monsterStatModifier)
+    // console.log("Monster stat modifier: ")
+    // console.log(monsterStatModifier)
 
     //get a random monster from location data
-    const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
-    // console.log("mon:",characters[monsterID]);
+    const monsterID = locData.monsters[(Math.floor(Math.random() * locData.monsters.length))]
+    // console.log(locData.monsters[(Math.floor(Math.random() * locData.monsters.length))])
+    console.log("mon:",characters[monsterID]);
     this.setState({
       myEnemyName: characters[monsterID].name,
       locationData: locData,
@@ -194,8 +195,8 @@ class Combat extends Component {
       if (imgLevel > 11){
         imgLevel = 11
       }
-      console.log(level)
-      console.log(imgLevel)
+      // console.log(level)
+      // console.log(imgLevel)
       imageSrc = player[imgLevel].image
     }
     //make a player card:
@@ -203,8 +204,8 @@ class Combat extends Component {
       _id: res.data._id,
       name: res.data.userName,
       lvl: level,
-      attack: (level * 102) + 123,
-      defense: (level * 132) + 123,
+      attack: (level * 95) + 123,
+      defense: (level * 120) + 123,
       hitPoints: (level * 432) + 800,
       currentHealth: (level * 432) + 800,
       image: imageSrc,
@@ -257,7 +258,7 @@ class Combat extends Component {
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
         // alert("You have won")
-        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * 3)]];
+        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * this.state.locationData.monsters.length)]];
         this.setState({
           result: 1,
           winCard: winCard
@@ -295,14 +296,14 @@ class Combat extends Component {
     //get the index of the card
     const randomCardIndex = Math.floor(Math.random() * currentTeamCombat.length)
     const cardGettingAttacked = currentTeamCombat[randomCardIndex]
-    // console.log("card getting attacked: ")
-    // console.log(cardGettingAttacked)
+    console.log("card getting attacked: ")
+    console.log(cardGettingAttacked)
     //get enemy attack:
     let thisAttack = this.state.myEnemyAttack;
     //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
     let mitigation = 2000;
     //take defense into account when attacking
-    let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
+    let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (cardGettingAttacked.defense / (mitigation + cardGettingAttacked.defense))))
     //get health after attack:
     let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttackAfterModified), 0);
 

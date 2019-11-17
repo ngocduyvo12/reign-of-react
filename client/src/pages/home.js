@@ -71,8 +71,8 @@ class Home extends Component {
                 <Player
                   userName={this.state.player.userName}
                   lvl={this.state.myLevel}
-                  attack={(this.state.myLevel * 102) + 123}
-                  defense={(this.state.myLevel * 132) + 123}
+                  attack={(this.state.myLevel * 95) + 123}
+                  defense={(this.state.myLevel * 120) + 123}
                   health={(this.state.myLevel * 432) + 800}
                 />
                 <img id="player-image" src={process.env.PUBLIC_URL + "/img/cards/" + this.state.playerImage}></img>
