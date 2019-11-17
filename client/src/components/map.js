@@ -36,6 +36,7 @@ class Map extends Component {
 
     //function for moving map:
     moveMap(event) {
+        event.preventDefault();
         const element = document.getElementById("text-box");
         switch (event.keyCode) {
             //UP

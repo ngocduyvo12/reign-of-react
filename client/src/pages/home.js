@@ -10,78 +10,86 @@ import "../styles/player-stat.css"
 
 class Home extends Component {
 
-    state = {
-        randomBackground: [],
-        player: [],
-        playerImage: "",
-        myLevel: ""
-    }
+  state = {
+    randomBackground: [],
+    player: [],
+    playerImage: "",
+    myLevel: ""
+  }
 
-    componentDidMount() {
-        API.getUserId(this.props.match.params.id)
-            .then(data => {
-                const expThreshHold = 300
-                let level = Math.floor((1 + Math.sqrt(1 + 8 * data.data.exp / expThreshHold)) / 2)
-                let imageSrc = ""
-                if (level > 0) {
-                    imageSrc = player[level - 1].image
-                }
-                this.setState({ 
-                    player: data.data,
-                    playerImage : imageSrc,
-                    myLevel : level
-                 })
-            })
-            .catch(err => console.log(err))
-    }
+  componentDidMount() {
+    API.getUserId(this.props.match.params.id)
+      .then(data => {
+        const expThreshHold = 300
+        let level = Math.floor((1 + Math.sqrt(1 + 8 * data.data.exp / expThreshHold)) / 2)
 
-    handleLocationClick = (name) => {
-        this.props.history.push("/combat/" + name + "/" + this.props.match.params.id)
-    }
+        let imageSrc = ""
 
-    render() {
+        if (level > 0) {
+          let imgLevel = level;
+          if (imgLevel > 11){
+            imgLevel = 11
+          }
+          imageSrc = player[imgLevel].image
+        }
 
-        return (
-            <div className="container-fluid map-hold">
-                <div className="row">
-                    <div className="col-md-8">
-                    <img id="map-compass" src="../img/map/compass.png" />
-                        {/* Map div */}
-                        <div id="map-box">
-                            {/* call on map component */}
-                            {/* <MapWithRouter userid={this.props.match.params.id} /> */}
-                            <Map handleLocationClick={this.handleLocationClick} />
-                        </div>
-                    </div>
 
-                    <div className="col col-md-4">
-                        {/* player stats div */}
-                        <div className="row">
-                                <div id="player-stat-box">
-                                    <Help />
-                                    {/* <div className="row align-items-center"> */}
-                                        <Player
-                                            userName={this.state.player.userName}
-                                            lvl={this.state.myLevel}
-                                            attack={this.state.myLevel * 32}
-                                            defense={this.state.myLevel * 41}
-                                            health={(this.state.myLevel * 234) + 550}
-                                        />
-                                        <img id="player-image" src={process.env.PUBLIC_URL + "/img/cards/" + this.state.playerImage}></img>
-                                    {/* </div> */}
-                            </div>
-                        </div>
-                    </div>
+        this.setState({
+          player: data.data,
+          playerImage: imageSrc,
+          myLevel: level
+        })
+      })
+      .catch(err => console.log(err))
+  }
 
-                    {/* equipped card div */}
-                    <div className="col-md-12" id="player-cards-home">
-                        {/* logic to display current equipped cards */}
-                        <Equipped {...this.props} />
-                    </div>
-                </div>
+  handleLocationClick = (name) => {
+    this.props.history.push("/combat/" + name + "/" + this.props.match.params.id)
+  }
+
+  render() {
+
+    return (
+      <div className="container-fluid map-hold">
+        <div className="row">
+          <div className="col-md-8">
+            <img id="map-compass" src="../img/map/compass.png" />
+            {/* Map div */}
+            <div id="map-box">
+              {/* call on map component */}
+              {/* <MapWithRouter userid={this.props.match.params.id} /> */}
+              <Map handleLocationClick={this.handleLocationClick} />
             </div>
-        )
-    }
+          </div>
+
+          <div className="col col-md-4">
+            {/* player stats div */}
+            <div className="row">
+              <div id="player-stat-box">
+                <Help />
+                {/* <div className="row align-items-center"> */}
+                <Player
+                  userName={this.state.player.userName}
+                  lvl={this.state.myLevel}
+                  attack={(this.state.myLevel * 102) + 123}
+                  defense={(this.state.myLevel * 132) + 123}
+                  health={(this.state.myLevel * 432) + 800}
+                />
+                <img id="player-image" src={process.env.PUBLIC_URL + "/img/cards/" + this.state.playerImage}></img>
+                {/* </div> */}
+              </div>
+            </div>
+          </div>
+
+          {/* equipped card div */}
+          <div className="col-md-12" id="player-cards-home">
+            {/* logic to display current equipped cards */}
+            <Equipped {...this.props} />
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Home;

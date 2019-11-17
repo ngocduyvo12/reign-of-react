@@ -190,17 +190,23 @@ class Combat extends Component {
     // }
 
     if (level > 0) {
-      imageSrc = player[level - 1].image
+      let imgLevel = level;
+      if (imgLevel > 11){
+        imgLevel = 11
+      }
+      console.log(level)
+      console.log(imgLevel)
+      imageSrc = player[imgLevel].image
     }
     //make a player card:
     var myPlayerObj = {
       _id: res.data._id,
       name: res.data.userName,
       lvl: level,
-      attack: level * 32,
-      defense: level * 41,
-      hitPoints: (level * 234) + 550,
-      currentHealth: (level * 234) + 550,
+      attack: (level * 102) + 123,
+      defense: (level * 132) + 123,
+      hitPoints: (level * 432) + 800,
+      currentHealth: (level * 432) + 800,
       image: imageSrc,
       alive: true
     }
@@ -241,7 +247,7 @@ class Combat extends Component {
       let mitigation = 2000;
       //take defense into account when attacking
       let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
-      console.log(thisAttackAfterModified)
+      // console.log(thisAttackAfterModified)
 
 
       let enemyHealthAfterAttack = Math.floor(this.state.myEnemyCurrentHealth - thisAttackAfterModified)
