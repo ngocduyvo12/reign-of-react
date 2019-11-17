@@ -48,13 +48,10 @@ Future Plans include the following;
 - Ability for gear to be added that would increase stats while equipped
 - Ability for auction house / shop to be introduced, where players could purchase gear, spells, consumables, cards and also sell excess cards and items
 - Ability to set win conditions, either on total card collection, defeating a final boss or through zone domination
-- Updated combat logic that is more balanced for better user experience
 - Updated lore and narrative for better user experience
-- Additional monsters within the game that also present new card collection opportunities for players
 
 ## Known Minor Bugs
-- Sometimes combat / rewards will present an opponent or random card that was not identified in first modal to engage in combat
-- Experience can drop below 0, creates an issue where combat does not function properly and players must manually return home
+- None currently known
 
 ## Known Major Bugs
 - None currently known

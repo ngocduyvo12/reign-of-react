@@ -8,6 +8,7 @@ import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
 import player from "../../json/player.json"
 import Modal from "react-modal";
+import { Link } from 'react-router-dom';
 import "./style.css"
 
 class Combat extends Component {
@@ -369,6 +370,7 @@ class Combat extends Component {
               <div className="combat-log col-md-3 fight-logs">
                 <p className="my-attack-log">{this.state.combatLog}</p>
                 <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
+                <Link to={"/home/" + this.props.match.params.id} ><button className="btn btn-dark" id="surrender">Surrender</button></Link>
               </div>
               <div className="enemy-cards col-md-9">
                 <EnemyCards
