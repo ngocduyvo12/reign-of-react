@@ -299,8 +299,11 @@ class Combat extends Component {
             result: 2,
             lostCard: lostCard
           });
+          // Check if lost exp is less than 0 so we won't go under zero when sending an amount to decrement
+          const lostExpResult = this.state.myPlayer.exp - this.state.locationData.experience;
+          const lostExp = lostExpResult > 0 ? this.state.locationData.experience : this.state.myPlayer.exp;
 
-          API.removeInventory(lostCard, this.props.match.params.id, -this.state.locationData.experience)
+          API.removeInventory(lostCard, this.props.match.params.id, -lostExp)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
