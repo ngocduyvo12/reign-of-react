@@ -118,7 +118,9 @@ class Combat extends Component {
     //monster stat modifier based on map tier.
     //Do a switch case here to determine enemy stat modifier based on map tier
     //probably better to do a function?
-    const adModifier = this.ADModifier(tierData);
+    const monsterStatModifier = this.monsterStatModifier(tierData);
+    console.log("Monster stat modifier: ")
+    console.log(monsterStatModifier)
 
     //get a random monster from location data
     const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
@@ -130,30 +132,44 @@ class Combat extends Component {
       mapTier: tierData,
       //set state modifier for monster. Need to be stored in state?
       // monStat: monStatModifier,
-      myEnemyAttack: characters[monsterID].attack * adModifier,
-      myEnemyDefense: characters[monsterID].defense * adModifier,
-      myEnemyTotalHealth: characters[monsterID].hitpoints * tierData * 2,
-      myEnemyCurrentHealth: characters[monsterID].hitpoints * tierData * 2,
+      myEnemyAttack: characters[monsterID].attack * 1,
+      myEnemyDefense: characters[monsterID].defense * 1,
+      myEnemyTotalHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
+      myEnemyCurrentHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
     });
-    console.log("in", this.state.locationData);
+    console.log("in", locData);
   }
 
   //function to calculate monster stat modifier based on map tier
-  ADModifier = (tierData) => {
+  monsterStatModifier = (tierData) => {
+
     switch (tierData) {
       //if map is tier 1 double enemy HP stats
       case 1:
-      default:
+        //HP modifier
         //attack and defense modifier
-        return 1
-      //if map is tier 2 quadruple enemy HP and random attack defense modifier between 1.5-2
+        return {
+          hpModifier: 2,
+          ADModifier: 1
+        }
+      //if map is tier 2 quadruple enemy HP and random attack defense modifier between 1-1.25
       case 2:
+        //HP modifier
         //attack and defense modifier
-        return Math.floor(Math.random() * 0.5) + 1.5;
-      //if map is tier 3 sextuple enemy stats and random attack and defense modifier between 2 - 2.5
+        return {
+          hpModifier: 3,
+          ADModifier: (Math.random() * 0.5) + 1
+        }
+      // return Math.floor(Math.random() * 0.5) + 1.5;
+      //if map is tier 3 sextuple enemy stats and random attack and defense modifier between 1.5-1.75
       case 3:
+        //HP modifier
         //attack and defense modifier
-        return Math.floor(Math.random() * 0.5) + 2;
+        return {
+          hpModifier: 4,
+          ADModifier: (Math.random() * 0.25) + 1.5
+        }
+      // return Math.floor(Math.random() * 0.5) + 2;
     }
   }
 
@@ -220,15 +236,24 @@ class Combat extends Component {
     } else {
       //player's attack logic
       let thisAttack = event.target.getAttribute("data-attack");
-      let enemyHealthAfterAttack = this.state.myEnemyCurrentHealth - thisAttack
+
+      //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
+      let mitigation = 2000;
+      //take defense into account when attacking
+      let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
+      console.log(thisAttackAfterModified)
+
+
+      let enemyHealthAfterAttack = Math.floor(this.state.myEnemyCurrentHealth - thisAttackAfterModified)
+
       this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
 
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
         // alert("You have won")
         const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * 3)]];
-        this.setState({ 
-          result: 1, 
+        this.setState({
+          result: 1,
           winCard: winCard
         })
 
@@ -240,7 +265,7 @@ class Combat extends Component {
       }
       //if enemy not dead after attack, call enemyAttack
       else {
-        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
+        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
         this.setState({ combatLog: comment })
         // console.log(combatLog)
 
@@ -268,8 +293,12 @@ class Combat extends Component {
     // console.log(cardGettingAttacked)
     //get enemy attack:
     let thisAttack = this.state.myEnemyAttack;
+    //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
+    let mitigation = 2000;
+    //take defense into account when attacking
+    let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
     //get health after attack:
-    let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttack), 0);
+    let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttackAfterModified), 0);
 
     //update current health of the attacked card
     //set state of current health for this card. Use card's ID to update its health in state
@@ -295,7 +324,7 @@ class Combat extends Component {
         var checkLost = currentTeamCombat.filter(card => card.alive === true)
         if (checkLost.length < 1) {
           const lostCard = this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)];
-          this.setState({ 
+          this.setState({
             result: 2,
             lostCard: lostCard
           });
@@ -314,7 +343,7 @@ class Combat extends Component {
     }
 
     //log out enemy attack:
-    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
+    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttackAfterModified} damage`
     this.setState({ enemyCombatLog: comment })
 
   }
@@ -338,8 +367,8 @@ class Combat extends Component {
                 <EnemyCards
                   monster={this.state.monster}
                   hitpoints={this.state.myEnemyCurrentHealth}
-                  attack={this.state.myEnemyAttack}
-                  defense={this.state.myEnemyDefense}
+                  attack={Math.floor(this.state.myEnemyAttack)}
+                  defense={Math.floor(this.state.myEnemyDefense)}
                 />
                 <div className="progress" id="enemy-hp">
                   <div className="progress-bar progress-bar-danger"
@@ -422,7 +451,7 @@ class Combat extends Component {
                     : ""}
                 </div>
                 <div className="card-status col-md-5" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
-                {this.state.result === 2 ?
+                  {this.state.result === 2 ?
                     <>
                       <h3>You lose: {this.state.lostCard.name}</h3>
                       <input

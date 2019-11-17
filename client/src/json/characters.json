@@ -1,4 +1,6 @@
 [
+    {"Nothing to see here": "this is index 0. This need to be here because we used character's array index instead of monster id. The monster number in map.json is messed up"},
+
     {
     "id": 1,
     "name": "Ancient Whale",
@@ -465,7 +467,7 @@
     "image": "lvl7_eideron.jpg",
     "hitpoints": 21230,
     "attack": 2594,
-    "defense": 21230,
+    "defense": 2123,
     "rarity": 7
     },
 
