@@ -5,6 +5,7 @@ import Player from "../components/Player";
 import Equipped from "../components/equipped/equipped"
 import player from "../json/player.json"
 import API from "../utils/API";
+import { Link } from 'react-router-dom';
 import "../styles/map.css";
 import "../styles/player-stat.css"
 
@@ -67,6 +68,7 @@ class Home extends Component {
             <div className="row">
               <div id="player-stat-box">
                 <Help />
+                <Link to="/"><button className="btn-dark btn" id="logout">Logout</button></Link>
                 {/* <div className="row align-items-center"> */}
                 <Player
                   userName={this.state.player.userName}
