@@ -32,6 +32,10 @@ router
 router
     .route("/unEquipCard")
     .post(userController.unEquipCard)
+//matches with "api/user/discardCard"
+//route for discarding a card in inventory
+router.route("/discardCard")
+.post(userController.discardCard)
 
 //route for seeding data for testing purposes.
 //matches with "api/user/dev/seed-equipped"

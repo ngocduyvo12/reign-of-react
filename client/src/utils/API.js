@@ -21,6 +21,8 @@ export default {
   updateEquippedCard: (data) => axios.post("/api/user/updateEquippedCard", data),
   //un-equip a card and add to inventory
   unEquipCard: (data) => axios.post("/api/user/unEquipCard", data),
+  //discard a card from inventory when discard is toggled:
+  discardCard: (data) => axios.post("/api/user/discardCard", data),
 
   addInventory: (card, userid, exp) => axios.post("/api/user/add-inventory", {card: card, userid: userid, exp: exp}),
 

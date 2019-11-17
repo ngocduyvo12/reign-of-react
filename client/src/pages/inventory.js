@@ -8,7 +8,8 @@ class Inventory extends Component {
   state = {
     inventoryCard: [],
     equippedCards: [],
-    activeCard: {}
+    activeCard: {},
+    discardActive: false
   }
 
   //on page load call functions for displaying inventory and equipped cards
@@ -39,18 +40,33 @@ class Inventory extends Component {
   //exist the loop
   //call API route to update equippedCards if slot is available
   equip = (event) => {
-
-    if (this.state.equippedCards.length > 3) {
-      alert("No more cards can be equipped");
-      return 
-    }
-
     const id = event.target.id
-    for (let i = 0; i < this.state.inventoryCard.length; i++){
-      if(id === this.state.inventoryCard[i]._id){
-        const newActiveState = {...this.state.inventoryCard[i]}
-        newActiveState.userID = this.props.match.params.id
-        this.setState({activeCard: newActiveState}, this.equipCard)
+
+    //check if discardActive is on? if it is discard clicked on cards
+    if(this.state.discardActive){
+      let discardObj = {
+        cardId: id,
+        userId: this.props.match.params.id
+      }
+      console.log("This is for discard: " + id)
+      API.discardCard(discardObj)
+      .then(res => this.componentDidMount())
+      .catch(err => console.log(err))
+    }else{
+
+      
+      if (this.state.equippedCards.length > 3) {
+        alert("No more cards can be equipped");
+        return 
+      }
+      
+      
+      for (let i = 0; i < this.state.inventoryCard.length; i++){
+        if(id === this.state.inventoryCard[i]._id){
+          const newActiveState = {...this.state.inventoryCard[i]}
+          newActiveState.userID = this.props.match.params.id
+          this.setState({activeCard: newActiveState}, this.equipCard)
+        }
       }
     }
   }
@@ -88,6 +104,15 @@ class Inventory extends Component {
     .catch(err => console.log(err))
   }
 
+  toggleDiscard = (event) => {
+    event.preventDefault()
+    if (!this.state.discardActive){
+      this.setState({discardActive: true})
+    }else{
+      this.setState({discardActive: false})
+    }
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -113,6 +138,13 @@ class Inventory extends Component {
                 </>
               )
                 : (<h3>No Cards in Inventory</h3>)}
+
+                {/* this button will TOGGLE discarding mode */}
+                <button 
+                type="button" 
+                className={!this.state.discardActive ? "btn btn-success" : "btn btn-danger"}
+                onClick={this.toggleDiscard}
+                >{!this.state.discardActive ? "Click to Turn Discard Mode on" : "Discard Mode is ON"}</button>
             </div>
           </div>
 
