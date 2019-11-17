@@ -74,7 +74,7 @@ class Combat extends Component {
 
   loadArena = () => {
     let randomImage = Math.floor(Math.random() * 9)
-    console.log("this is map image" + randomImage)
+    // console.log("this is map image" + randomImage)
     document.body.classList.add(`image${randomImage}`)
   }
 
@@ -118,11 +118,14 @@ class Combat extends Component {
     //monster stat modifier based on map tier.
     //Do a switch case here to determine enemy stat modifier based on map tier
     //probably better to do a function?
-    const adModifier = this.ADModifier(tierData);
+    const monsterStatModifier = this.monsterStatModifier(tierData);
+    // console.log("Monster stat modifier: ")
+    // console.log(monsterStatModifier)
 
     //get a random monster from location data
-    const monsterID = locData.monsters[Math.floor(Math.random() * 3)]
-    // console.log("mon:",characters[monsterID]);
+    const monsterID = locData.monsters[(Math.floor(Math.random() * locData.monsters.length))]
+    // console.log(locData.monsters[(Math.floor(Math.random() * locData.monsters.length))])
+    console.log("mon:",characters[monsterID]);
     this.setState({
       myEnemyName: characters[monsterID].name,
       locationData: locData,
@@ -130,30 +133,44 @@ class Combat extends Component {
       mapTier: tierData,
       //set state modifier for monster. Need to be stored in state?
       // monStat: monStatModifier,
-      myEnemyAttack: characters[monsterID].attack * adModifier,
-      myEnemyDefense: characters[monsterID].defense * adModifier,
-      myEnemyTotalHealth: characters[monsterID].hitpoints * tierData * 2,
-      myEnemyCurrentHealth: characters[monsterID].hitpoints * tierData * 2,
+      myEnemyAttack: characters[monsterID].attack * 1,
+      myEnemyDefense: characters[monsterID].defense * 1,
+      myEnemyTotalHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
+      myEnemyCurrentHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
     });
-    console.log("in", this.state.locationData);
+    console.log("in", locData);
   }
 
   //function to calculate monster stat modifier based on map tier
-  ADModifier = (tierData) => {
+  monsterStatModifier = (tierData) => {
+
     switch (tierData) {
       //if map is tier 1 double enemy HP stats
       case 1:
-      default:
+        //HP modifier
         //attack and defense modifier
-        return 1
-      //if map is tier 2 quadruple enemy HP and random attack defense modifier between 1.5-2
+        return {
+          hpModifier: 2,
+          ADModifier: 1
+        }
+      //if map is tier 2 quadruple enemy HP and random attack defense modifier between 1-1.25
       case 2:
+        //HP modifier
         //attack and defense modifier
-        return Math.floor(Math.random() * 0.5) + 1.5;
-      //if map is tier 3 sextuple enemy stats and random attack and defense modifier between 2 - 2.5
+        return {
+          hpModifier: 3,
+          ADModifier: (Math.random() * 0.5) + 1
+        }
+      // return Math.floor(Math.random() * 0.5) + 1.5;
+      //if map is tier 3 sextuple enemy stats and random attack and defense modifier between 1.5-1.75
       case 3:
+        //HP modifier
         //attack and defense modifier
-        return Math.floor(Math.random() * 0.5) + 2;
+        return {
+          hpModifier: 4,
+          ADModifier: (Math.random() * 0.25) + 1.5
+        }
+      // return Math.floor(Math.random() * 0.5) + 2;
     }
   }
 
@@ -174,17 +191,23 @@ class Combat extends Component {
     // }
 
     if (level > 0) {
-      imageSrc = player[level - 1].image
+      let imgLevel = level;
+      if (imgLevel > 11){
+        imgLevel = 11
+      }
+      // console.log(level)
+      // console.log(imgLevel)
+      imageSrc = player[imgLevel].image
     }
     //make a player card:
     var myPlayerObj = {
       _id: res.data._id,
       name: res.data.userName,
       lvl: level,
-      attack: level * 99,
-      defense: level * 103,
-      hitPoints: (level * 590) + 860,
-      currentHealth: (level * 590) + 860,
+      attack: (level * 95) + 123,
+      defense: (level * 120) + 123,
+      hitPoints: (level * 432) + 800,
+      currentHealth: (level * 432) + 800,
       image: imageSrc,
       alive: true
     }
@@ -220,15 +243,24 @@ class Combat extends Component {
     } else {
       //player's attack logic
       let thisAttack = event.target.getAttribute("data-attack");
-      let enemyHealthAfterAttack = this.state.myEnemyCurrentHealth - thisAttack
+
+      //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
+      let mitigation = 2000;
+      //take defense into account when attacking
+      let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
+      // console.log(thisAttackAfterModified)
+
+
+      let enemyHealthAfterAttack = Math.floor(this.state.myEnemyCurrentHealth - thisAttackAfterModified)
+
       this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
 
       //check winning condition here with out waiting for state to set in
       if (enemyHealthAfterAttack <= 0) {
         // alert("You have won")
-        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * 3)]];
-        this.setState({ 
-          result: 1, 
+        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * this.state.locationData.monsters.length)]];
+        this.setState({
+          result: 1,
           winCard: winCard
         })
 
@@ -240,7 +272,7 @@ class Combat extends Component {
       }
       //if enemy not dead after attack, call enemyAttack
       else {
-        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttack} damage`
+        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
         this.setState({ combatLog: comment })
         // console.log(combatLog)
 
@@ -264,12 +296,16 @@ class Combat extends Component {
     //get the index of the card
     const randomCardIndex = Math.floor(Math.random() * currentTeamCombat.length)
     const cardGettingAttacked = currentTeamCombat[randomCardIndex]
-    // console.log("card getting attacked: ")
-    // console.log(cardGettingAttacked)
+    console.log("card getting attacked: ")
+    console.log(cardGettingAttacked)
     //get enemy attack:
     let thisAttack = this.state.myEnemyAttack;
+    //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
+    let mitigation = 2000;
+    //take defense into account when attacking
+    let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (cardGettingAttacked.defense / (mitigation + cardGettingAttacked.defense))))
     //get health after attack:
-    let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttack), 0);
+    let myCardHealthAfterAttack = Math.max((cardGettingAttacked.currentHealth - thisAttackAfterModified), 0);
 
     //update current health of the attacked card
     //set state of current health for this card. Use card's ID to update its health in state
@@ -295,12 +331,15 @@ class Combat extends Component {
         var checkLost = currentTeamCombat.filter(card => card.alive === true)
         if (checkLost.length < 1) {
           const lostCard = this.state.myCards[Math.floor(Math.random() * this.state.myCards.length)];
-          this.setState({ 
+          this.setState({
             result: 2,
             lostCard: lostCard
           });
+          // Check if lost exp is less than 0 so we won't go under zero when sending an amount to decrement
+          const lostExpResult = this.state.myPlayer.exp - this.state.locationData.experience;
+          const lostExp = lostExpResult > 0 ? this.state.locationData.experience : this.state.myPlayer.exp;
 
-          API.removeInventory(lostCard, this.props.match.params.id, -this.state.locationData.experience)
+          API.removeInventory(lostCard, this.props.match.params.id, -lostExp)
             .then(res => console.log(res))
             .catch(err => console.log(err))
 
@@ -311,7 +350,7 @@ class Combat extends Component {
     }
 
     //log out enemy attack:
-    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttack} damage`
+    let comment = `${this.state.myEnemyName} attacked ${cardGettingAttacked.name} for ${thisAttackAfterModified} damage`
     this.setState({ enemyCombatLog: comment })
 
   }
@@ -335,8 +374,8 @@ class Combat extends Component {
                 <EnemyCards
                   monster={this.state.monster}
                   hitpoints={this.state.myEnemyCurrentHealth}
-                  attack={this.state.myEnemyAttack}
-                  defense={this.state.myEnemyDefense}
+                  attack={Math.floor(this.state.myEnemyAttack)}
+                  defense={Math.floor(this.state.myEnemyDefense)}
                 />
                 <div className="progress" id="enemy-hp">
                   <div className="progress-bar progress-bar-danger"
@@ -355,7 +394,7 @@ class Combat extends Component {
                   {this.state.myTeam ? (
                     this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
-                        <h4> Name: {cards.name}</h4>
+                        <h5> Name: {cards.name}</h5>
                         {/* health will probably be changed to current health for each card */}
                         <h5> Health: {cards.currentHealth}</h5>
                         <div className="progress">
@@ -425,7 +464,7 @@ class Combat extends Component {
                     : ""}
                 </div>
                 <div className="card-status col-md-12" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
-                {this.state.result === 2 ?
+                  {this.state.result === 2 ?
                     <>
                       <h3>You lost your {this.state.lostCard.name}</h3>
                       <input

@@ -63,3 +63,9 @@ h2 {
     padding: 1rem;
     border-radius: 18px;
 }
+
+/* resize the cards. Should only affect animated cards. Done by Ngoc*/
+.equippedImages {
+    width: 180px;
+    height: 224px;
+}

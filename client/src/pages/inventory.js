@@ -8,7 +8,8 @@ class Inventory extends Component {
   state = {
     inventoryCard: [],
     equippedCards: [],
-    activeCard: {}
+    activeCard: {},
+    discardActive: false
   }
 
   //on page load call functions for displaying inventory and equipped cards
@@ -37,28 +38,43 @@ class Inventory extends Component {
   //exist the loop
   //call API route to update equippedCards if slot is available
   equip = (event) => {
-
-    if (this.state.equippedCards.length > 3) {
-      alert("No more cards can be equipped");
-      return 
-    }
-
     const id = event.target.id
-    for (let i = 0; i < this.state.inventoryCard.length; i++){
-      if(id === this.state.inventoryCard[i]._id){
-        const newActiveState = {...this.state.inventoryCard[i]}
-        newActiveState.userID = this.props.match.params.id
-        this.setState({activeCard: newActiveState}, this.equipCard)
+
+    //check if discardActive is on? if it is discard clicked on cards
+    if (this.state.discardActive) {
+      let discardObj = {
+        cardId: id,
+        userId: this.props.match.params.id
+      }
+      console.log("This is for discard: " + id)
+      API.discardCard(discardObj)
+        .then(res => this.componentDidMount())
+        .catch(err => console.log)
+    } else {
+
+
+      if (this.state.equippedCards.length > 3) {
+        alert("No more cards can be equipped");
+        return
+      }
+
+
+      for (let i = 0; i < this.state.inventoryCard.length; i++) {
+        if (id === this.state.inventoryCard[i]._id) {
+          const newActiveState = { ...this.state.inventoryCard[i] }
+          newActiveState.userID = this.props.match.params.id
+          this.setState({ activeCard: newActiveState }, this.equipCard)
+        }
       }
     }
   }
-  
+
   equipCard = () => {
     API.updateEquippedCard(this.state.activeCard)
-    .then(res => {
-      this.componentDidMount();
-    })
-    .catch(err => console.log(err))
+      .then(res => {
+        this.componentDidMount();
+      })
+      .catch(err => console.log(err))
   }
 
   //onclick event to unequip a currently equipped card:
@@ -69,21 +85,30 @@ class Inventory extends Component {
   //call API route to remove this card id from equippedCard array in database and add it to the inventoryCard array in database
   unEquip = (event) => {
     const id = event.target.id
-    for(let i = 0; i < this.state.equippedCards.length; i++){
-      if(id === this.state.equippedCards[i]._id){
-        const newActiveState = {...this.state.equippedCards[i]}
+    for (let i = 0; i < this.state.equippedCards.length; i++) {
+      if (id === this.state.equippedCards[i]._id) {
+        const newActiveState = { ...this.state.equippedCards[i] }
         newActiveState.userID = this.props.match.params.id
-        this.setState({activeCard: newActiveState}, this.cardUnEquip)
+        this.setState({ activeCard: newActiveState }, this.cardUnEquip)
       }
     }
   }
-  
+
   cardUnEquip = () => {
     API.unEquipCard(this.state.activeCard)
-    .then(res => {
-      this.componentDidMount();
-    })
-    .catch(err => console.log(err))
+      .then(res => {
+        this.componentDidMount();
+      })
+      .catch(err => console.log(err))
+  }
+
+  toggleDiscard = (event) => {
+    event.preventDefault()
+    if (!this.state.discardActive) {
+      this.setState({ discardActive: true })
+    } else {
+      this.setState({ discardActive: false })
+    }
   }
 
   render() {
@@ -92,8 +117,14 @@ class Inventory extends Component {
         <div className="row">
           <Link to={"/home/" + this.props.match.params.id} id="return-home"><button className="btn-lg btn-dark" id="other-home">Return Home</button></Link>
           <div className="col-md-6 inventory-inventory">
-          <h2>Current Inventory: {this.state.inventoryCard.length ? this.state.inventoryCard.length : 0} Cards</h2>
+            <h2>Current Inventory: {this.state.inventoryCard.length ? this.state.inventoryCard.length : 0} Cards</h2>
             {/* inventory go here */}
+            {/* this button will TOGGLE discarding mode */}
+            <button
+              type="button"
+              className={!this.state.discardActive ? "btn btn-success" : "btn btn-danger"}
+              onClick={this.toggleDiscard}
+            >{!this.state.discardActive ? "Click to Turn Discard Mode on" : "Discard Mode is ON"}</button>
             <div className="row" id="style-inventory">
               {this.state.inventoryCard.length ? (
                 <>
@@ -102,21 +133,21 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="equippedImages"
-                        src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
+                        src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
                         alt={cards.name}
                         attack={cards.attack}
                         onClick={this.equip}
-                        />
+                      />
                     </div>
                   ))}
                 </>
               )
-              : (<h3>No Cards in Inventory</h3>)}
+                : (<h3>No Cards in Inventory</h3>)}
             </div>
           </div>
 
           <div className="col-md-5 inventory-equipped">
-          <h2>Currently Equipped</h2>
+            <h2>Currently Equipped</h2>
             <div className="row" id="style-equipped">
               {/* equipped cards go here */}
               {this.state.equippedCards.length ? (
@@ -127,7 +158,7 @@ class Inventory extends Component {
                       <img
                         id={cards._id}
                         className="equippedImages"
-                        src={process.env.PUBLIC_URL+"/img/cards/" + cards.image}
+                        src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
                         alt={cards.name}
                         onClick={this.unEquip}
                       />

@@ -130,6 +130,16 @@ module.exports = {
       }).catch(err => console.log(err))
   },
 
+  //discard a card in inventory:
+  discardCard: function (req, res){
+    db.InventoryCards.findByIdAndDelete(req.body.cardId)
+    .then(function(dbSeed) {
+      return db.User.findByIdAndUpdate(req.body.userId, { $pull: {inventoryCards: req.body.cardId}})
+    }).then(function (result) {
+      res.json(result)
+    }).catch(err => console.log(err))
+  },
+
   //for testing purposes
   //this is a route to seed equipped card in db
   devSeed: function (req, res) {

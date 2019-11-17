@@ -45,7 +45,7 @@ area {
 
 .modal-title {
     margin-top: 3rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
 }
 
 .modal-reward {
@@ -57,7 +57,7 @@ area {
 
 .monsters-rendered {
     float: left;
-    margin-left: 18%;
+    margin-left: 9%;
 }
 
 .modal-wrap {
@@ -87,3 +87,14 @@ area {
 .ReactModal__Overlay {
     z-index: 4;
 }
+
+.modal-images {
+    width: 112px;
+    margin-right: auto !important;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
