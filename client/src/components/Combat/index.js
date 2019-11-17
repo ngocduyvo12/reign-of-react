@@ -8,6 +8,7 @@ import mapJSON from "../../json/map.json";
 import API from "../../utils/API";
 import player from "../../json/player.json"
 import Modal from "react-modal";
+import { Link } from 'react-router-dom';
 import "./style.css"
 
 class Combat extends Component {
@@ -238,7 +239,7 @@ class Combat extends Component {
   attackNow = (event) => {
     //if enemy is already dead, prevent further action. Probably wont be needing this
     if (this.state.myEnemyCurrentHealth <= 0) {
-      alert("Enemy is dead")
+      alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
       return
     } else {
       //player's attack logic
@@ -369,6 +370,7 @@ class Combat extends Component {
               <div className="combat-log col-md-3 fight-logs">
                 <p className="my-attack-log">{this.state.combatLog}</p>
                 <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
+                <Link to={"/home/" + this.props.match.params.id} ><button className="btn btn-dark" id="surrender">Surrender</button></Link>
               </div>
               <div className="enemy-cards col-md-9">
                 <EnemyCards
@@ -394,7 +396,7 @@ class Combat extends Component {
                   {this.state.myTeam ? (
                     this.state.myTeam.map(cards => (
                       <div key={cards._id} className="player-equipped">
-                        <h4> Name: {cards.name}</h4>
+                        <h5> Name: {cards.name}</h5>
                         {/* health will probably be changed to current health for each card */}
                         <h5> Health: {cards.currentHealth}</h5>
                         <div className="progress">
@@ -440,12 +442,18 @@ class Combat extends Component {
         >
           <div className="jumbotron" id="ec-wrapper" ref={subtitle => this.subtitle = subtitle}>
             <h1 ref={subtitle => this.subtitle = subtitle} id="ec">End of Combat</h1>
+            <button
+                  type="submit"
+                  id="ec-button"
+                  className="btn btn-lg btn-dark result-submit"
+                  onClick={this.goHome}
+                >Return to Map</button>
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
-                <div className="combat-result col-md-7" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
+                <div className="combat-result col-md-12" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.result === 1 ?
                     <>
-                      <h3>You win: {this.state.winCard.name}</h3>
+                      <h3>You won a {this.state.winCard.name}</h3>
                       <input
                         type="image"
                         id={this.state.winCard._id}
@@ -457,10 +465,10 @@ class Combat extends Component {
                     </>
                     : ""}
                 </div>
-                <div className="card-status col-md-5" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
+                <div className="card-status col-md-12" id="player-ec-lost" ref={subtitle => this.subtitle = subtitle}>
                   {this.state.result === 2 ?
                     <>
-                      <h3>You lose: {this.state.lostCard.name}</h3>
+                      <h3>You lost your {this.state.lostCard.name}</h3>
                       <input
                         type="image"
                         id={this.state.lostCard._id}
@@ -472,17 +480,6 @@ class Combat extends Component {
                     </>
                     : ""}
                 </div>
-
-                <div className="card-inventory col-md-12" id="player-stat-ec" ref={subtitle => this.subtitle = subtitle}>
-                  <div>Player stats and card inventory will go here</div>
-                </div>
-
-                <button
-                  type="submit"
-                  id="ec-button"
-                  className="btn btn-lg btn-dark result-submit"
-                  onClick={this.goHome}
-                >Return to Map</button>
 
               </div>
             </div>

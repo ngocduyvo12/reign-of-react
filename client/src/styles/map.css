@@ -44,14 +44,8 @@ area {
 }
 
 .modal-title {
-    margin-bottom: 2rem;
-}
-
-.modal-monster {
-    float: left;
-    border-style: solid;
-    margin-left: 5rem;
-    border-radius: 18px;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .modal-reward {
@@ -63,7 +57,7 @@ area {
 
 .monsters-rendered {
     float: left;
-    margin-left: 7%;
+    margin-left: 9%;
 }
 
 .modal-wrap {

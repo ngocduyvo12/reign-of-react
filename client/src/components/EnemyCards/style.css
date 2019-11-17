@@ -1,10 +1,9 @@
 img {
     float: right;
-    margin-right: 15%;
+    margin-right: 5%;
 }
 
 .enemy-stats {
-    width: 50%;
     margin-top: 5%;
     font-size: 24px;
 }
@@ -13,7 +12,7 @@ img {
     margin-top: 5%;
 }
 
-#enemy-img {
-    width: 180px;
-    height: 224px;
+#enemy-card {
+    margin-top: -5%;
+    height: 300px;
 }

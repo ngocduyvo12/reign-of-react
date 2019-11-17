@@ -115,21 +115,13 @@ class Map extends Component {
                 <div className="modal-wrap">
                   <div className="modal-title col-md-12">
                     <h1>{this.state.currentArea.name}</h1>
-                    <h2>Region Tier: {this.state.currentArea.tier}</h2>
+                    <h3>Region Tier: {this.state.currentArea.tier}</h3>
                   </div>
-
-                  <div className="modal-monster col-md-10">
-                    <h3>You have a chance to win one of the cards below that reside here, in addition to  {this.state.currentArea.experience} experience points</h3>
+                  <div className="modal-monster col-md-12">
+                    <h3>The monsters below are those that reside in {this.state.currentArea.name}, in addition to gaining {this.state.currentArea.experience} experience points, you'll have a chance to win one of these cards after a sucessful combat.</h3>
                     <hr />
                     {this.renderMonsters(this.state.currentArea.monsters)}
                   </div>
-                  {/* 
-                                    <div className="modal-reward col-md-5">
-                                        <h3>You Gain {this.state.currentArea.experience}XP and A Shot At these Cards:</h3>
-                                        <hr />
-                                        {this.renderMonsters(this.state.currentArea.monsters)}
-                                    </div> */}
-
                   <div className="modal-leave col-md-12">
                     <button id="attack-region" className="btn btn-dark btn-lg" onClick={this.handleAttackClick}>Attack Region</button>
                     <button id="modal-close" className="btn btn-dark btn-lg" onClick={this.closeModal}>Close</button>
@@ -144,7 +136,6 @@ class Map extends Component {
                 isOpen={this.state.modalIsOpen}
                 onAfterOpen={this.afterOpenModal}
                 onRequestClose={this.closeModal}
-                // style={customStyles}
                 contentLabel="Example Modal"
               >
                 <h2 ref={subtitle => this.subtitle = subtitle}>None</h2>
