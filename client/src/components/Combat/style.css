@@ -208,10 +208,10 @@
     border-width: 5px;
     border-style: solid;
     border-color: maroon;
-    animation: intro 4s linear;
-    -webkit-animation: intro 4s normal forwards; 
-    -moz-animation:  intro 4s normal forwards;
-    -o-animation:     intro 4s normal forwards;
+    animation: intro 3s linear;
+    -webkit-animation: intro 3s normal forwards; 
+    -moz-animation:  intro 3s normal forwards;
+    -o-animation:     intro 3s normal forwards;
 }
 
 .equipped-combat:hover {
@@ -222,8 +222,39 @@
     border-color: maroon;
 }
 
+.equipped-combat:enabled {
+    animation: begin .5s linear;
+}
+
+.equipped-combat:active {
+    animation: attack 1s linear;
+}
+
 #enemy-card:hover {
     animation: enemyCard 3s linear;
+}
+
+@keyframes begin {
+    0%{
+        opacity: 0;
+        transform: translate(0%, -50%);
+    }
+    90% {
+        opacity: .9;
+        transform: translate(0%, 5%);
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes attack {
+    0%{
+        background: red;
+    }
+    100%{
+        transform: translate(100%, -80%)
+    }
 }
 
 @keyframes arena {

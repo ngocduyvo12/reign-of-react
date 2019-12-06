@@ -441,7 +441,7 @@ class Combat extends Component {
         {/* Animated Intro */}
         <div className="combat-intro">
           <h1 className="welcome-text">Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
-          <h2>You have stumpled upon the lair of a violent enemy!</h2>
+          <h2>Best of luck on your endevours</h2>
         </div>
 
         <Modal
