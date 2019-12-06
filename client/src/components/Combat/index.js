@@ -126,7 +126,7 @@ class Combat extends Component {
     //get a random monster from location data
     const monsterID = locData.monsters[(Math.floor(Math.random() * locData.monsters.length))]
     // console.log(locData.monsters[(Math.floor(Math.random() * locData.monsters.length))])
-    console.log("mon:",characters[monsterID]);
+    console.log("mon:", characters[monsterID]);
     this.setState({
       myEnemyName: characters[monsterID].name,
       locationData: locData,
@@ -193,7 +193,7 @@ class Combat extends Component {
 
     if (level > 0) {
       let imgLevel = level;
-      if (imgLevel > 11){
+      if (imgLevel > 11) {
         imgLevel = 11
       }
       // console.log(level)
@@ -363,6 +363,11 @@ class Combat extends Component {
   render() {
     return (
       <>
+        {/* <div className="combat-intro">
+          <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
+          <h2>You have stumpled upon the lair of a {this.state.monster}</h2>
+        </div> */}
+
         <div className="jumbotron battle-wrapper" id="combat-wrap">
           <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
           <div className="container">
@@ -433,6 +438,12 @@ class Combat extends Component {
           </div>
         </div>
 
+        {/* Animated Intro */}
+        <div className="combat-intro">
+          <h1 className="welcome-text">Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
+          <h2>You have stumpled upon the lair of a violent enemy!</h2>
+        </div>
+
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
@@ -443,11 +454,11 @@ class Combat extends Component {
           <div className="jumbotron" id="ec-wrapper" ref={subtitle => this.subtitle = subtitle}>
             <h1 ref={subtitle => this.subtitle = subtitle} id="ec">End of Combat</h1>
             <button
-                  type="submit"
-                  id="ec-button"
-                  className="btn btn-lg btn-dark result-submit"
-                  onClick={this.goHome}
-                >Return to Map</button>
+              type="submit"
+              id="ec-button"
+              className="btn btn-lg btn-dark result-submit"
+              onClick={this.goHome}
+            >Return to Map</button>
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
                 <div className="combat-result col-md-12" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>
