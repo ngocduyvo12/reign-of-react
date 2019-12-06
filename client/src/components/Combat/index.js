@@ -29,6 +29,7 @@ class Combat extends Component {
     myEnemyDefense: 1,
     myEnemyTotalHealth: 1,
     myEnemyCurrentHealth: 1,
+    enemyCardActive: false,
     locationData: {},
     monster: {},
     round: true,
@@ -227,6 +228,14 @@ class Combat extends Component {
     // console.log(this.state.myTeam)
   }
 
+  cardAttacked = () => {
+    if (this.state.enemyCardActive === false) {
+      this.setState({ enemyCardActive: true })
+    } else {
+      this.setState({ enemyCardActive: false })
+    }
+  };
+
   //on click of image, attack the enemy card like the original logic.
   //after player finished attacking, check to see if enemy health is lesser or equal to zero. 
   //If it is end combat and toggle reward modal. 
@@ -237,6 +246,7 @@ class Combat extends Component {
 
 
   attackNow = (event) => {
+    this.cardAttacked();
     //if enemy is already dead, prevent further action. Probably wont be needing this
     if (this.state.myEnemyCurrentHealth <= 0) {
       alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
@@ -274,9 +284,8 @@ class Combat extends Component {
       //if enemy not dead after attack, call enemyAttack
       else {
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
-        this.setState({ combatLog: comment })
+        this.setState({ combatLog: comment})
         // console.log(combatLog)
-
         // setTimeout(this.enemyAttack, 2000)
         this.enemyAttack()
       }
@@ -319,6 +328,7 @@ class Combat extends Component {
         if (currentTeamCombat[i].currentHealth <= 0) {
           currentTeamCombat[i].alive = false;
         }
+
 
         // console.log(currentTeamCombat)
         // console.log("team in state: ")
@@ -363,11 +373,6 @@ class Combat extends Component {
   render() {
     return (
       <>
-        {/* <div className="combat-intro">
-          <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
-          <h2>You have stumpled upon the lair of a {this.state.monster}</h2>
-        </div> */}
-
         <div className="jumbotron battle-wrapper" id="combat-wrap">
           <h1>Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
           <div className="container">
@@ -377,7 +382,7 @@ class Combat extends Component {
                 <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
                 <Link to={"/home/" + this.props.match.params.id} ><button className="btn btn-dark" id="surrender">Surrender</button></Link>
               </div>
-              <div className="enemy-cards col-md-9">
+              <div className="enemy-cards col-md-9" id={this.state.enemyCardActive ? "active-enemy" : "inactive-enemy"}>
                 <EnemyCards
                   monster={this.state.monster}
                   hitpoints={this.state.myEnemyCurrentHealth}
@@ -441,7 +446,7 @@ class Combat extends Component {
         {/* Animated Intro */}
         <div className="combat-intro">
           <h1 className="welcome-text">Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
-          <h2>Best of luck on your endevours</h2>
+          <h2>Best of luck on your endevours, Adventurer</h2>
         </div>
 
         <Modal

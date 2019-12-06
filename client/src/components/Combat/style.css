@@ -168,7 +168,7 @@
 }
 
 .my-attack-log {
-    margin-top: 30%;
+    margin-top: 17%;
     color: green;
 }
 
@@ -230,8 +230,12 @@
     animation: attack .5s linear;
 }
 
-#enemy-card:focus {
-    animation: enemyCard 1s linear;
+#active-enemy img {
+    animation: enemyCard .5s linear;
+}
+
+#inactive-enemy img {
+    animation: enemyCard2 .5s linear;
 }
 
 @keyframes begin {
@@ -271,13 +275,27 @@
 
 @keyframes enemyCard {
     0%{
-        transform: scale(1);
+        transform: translate(10%, -7%);
     }
     50%{
-        transform: scale(1.5);
+        opacity: .6;
+        padding: 1rem;
     }
     100% {
-        transform: scale(1);
+        background: maroon
+    }
+}
+
+@keyframes enemyCard2 {
+    0%{
+        transform: translate(10%, -3%)
+    }
+    50%{
+        opacity: .6;
+        padding: 1rem;
+    }
+    100% {
+        background: maroon;
     }
 }
 

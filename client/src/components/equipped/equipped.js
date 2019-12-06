@@ -29,7 +29,7 @@ class Equipped extends Component {
                     <>
                         {this.state.cards.map(cards => (
                             // <div className="col col-md-3" key={cards._id}>
-                            <div className="style-equipped" key={cards._id}>
+                            <div className="style-equipped col-md-3" key={cards._id}>
                                 <Link 
                                 to={"../inventory/" + this.props.match.params.id}>
                                     <img
