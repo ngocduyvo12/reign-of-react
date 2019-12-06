@@ -227,17 +227,17 @@
 }
 
 .equipped-combat:active {
-    animation: attack 1s linear;
+    animation: attack .5s linear;
 }
 
-#enemy-card:hover {
-    animation: enemyCard 3s linear;
+#enemy-card:focus {
+    animation: enemyCard 1s linear;
 }
 
 @keyframes begin {
     0%{
         opacity: 0;
-        transform: translate(0%, -50%);
+        transform: translate(50%, -50%);
     }
     90% {
         opacity: .9;
@@ -287,7 +287,7 @@
         z-index: 5;
     }
     90% {
-        opacity: .9;
+        opacity: 1;
         z-index: 5;
     }
     100%{
