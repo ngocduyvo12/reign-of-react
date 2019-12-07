@@ -57,3 +57,37 @@ h1, h2 {
     float: right;
     margin-top: 5%;
 }
+
+#sword-logo {
+    height: 120px;
+    animation: rumble 10s infinite;
+}
+
+#shield-logo {
+    height: 120px;
+    animation: rumble-alt 10s infinite;
+}
+
+@keyframes rumble {
+    0%{
+        transform: translate(-500%, 0%);
+    }
+    50%{
+        transform: translate(-400%, 0%);
+    }
+    100%{
+        transform: translate(-500%, 0%);
+    }
+}
+
+@keyframes rumble-alt {
+    0%{
+        transform: translate(200%, 0%);
+    }
+    50%{
+        transform: translate(-250%, 0%);
+    }
+    100%{
+        transform: translate(200%, 0%);
+    }
+}
