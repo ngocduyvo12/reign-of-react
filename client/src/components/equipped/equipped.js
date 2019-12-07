@@ -32,7 +32,7 @@ class Equipped extends Component {
                             <div className="style-equipped col-md-3" key={cards._id}>
                                 <div id="map-card-stats">
                                     <p>
-                                    Attack: {cards.attack} | 
+                                    Attack: {cards.attack} |
                                     Defense: {cards.defense} | 
                                     Health: {cards.hitPoints}
                                     </p>

@@ -82,7 +82,7 @@ area {
     left: 21px;
     z-index: 3;
     top: 400px;
-    animation: compass 5s linear;
+    animation: compass 3s linear;
 }
 
 .ReactModal__Overlay {
