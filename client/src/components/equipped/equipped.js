@@ -30,12 +30,20 @@ class Equipped extends Component {
                         {this.state.cards.map(cards => (
                             // <div className="col col-md-3" key={cards._id}>
                             <div className="style-equipped col-md-3" key={cards._id}>
+                                <div id="map-card-stats">
+                                    <p>
+                                    Attack: {cards.attack} | 
+                                    Defense: {cards.defense} | 
+                                    Health: {cards.hitPoints}
+                                    </p>
+                                </div>
                                 <Link 
                                 to={"../inventory/" + this.props.match.params.id}>
                                     <img
                                         className="equippedImages"
                                         src={process.env.PUBLIC_URL + "/img/cards/" + cards.image}
                                         alt={cards.name}
+                                        attack={cards.attack}
                                     />
                                 </Link>
                             </div>

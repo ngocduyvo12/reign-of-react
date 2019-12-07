@@ -81,7 +81,8 @@ area {
     position: absolute;
     left: 21px;
     z-index: 3;
-    top: 400px
+    top: 400px;
+    animation: compass 5s linear;
 }
 
 .ReactModal__Overlay {
@@ -97,4 +98,27 @@ area {
     content: "";
     clear: both;
     display: table;
-  }
+}
+
+#map-card-stats{
+    color: white;
+    float: right;
+    letter-spacing: 3px;
+}
+
+/* Animations */
+
+@keyframes compass {
+    0%{
+        transform: translate(70%, -70%);
+    }
+    33%{
+        transform: scale(1.2);
+    }
+    66%{
+        transform: scale(.8);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
