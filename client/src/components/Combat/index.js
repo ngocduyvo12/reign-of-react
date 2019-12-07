@@ -432,8 +432,8 @@ class Combat extends Component {
                           onClick={this.attackNow}
                           className="equipped-combat"
                         />
-                        <h5> Attack: {cards.attack}</h5>
-                        <h5> Defense: {cards.defense}</h5>
+                        <h5>Attack: {cards.attack}</h5>
+                        <h5>Defense: {cards.defense}</h5>
                       </div>
                     ))
                   ) : ""}
@@ -446,7 +446,7 @@ class Combat extends Component {
         {/* Animated Intro */}
         <div className="combat-intro">
           <h1 className="welcome-text">Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
-          <h2>Best of luck on your endevours, Adventurer</h2>
+          <h2 id="fade-text">Best of luck on your endevours, Adventurer...</h2>
         </div>
 
         <Modal
