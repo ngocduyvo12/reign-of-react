@@ -65,29 +65,35 @@ h1, h2 {
 
 #shield-logo {
     height: 120px;
-    animation: rumble-alt 20s infinite;
+    animation: rumble-alt 15s infinite;
 }
 
 @keyframes rumble {
     0%{
-        transform: translate(-500%, 0%);
+        opacity: 1;
+        transform: rotateY(0);
     }
     50%{
-        transform: translate(-100%, 0%);
+        opacity: .5;
+        transform: rotateY(180deg);
     }
     100%{
-        transform: translate(-500%, 0%);
+        opacity: 1;
+        transform: rotateY(0);
     }
 }
 
 @keyframes rumble-alt {
     0%{
-        transform: translate(200%, 0%);
+        opacity: .5;
+        transform: rotateY(0);
     }
     50%{
-        transform: translate(-250%, 0%);
+        opacity: 1;
+        transform: rotateY(180deg);
     }
     100%{
-        transform: translate(200%, 0%);
+        opacity: .5;
+        transform: rotateY(0);
     }
 }

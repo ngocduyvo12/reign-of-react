@@ -143,6 +143,8 @@
 .equipped-combat {
     height: 200px;
     width: 160px;
+    outline:none;
+    box-shadow: none;
 }
 
 .container {
@@ -201,7 +203,7 @@
 
 .combat-intro {
     color: white;
-    height: 97%;
+    height: 96%;
     position: absolute;
     background: black;
     left: 1rem;
@@ -219,11 +221,6 @@
 
 #fade-text{
     animation: fade-out 3s linear;
-}
-
-.equipped-combat:hover {
-    transform: scale(1.3);
-    animation: arena 1s infinite;
 }
 
 .equipped-combat:enabled {
@@ -244,19 +241,25 @@
 
 :disabled {
     padding: 2rem;
-    animation: death 3s infinite;
-    opacity: .5;
+    animation: death 6s infinite;
+}
+
+button:disabled{
+    animation: none;
 }
 
 @keyframes death {
     0%{
-        opacity: 1;
+        opacity: .6;
+        transform: rotateX(0);
     }
     50%{
         opacity: 0;
+        transform: rotateX(180deg);
     }
     100%{
-        opacity: 1;
+        opacity: .6;
+        transform: rotateX(0);
     }
 }
 
@@ -306,7 +309,7 @@
         background: red;
     }
     100%{
-        transform: translate(100%, -80%)
+        transform: translate(90%, -60%)
     }
 }
 

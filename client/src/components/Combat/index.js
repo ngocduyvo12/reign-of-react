@@ -75,7 +75,7 @@ class Combat extends Component {
   }
 
   loadArena = () => {
-    let randomImage = Math.floor(Math.random() * 9)
+    let randomImage = Math.floor(Math.random() * 10)
     // console.log("this is map image" + randomImage)
     document.body.classList.add(`image${randomImage}`)
   }
@@ -110,7 +110,6 @@ class Combat extends Component {
 
   //load location and monster info based on name of the map in param.
   loadLocationAndMonsterInfo = () => {
-    this.loadArena()
     //get the data of the map using the name in params
     const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
     // console.log(locData)
@@ -141,6 +140,9 @@ class Combat extends Component {
       myEnemyCurrentHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
     });
     console.log("in", locData);
+    setTimeout(() => {
+      this.loadArena()
+    }, 500);
   }
 
   //function to calculate monster stat modifier based on map tier
@@ -284,7 +286,7 @@ class Combat extends Component {
       //if enemy not dead after attack, call enemyAttack
       else {
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
-        this.setState({ combatLog: comment})
+        this.setState({ combatLog: comment })
         // console.log(combatLog)
         // setTimeout(this.enemyAttack, 2000)
         this.enemyAttack()
