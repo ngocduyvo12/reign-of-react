@@ -60,12 +60,12 @@ h1, h2 {
 
 #sword-logo {
     height: 120px;
-    animation: rumble 10s infinite;
+    animation: rumble 20s infinite;
 }
 
 #shield-logo {
     height: 120px;
-    animation: rumble-alt 10s infinite;
+    animation: rumble-alt 20s infinite;
 }
 
 @keyframes rumble {
@@ -73,7 +73,7 @@ h1, h2 {
         transform: translate(-500%, 0%);
     }
     50%{
-        transform: translate(-400%, 0%);
+        transform: translate(-100%, 0%);
     }
     100%{
         transform: translate(-500%, 0%);

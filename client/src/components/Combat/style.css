@@ -242,6 +242,24 @@
     animation: enemyCard2 .5s linear;
 }
 
+:disabled {
+    padding: 2rem;
+    animation: death 3s infinite;
+    opacity: .5;
+}
+
+@keyframes death {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
 @keyframes flash {
     0% {
         border-color: black;

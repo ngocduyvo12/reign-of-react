@@ -110,7 +110,7 @@ area {
 
 @keyframes compass {
     0%{
-        transform: translate(70%, -70%);
+        transform: scale(1.4);
     }
     33%{
         transform: scale(1.2);
