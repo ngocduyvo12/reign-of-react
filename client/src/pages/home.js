@@ -28,7 +28,7 @@ class Home extends Component {
 
         if (level > 0) {
           let imgLevel = level;
-          if (imgLevel > 11){
+          if (imgLevel > 11) {
             imgLevel = 11
           }
           imageSrc = player[imgLevel].image
@@ -84,9 +84,11 @@ class Home extends Component {
           </div>
 
           {/* equipped card div */}
-          <div className="col-md-12" id="player-cards-home">
-            {/* logic to display current equipped cards */}
-            <Equipped {...this.props} />
+          <div className="col-md-12">
+            <div className="row" id="player-cards-home">
+              {/* logic to display current equipped cards */}
+              <Equipped {...this.props} />
+            </div>
           </div>
         </div>
       </div>

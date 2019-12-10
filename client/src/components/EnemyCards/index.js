@@ -2,6 +2,7 @@ import React from "react";
 import "./style.css";
 
 function EnemyCards(props) {
+    console.log(props)
     return (
         <>
             <div className="img-container enemy-img-container">

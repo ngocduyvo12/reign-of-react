@@ -57,3 +57,51 @@ h1, h2 {
     float: right;
     margin-top: 5%;
 }
+
+#sword-logo {
+    height: 120px;
+    animation: rumble 20s infinite;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+#shield-logo {
+    height: 120px;
+    animation: rumble-alt 15s infinite;
+}
+
+#floating-cards {
+    position: absolute;
+    left: 44%;
+    width: 10%;
+}
+
+@keyframes rumble {
+    0%{
+        opacity: 1;
+        transform: rotateY(0);
+    }
+    50%{
+        opacity: .5;
+        transform: rotateY(180deg);
+    }
+    100%{
+        opacity: 1;
+        transform: rotateY(0);
+    }
+}
+
+@keyframes rumble-alt {
+    0%{
+        opacity: .5;
+        transform: rotateY(0);
+    }
+    50%{
+        opacity: 1;
+        transform: rotateY(180deg);
+    }
+    100%{
+        opacity: .5;
+        transform: rotateY(0);
+    }
+}

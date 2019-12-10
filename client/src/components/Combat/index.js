@@ -29,6 +29,7 @@ class Combat extends Component {
     myEnemyDefense: 1,
     myEnemyTotalHealth: 1,
     myEnemyCurrentHealth: 1,
+    enemyCardActive: false,
     locationData: {},
     monster: {},
     round: true,
@@ -74,7 +75,7 @@ class Combat extends Component {
   }
 
   loadArena = () => {
-    let randomImage = Math.floor(Math.random() * 9)
+    let randomImage = Math.floor(Math.random() * 10)
     // console.log("this is map image" + randomImage)
     document.body.classList.add(`image${randomImage}`)
   }
@@ -109,7 +110,6 @@ class Combat extends Component {
 
   //load location and monster info based on name of the map in param.
   loadLocationAndMonsterInfo = () => {
-    this.loadArena()
     //get the data of the map using the name in params
     const locData = mapJSON.find(loc => loc.name === this.props.match.params.location);
     // console.log(locData)
@@ -126,7 +126,7 @@ class Combat extends Component {
     //get a random monster from location data
     const monsterID = locData.monsters[(Math.floor(Math.random() * locData.monsters.length))]
     // console.log(locData.monsters[(Math.floor(Math.random() * locData.monsters.length))])
-    console.log("mon:",characters[monsterID]);
+    console.log("mon:", characters[monsterID]);
     this.setState({
       myEnemyName: characters[monsterID].name,
       locationData: locData,
@@ -140,6 +140,9 @@ class Combat extends Component {
       myEnemyCurrentHealth: characters[monsterID].hitpoints * monsterStatModifier.hpModifier,
     });
     console.log("in", locData);
+    setTimeout(() => {
+      this.loadArena()
+    }, 500);
   }
 
   //function to calculate monster stat modifier based on map tier
@@ -193,7 +196,7 @@ class Combat extends Component {
 
     if (level > 0) {
       let imgLevel = level;
-      if (imgLevel > 11){
+      if (imgLevel > 11) {
         imgLevel = 11
       }
       // console.log(level)
@@ -227,6 +230,14 @@ class Combat extends Component {
     // console.log(this.state.myTeam)
   }
 
+  cardAttacked = () => {
+    if (this.state.enemyCardActive === false) {
+      this.setState({ enemyCardActive: true })
+    } else {
+      this.setState({ enemyCardActive: false })
+    }
+  };
+
   //on click of image, attack the enemy card like the original logic.
   //after player finished attacking, check to see if enemy health is lesser or equal to zero. 
   //If it is end combat and toggle reward modal. 
@@ -237,6 +248,7 @@ class Combat extends Component {
 
 
   attackNow = (event) => {
+    this.cardAttacked();
     //if enemy is already dead, prevent further action. Probably wont be needing this
     if (this.state.myEnemyCurrentHealth <= 0) {
       alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
@@ -276,7 +288,6 @@ class Combat extends Component {
         let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
         this.setState({ combatLog: comment })
         // console.log(combatLog)
-
         // setTimeout(this.enemyAttack, 2000)
         this.enemyAttack()
       }
@@ -319,6 +330,7 @@ class Combat extends Component {
         if (currentTeamCombat[i].currentHealth <= 0) {
           currentTeamCombat[i].alive = false;
         }
+
 
         // console.log(currentTeamCombat)
         // console.log("team in state: ")
@@ -372,7 +384,7 @@ class Combat extends Component {
                 <p className="enemy-attack-log">{this.state.enemyCombatLog}</p>
                 <Link to={"/home/" + this.props.match.params.id} ><button className="btn btn-dark" id="surrender">Surrender</button></Link>
               </div>
-              <div className="enemy-cards col-md-9">
+              <div className="enemy-cards col-md-9" id={this.state.enemyCardActive ? "active-enemy" : "inactive-enemy"}>
                 <EnemyCards
                   monster={this.state.monster}
                   hitpoints={this.state.myEnemyCurrentHealth}
@@ -422,8 +434,8 @@ class Combat extends Component {
                           onClick={this.attackNow}
                           className="equipped-combat"
                         />
-                        <h5> Attack: {cards.attack}</h5>
-                        <h5> Defense: {cards.defense}</h5>
+                        <h5>Attack: {cards.attack}</h5>
+                        <h5>Defense: {cards.defense}</h5>
                       </div>
                     ))
                   ) : ""}
@@ -431,6 +443,12 @@ class Combat extends Component {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Animated Intro */}
+        <div className="combat-intro">
+          <h1 className="welcome-text">Welcome To The {this.state.locationData ? this.state.locationData.name : ""} Arena</h1>
+          <h2 id="fade-text">Best of luck on your endevours, Adventurer...</h2>
         </div>
 
         <Modal
@@ -443,11 +461,11 @@ class Combat extends Component {
           <div className="jumbotron" id="ec-wrapper" ref={subtitle => this.subtitle = subtitle}>
             <h1 ref={subtitle => this.subtitle = subtitle} id="ec">End of Combat</h1>
             <button
-                  type="submit"
-                  id="ec-button"
-                  className="btn btn-lg btn-dark result-submit"
-                  onClick={this.goHome}
-                >Return to Map</button>
+              type="submit"
+              id="ec-button"
+              className="btn btn-lg btn-dark result-submit"
+              onClick={this.goHome}
+            >Return to Map</button>
             <div className="container" ref={subtitle => this.subtitle = subtitle}>
               <div className="row" ref={subtitle => this.subtitle = subtitle}>
                 <div className="combat-result col-md-12" id="player-ec-win" ref={subtitle => this.subtitle = subtitle}>

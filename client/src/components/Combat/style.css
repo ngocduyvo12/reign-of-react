@@ -1,5 +1,6 @@
 .battle-wrapper {
     height: 790px;
+    z-index: 10;
 }
 
 .image0 {
@@ -81,7 +82,7 @@
     background-repeat: repeat;
     border-style: solid;
     border-width: 5px;
-    border-color: darkred;
+    animation: flash 5s infinite;
 }
 
 #combat-stats {
@@ -109,7 +110,10 @@
     border-left: 0;
     border-right: 0;
     border-bottom: 0;
+    border-width: 5px;
     margin-top: 10px;
+    border-radius: 50px;
+    animation: flash 6s infinite;
 }
 
 .card {
@@ -133,12 +137,14 @@
 }
 
 .progress-bar {
-    background-color: red;
+    background-color: green;
 }
 
 .equipped-combat {
     height: 200px;
     width: 160px;
+    outline:none;
+    box-shadow: none;
 }
 
 .container {
@@ -167,7 +173,7 @@
 }
 
 .my-attack-log {
-    margin-top: 30%;
+    margin-top: 17%;
     color: green;
 }
 
@@ -180,11 +186,187 @@
 }
 
 #enemy-health {
-    background-color: darkorange;
+    background-color: red;
 }
 
 #enemy-hp {
     width: 60%;
     height: 30px;
     margin-left: 3%;
+}
+
+.welcome-text {
+    margin-top: 25%;
+}
+
+/* Animations  */
+
+.combat-intro {
+    color: white;
+    height: 96%;
+    position: absolute;
+    background: black;
+    left: 1rem;
+    width: 98%;
+    top: 1rem;
+    border-radius: 18px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: maroon;
+    animation: intro 3s linear;
+    -webkit-animation: intro 3s normal forwards; 
+    -moz-animation:  intro 3s normal forwards;
+    -o-animation:     intro 3s normal forwards;
+}
+
+#fade-text{
+    animation: fade-out 3s linear;
+}
+
+.equipped-combat:enabled {
+    animation: begin .5s linear;
+}
+
+.equipped-combat:active {
+    animation: attack .5s linear;
+}
+
+#active-enemy img {
+    animation: enemyCard .5s linear;
+}
+
+#inactive-enemy img {
+    animation: enemyCard2 .5s linear;
+}
+
+:disabled {
+    padding: 2rem;
+    animation: death 6s infinite;
+}
+
+button:disabled{
+    animation: none;
+}
+
+@keyframes death {
+    0%{
+        opacity: .6;
+        transform: rotateX(0);
+    }
+    50%{
+        opacity: 0;
+        transform: rotateX(180deg);
+    }
+    100%{
+        opacity: .6;
+        transform: rotateX(0);
+    }
+}
+
+@keyframes flash {
+    0% {
+        border-color: black;
+    }
+    50% {
+        border-color: maroon;
+    }
+    100%{
+        border-color: black;
+    }
+}
+
+@keyframes fade-out {
+    0%{
+        opacity: 1;
+        color: white;
+    }
+    50%{
+        opacity: .5;
+        color: white;
+    }
+    100%{
+        opacity: 0;
+        color: white;
+    }
+}
+
+@keyframes begin {
+    0%{
+        opacity: 0;
+        transform: translate(50%, -50%);
+    }
+    90% {
+        opacity: .9;
+        transform: translate(0%, 5%);
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes attack {
+    0%{
+        background: red;
+    }
+    100%{
+        transform: translate(90%, -60%)
+    }
+}
+
+@keyframes arena {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: .8;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+@keyframes enemyCard {
+    0%{
+        transform: translate(10%, -8%);
+    }
+    50%{
+        opacity: .6;
+        padding: 1rem;
+    }
+    100% {
+        background: maroon
+    }
+}
+
+@keyframes enemyCard2 {
+    0%{
+        transform: translate(10%, -2%)
+    }
+    50%{
+        opacity: .6;
+        padding: 1rem;
+    }
+    100% {
+        background: maroon;
+    }
+}
+
+@keyframes intro {
+    0%{
+        opacity: 1;
+        z-index: 5;
+    }
+    70%{
+        color: white;
+    }
+    90% {
+        opacity: 1;
+        z-index: 5;
+        color: maroon;
+    }
+    100%{
+        opacity: 0;
+        z-index: -1;
+        color: maroon;
+    }
 }

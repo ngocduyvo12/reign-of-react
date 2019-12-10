@@ -138,8 +138,16 @@ class Inventory extends Component {
                         attack={cards.attack}
                         onClick={this.equip}
                       />
+                      <p id="inventory-card-stats">
+                      Name: {cards.name} <br></br>
+                      Attack: {cards.attack} <br></br>
+                      Defense: {cards.defense} <br></br>
+                      Health: {cards.hitPoints}
+                      </p>
                     </div>
-                  ))}
+                  )
+                  )
+                  }
                 </>
               )
                 : (<h3>No Cards in Inventory</h3>)}
@@ -162,6 +170,12 @@ class Inventory extends Component {
                         alt={cards.name}
                         onClick={this.unEquip}
                       />
+                      <p id="equipped-card-stats">
+                      Name: {cards.name} <br></br>
+                      Attack: {cards.attack} <br></br>
+                      Defense: {cards.defense} <br></br>
+                      Health: {cards.hitPoints}
+                      </p>
                     </div>
                   ))}
                 </>
