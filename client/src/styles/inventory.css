@@ -44,11 +44,11 @@
 }
 
 #other-home:hover{
-    background: white;
-    color: black;
+    background: black;
+    color: white;
     transform: scale(1.1);
     border-width: 2px;
-    border-color: black;
+    border-color: maroon;
 }
 
 .container-fluid {

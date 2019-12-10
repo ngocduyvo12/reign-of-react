@@ -61,11 +61,19 @@ h1, h2 {
 #sword-logo {
     height: 120px;
     animation: rumble 20s infinite;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 #shield-logo {
     height: 120px;
     animation: rumble-alt 15s infinite;
+}
+
+#floating-cards {
+    position: absolute;
+    left: 44%;
+    width: 10%;
 }
 
 @keyframes rumble {
