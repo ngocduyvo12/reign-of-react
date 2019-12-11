@@ -37,7 +37,9 @@ class Combat extends Component {
     combatLog: "",
     enemyCombatLog: "",
     winCard: {},
-    lostCard: {}
+    lostCard: {},
+    potions: "",
+    potionsActive: false
   }
 
   constructor() {
@@ -102,7 +104,8 @@ class Combat extends Component {
           myPlayer: res.data,
           myLevel: level,
           myCurrentHealth: healthNow,
-          myTotalHealth: healthNow
+          myTotalHealth: healthNow,
+          potions: 10
         })
       })
       .catch(err => console.log(err))
@@ -248,48 +251,80 @@ class Combat extends Component {
 
 
   attackNow = (event) => {
-    this.cardAttacked();
-    //if enemy is already dead, prevent further action. Probably wont be needing this
-    if (this.state.myEnemyCurrentHealth <= 0) {
-      alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
-      return
+
+    if (this.state.potionsActive) {
+      //if potions is active the next on click will heal the clicked card
+      let thisId = event.target.getAttribute("id")
+
+      //need to do a filter here to grab the card with the same id as the one clicked from my team.
+      var healedCard = this.state.myTeam.filter(card => card._id === thisId)
+      console.log(healedCard)
+      let potionHealsAmount = parseInt(healedCard[0].hitPoints) * 0.5
+      let cardHealedHP = parseInt(healedCard[0].currentHealth) + potionHealsAmount
+      let cardHpAfterPotion = Math.min((cardHealedHP), healedCard[0].hitPoints)
+      healedCard[0].currentHealth = cardHpAfterPotion
+
+      //decrease potions count by 1
+      let potionsCount = parseInt(this.state.potions) - 1
+
+      //change the state back to false and update potions count
+      this.setState({
+        potionsActive: false,
+        potions: potionsCount
+      })
+
+      let comment = `${event.target.alt} healed for ${potionHealsAmount} health`
+      this.setState({ combatLog: comment })
+
+      //take this out for now because it's creating animation bug
+      // //let enemy attack
+      // this.enemyAttack();
+
     } else {
-      //player's attack logic
-      let thisAttack = event.target.getAttribute("data-attack");
 
-      //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
-      let mitigation = 2000;
-      //take defense into account when attacking
-      let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
-      // console.log(thisAttackAfterModified)
+      this.cardAttacked();
+      //if enemy is already dead, prevent further action. Probably wont be needing this
+      if (this.state.myEnemyCurrentHealth <= 0) {
+        alert("This enemy has been killed, if you have not been automatically redirected please click to go back 1 page")
+        return
+      } else {
+        //player's attack logic
+        let thisAttack = event.target.getAttribute("data-attack");
+
+        //defense mitigation base line: edit this number to increase or decrease mitigation damage from defense
+        let mitigation = 2000;
+        //take defense into account when attacking
+        let thisAttackAfterModified = Math.floor(thisAttack - (thisAttack * (this.state.myEnemyDefense / (mitigation + this.state.myEnemyDefense))))
+        // console.log(thisAttackAfterModified)
 
 
-      let enemyHealthAfterAttack = Math.floor(this.state.myEnemyCurrentHealth - thisAttackAfterModified)
+        let enemyHealthAfterAttack = Math.floor(this.state.myEnemyCurrentHealth - thisAttackAfterModified)
 
-      this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
+        this.setState({ myEnemyCurrentHealth: enemyHealthAfterAttack })
 
-      //check winning condition here with out waiting for state to set in
-      if (enemyHealthAfterAttack <= 0) {
-        // alert("You have won")
-        const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * this.state.locationData.monsters.length)]];
-        this.setState({
-          result: 1,
-          winCard: winCard
-        })
+        //check winning condition here with out waiting for state to set in
+        if (enemyHealthAfterAttack <= 0) {
+          // alert("You have won")
+          const winCard = characters[this.state.locationData.monsters[Math.floor(Math.random() * this.state.locationData.monsters.length)]];
+          this.setState({
+            result: 1,
+            winCard: winCard
+          })
 
-        API.addInventory(winCard, this.props.match.params.id, this.state.locationData.experience)
-          .then(res => console.log(res))
-          .catch(err => console.log(err))
-        //toggle reward modal here
-        this.openModal();
-      }
-      //if enemy not dead after attack, call enemyAttack
-      else {
-        let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
-        this.setState({ combatLog: comment })
-        // console.log(combatLog)
-        // setTimeout(this.enemyAttack, 2000)
-        this.enemyAttack()
+          API.addInventory(winCard, this.props.match.params.id, this.state.locationData.experience)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+          //toggle reward modal here
+          this.openModal();
+        }
+        //if enemy not dead after attack, call enemyAttack
+        else {
+          let comment = `${event.target.alt} attacked ${this.state.myEnemyName} for ${thisAttackAfterModified} damage`
+          this.setState({ combatLog: comment })
+          // console.log(combatLog)
+          // setTimeout(this.enemyAttack, 2000)
+          this.enemyAttack()
+        }
       }
     }
   }
@@ -368,6 +403,16 @@ class Combat extends Component {
 
   }
 
+  //function to trigger potion usage state
+  potionsUsage = () => {
+    //trigger potion use stage on:
+    if (this.state.potionsActive) {
+      this.setState({ potionsActive: false })
+    } else {
+      this.setState({ potionsActive: true })
+    }
+  }
+
   goHome = () => {
     this.props.history.push("/home/" + this.props.match.params.id)
   }
@@ -403,6 +448,13 @@ class Combat extends Component {
                   </div>
                 </div>
               </div>
+
+              <input
+                type="image"
+                src={process.env.PUBLIC_URL + "/img/sprite/potions.png"}
+                onClick={this.potionsUsage} />
+              <span>x {this.state.potions}</span>
+              
               <div className="player-cards col-md-12">
                 <>
                   {this.state.myTeam ? (
